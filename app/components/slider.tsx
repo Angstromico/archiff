@@ -35,7 +35,8 @@ export default function ImageSlider() {
 
   const rafRef = useRef<number | null>(null)
   const accumRef = useRef(0)
-  const dragRef = useRef(0)
+  const dragStartIndexRef = useRef(0)
+  const trackRef = useRef<HTMLDivElement>(null)
 
   // ---- Resize handler ----
   useEffect(() => {
@@ -46,12 +47,19 @@ export default function ImageSlider() {
   }, [])
 
   // --------------------------------------------------------------
-  // 3. Continuous smooth scroll
+  // 3. Continuous smooth scroll (ONLY when NOT dragging)
   // --------------------------------------------------------------
   const speed = 0.1
 
   useEffect(() => {
-    if (isDragging) return
+    // Don't run animation loop while dragging
+    if (isDragging) {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+      }
+      return
+    }
 
     let last = performance.now()
 
@@ -78,14 +86,100 @@ export default function ImageSlider() {
   }, [cardsPerView, slides.length, isDragging])
 
   // --------------------------------------------------------------
-  // 4. Render
+  // 4. Mouse event handlers
+  // --------------------------------------------------------------
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+    setDragStartX(e.clientX)
+    // Store the current position when drag starts
+    dragStartIndexRef.current = index + progress
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+
+    const deltaX = e.clientX - dragStartX
+    const pxPerSlot = window.innerWidth / cardsPerView
+    const offsetInSlots = -deltaX / pxPerSlot // Negative to match drag direction
+
+    setDragOffset(offsetInSlots)
+  }
+
+  const handleMouseUp = () => {
+    if (!isDragging) return
+
+    // Calculate final position
+    const finalPosition = dragStartIndexRef.current + dragOffset
+    const normalizedIndex =
+      ((finalPosition % slides.length) + slides.length) % slides.length
+
+    setIndex(Math.floor(normalizedIndex))
+    setProgress(normalizedIndex - Math.floor(normalizedIndex))
+
+    // Reset drag state
+    setIsDragging(false)
+    setDragOffset(0)
+
+    // Reset accumulator for smooth animation
+    accumRef.current = normalizedIndex - Math.floor(normalizedIndex)
+  }
+
+  const handleMouseLeave = () => {
+    if (!isDragging) return
+    handleMouseUp()
+  }
+
+  // Add global mouse events for better drag experience
+  useEffect(() => {
+    if (!isDragging) return
+
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      const deltaX = e.clientX - dragStartX
+      const pxPerSlot = window.innerWidth / cardsPerView
+      const offsetInSlots = -deltaX / pxPerSlot
+
+      setDragOffset(offsetInSlots)
+    }
+
+    const handleGlobalMouseUp = () => {
+      if (!isDragging) return
+
+      const finalPosition = dragStartIndexRef.current + dragOffset
+      const normalizedIndex =
+        ((finalPosition % slides.length) + slides.length) % slides.length
+
+      setIndex(Math.floor(normalizedIndex))
+      setProgress(normalizedIndex - Math.floor(normalizedIndex))
+
+      setIsDragging(false)
+      setDragOffset(0)
+      accumRef.current = normalizedIndex - Math.floor(normalizedIndex)
+    }
+
+    window.addEventListener('mousemove', handleGlobalMouseMove)
+    window.addEventListener('mouseup', handleGlobalMouseUp)
+
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMouseMove)
+      window.removeEventListener('mouseup', handleGlobalMouseUp)
+    }
+  }, [isDragging, dragStartX, cardsPerView, dragOffset, slides.length])
+
+  // --------------------------------------------------------------
+  // 5. Render
   // --------------------------------------------------------------
   const visibleCount = typeof window === 'undefined' ? 2 : cardsPerView
   const slotWidth = `${100 / visibleCount}%`
   const slotWidthPercent = 100 / visibleCount
   const infiniteSlides = [...slides, ...slides]
 
-  const translateX = -(index + progress + dragOffset) * slotWidthPercent
+  // Calculate translateX based on whether we're dragging or not
+  const currentPosition = isDragging
+    ? dragStartIndexRef.current + dragOffset
+    : index + progress
+
+  const translateX = -currentPosition * slotWidthPercent
 
   return (
     <div className='relative w-full overflow-hidden mt-32'>
@@ -95,45 +189,22 @@ export default function ImageSlider() {
 
       {/* Track */}
       <div
+        ref={trackRef}
         className='flex gap-8'
         style={{
           transform: `translateX(${translateX}%)`,
           transition: 'none',
           cursor: isDragging ? 'grabbing' : 'grab',
+          userSelect: 'none',
         }}
-        onMouseDown={(e) => {
-          setIsDragging(true)
-          setDragStartX(e.clientX)
-          dragRef.current = index + progress
-        }}
-        onMouseMove={(e) => {
-          if (!isDragging) return
-          const deltaX = e.clientX - dragStartX
-          const pxPerSlot = window.innerWidth / visibleCount
-          const offsetIndex = deltaX / pxPerSlot
-          setDragOffset(offsetIndex)
-        }}
-        onMouseUp={() => {
-          if (!isDragging) return
-          const newIndex = dragRef.current - dragOffset
-          setIndex(((newIndex % slides.length) + slides.length) % slides.length)
-          setIsDragging(false)
-          setDragOffset(0)
-        }}
-        onMouseLeave={() => {
-          if (!isDragging) return
-          const newIndex = dragRef.current - dragOffset
-          setIndex(((newIndex % slides.length) + slides.length) % slides.length)
-          setIsDragging(false)
-          setDragOffset(0)
-        }}
+        onMouseDown={handleMouseDown}
       >
         {infiniteSlides.map((img, i) => (
           <div
             key={i}
             style={{ width: slotWidth, height: 'auto' }}
             className={`shrink-0 transition-transform duration-200 ${
-              isDragging ? 'scale-90' : 'scale-100'
+              isDragging ? 'scale-95' : 'scale-100'
             }`}
           >
             <CarouselImage
@@ -174,6 +245,7 @@ function CarouselImage({
           e.stopPropagation()
         }
       }}
+      draggable={false}
     >
       <Image
         src={normal}
@@ -182,6 +254,7 @@ function CarouselImage({
         height={0}
         className='w-full h-auto object-cover transition-opacity duration-500 group-hover:opacity-0 static'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
+        draggable={false}
       />
       <Image
         src={hover}
@@ -190,6 +263,7 @@ function CarouselImage({
         height={0}
         className='absolute inset-0 w-full h-auto object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
+        draggable={false}
       />
     </Link>
   )
