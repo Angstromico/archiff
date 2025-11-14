@@ -37,6 +37,7 @@ export default function ImageSlider() {
   const accumRef = useRef(0)
   const dragStartIndexRef = useRef(0)
   const trackRef = useRef<HTMLDivElement>(null)
+  const dragDistanceRef = useRef(0) // Para trackear distancia del drag
 
   // ---- Resize handler ----
   useEffect(() => {
@@ -92,42 +93,9 @@ export default function ImageSlider() {
     e.preventDefault()
     setIsDragging(true)
     setDragStartX(e.clientX)
+    dragDistanceRef.current = 0 // Reset drag distance
     // Store the current position when drag starts
     dragStartIndexRef.current = index + progress
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
-
-    const deltaX = e.clientX - dragStartX
-    const pxPerSlot = window.innerWidth / cardsPerView
-    const offsetInSlots = -deltaX / pxPerSlot // Negative to match drag direction
-
-    setDragOffset(offsetInSlots)
-  }
-
-  const handleMouseUp = () => {
-    if (!isDragging) return
-
-    // Calculate final position
-    const finalPosition = dragStartIndexRef.current + dragOffset
-    const normalizedIndex =
-      ((finalPosition % slides.length) + slides.length) % slides.length
-
-    setIndex(Math.floor(normalizedIndex))
-    setProgress(normalizedIndex - Math.floor(normalizedIndex))
-
-    // Reset drag state
-    setIsDragging(false)
-    setDragOffset(0)
-
-    // Reset accumulator for smooth animation
-    accumRef.current = normalizedIndex - Math.floor(normalizedIndex)
-  }
-
-  const handleMouseLeave = () => {
-    if (!isDragging) return
-    handleMouseUp()
   }
 
   // Add global mouse events for better drag experience
@@ -136,6 +104,7 @@ export default function ImageSlider() {
 
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const deltaX = e.clientX - dragStartX
+      dragDistanceRef.current = Math.abs(deltaX) // Update drag distance
       const pxPerSlot = window.innerWidth / cardsPerView
       const offsetInSlots = -deltaX / pxPerSlot
 
@@ -212,6 +181,7 @@ export default function ImageSlider() {
               hover={img.hover}
               link={img.link}
               isDragging={isDragging}
+              dragDistance={dragDistanceRef.current}
             />
           </div>
         ))}
@@ -228,23 +198,29 @@ function CarouselImage({
   hover,
   link,
   isDragging,
+  dragDistance,
 }: {
   normal: string
   hover: string
   link: string
   isDragging: boolean
+  dragDistance: number
 }) {
+  const handleClick = (e: React.MouseEvent) => {
+    // Only prevent if it was an actual drag (not just a click)
+    if (isDragging || dragDistance > 5) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    // Otherwise, it's a normal click and the link will open
+  }
+
   return (
     <Link
       href={link}
       target='_blank'
       className='group relative block w-full h-full'
-      onClick={(e) => {
-        if (isDragging) {
-          e.preventDefault()
-          e.stopPropagation()
-        }
-      }}
+      onClick={handleClick}
       draggable={false}
     >
       <Image
