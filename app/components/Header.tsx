@@ -1,7 +1,7 @@
 const Header = () => {
   return (
-    <header className='mt-15 lg:mt-20 px-12 lg:px-14'>
-      <h1 className='text-black font-bold text-2xl md:text-4xl lg:text-5xl xl:text-6xl'>
+    <header className='component-container'>
+      <h1 className='text-black font-bold text-[44px] md:text-[115px]'>
         Escuela online de <br className='hidden md:block' /> Arquitectura y
         Diseño.
       </h1>

@@ -1,4 +1,4 @@
-import { Header, ImageSlider } from './components'
+import { Header, ImageSlider, TextCounterVideo } from './components'
 
 export default function Home() {
   return (
@@ -6,6 +6,7 @@ export default function Home() {
       <main className='min-h-screen w-full bg-white'>
         <Header />
         <ImageSlider />
+        <TextCounterVideo />
       </main>
     </div>
   )
