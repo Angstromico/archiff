@@ -1,6 +1,6 @@
 const TextContainer = () => {
   return (
-    <p className='mb-3.5 md:mb-8 text-justify text-[20px] lg:text-[40px]'>
+    <p className='mb-7 md:mb-16 text-justify text-[20px] lg:text-[40px]'>
       <strong>
         Archiff es la escuela online que conecta la arquitectura y el diseño con
         la educación y la innovación.
