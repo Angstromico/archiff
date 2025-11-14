@@ -1,4 +1,4 @@
-import Header from './header'
-import ImageSlider from './slider'
+import Header from './Header'
+import ImageSlider from './Slider/Slider'
 
 export { Header, ImageSlider }
