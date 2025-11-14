@@ -1,10 +1,11 @@
-import Header from './components/header'
+import { Header, ImageSlider } from './components'
 
 export default function Home() {
   return (
-    <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
+    <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black w-full'>
       <main className='min-h-screen w-full bg-white'>
         <Header />
+        <ImageSlider />
       </main>
     </div>
   )
