@@ -1,4 +1,4 @@
-import { Header, ImageSlider, TextCounterVideo } from './components'
+import { Header, ImageSlider, Masters, TextCounterVideo } from './components'
 
 export default function Home() {
   return (
@@ -7,6 +7,7 @@ export default function Home() {
         <Header />
         <ImageSlider />
         <TextCounterVideo />
+        <Masters />
       </main>
     </div>
   )
