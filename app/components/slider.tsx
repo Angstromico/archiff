@@ -32,6 +32,10 @@ export default function ImageSlider() {
   const [progress, setProgress] = useState(0)
   const rafRef = useRef<number | null>(null)
   const accumRef = useRef(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStartX, setDragStartX] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const dragRef = useRef(0)
 
   // ---- Resize handler (runs **after** hydration) ----
   useEffect(() => {
@@ -47,6 +51,8 @@ export default function ImageSlider() {
   const speed = 0.1
 
   useEffect(() => {
+    if (isDragging) return
+
     let last = performance.now()
 
     const loop = (now: number) => {
@@ -75,7 +81,7 @@ export default function ImageSlider() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [cardsPerView, slides.length])
+  }, [cardsPerView, slides.length, isDragging])
 
   // --------------------------------------------------------------
   // 4. Render – SSR & client always render the same width
@@ -89,7 +95,8 @@ export default function ImageSlider() {
 
   // Translate **only** by the current index * slot width
   const slotWidthPercent = 100 / visibleCount
-  const translateX = -(index * slotWidthPercent + progress * slotWidthPercent)
+  const translateX =
+    -(index * slotWidthPercent + progress * slotWidthPercent) + dragOffset * 40
 
   return (
     <div className='relative w-full overflow-hidden mt-32'>
@@ -104,17 +111,43 @@ export default function ImageSlider() {
           transform: `translateX(${translateX}%)`,
           transition: 'none',
         }}
+        onMouseDown={(e) => {
+          setIsDragging(true)
+          setDragStartX(e.clientX)
+          dragRef.current = index + progress // estado actual del slider
+        }}
+        onMouseMove={(e) => {
+          if (!isDragging) return
+          const delta = (e.clientX - dragStartX) / 200 // sensibilidad
+          setDragOffset(delta)
+        }}
+        onMouseUp={() => {
+          if (!isDragging) return
+          setIsDragging(false)
+
+          // Aplicar el offset al índice final
+          const newIndex = dragRef.current - dragOffset
+          setIndex(((newIndex % slides.length) + slides.length) % slides.length)
+          setDragOffset(0)
+        }}
+        onMouseLeave={() => {
+          setIsDragging(false)
+          setDragOffset(0)
+        }}
       >
         {infiniteSlides.map((img, i) => (
           <div
             key={i}
-            className='shrink-0'
             style={{ width: slotWidth, height: 'auto' }}
+            className={`shrink-0 transition-transform duration-200 ${
+              isDragging ? 'scale-90' : 'scale-100'
+            }`}
           >
             <CarouselImage
               normal={img.normal}
               hover={img.hover}
               link={img.link}
+              isDragging={isDragging}
             />
           </div>
         ))}
@@ -130,16 +163,24 @@ function CarouselImage({
   normal,
   hover,
   link,
+  isDragging,
 }: {
   normal: string
   hover: string
   link: string
+  isDragging: boolean
 }) {
   return (
     <Link
       href={link}
       target='_blank'
       className='group relative block w-full h-full'
+      onClick={(e) => {
+        if (isDragging) {
+          e.preventDefault() // no abrir el link si arrastró
+          e.stopPropagation()
+        }
+      }}
     >
       <Image
         src={normal}
