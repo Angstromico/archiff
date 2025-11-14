@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export default function ImageSlider() {
   // --------------------------------------------------------------
-  // 1. Slides (use .webp if you have them)
+  // 1. Slides
   // --------------------------------------------------------------
   const totalImages = 26
   const slides = Array.from({ length: totalImages / 2 }, (_, i) => ({
@@ -26,27 +26,27 @@ export default function ImageSlider() {
     return 2
   }
 
-  // Start with a **SSR-safe** value (2) – never change it on mount
   const [cardsPerView, setCardsPerView] = useState(2)
   const [index, setIndex] = useState(0)
   const [progress, setProgress] = useState(0)
-  const rafRef = useRef<number | null>(null)
-  const accumRef = useRef(0)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
+
+  const rafRef = useRef<number | null>(null)
+  const accumRef = useRef(0)
   const dragRef = useRef(0)
 
-  // ---- Resize handler (runs **after** hydration) ----
+  // ---- Resize handler ----
   useEffect(() => {
     const onResize = () => setCardsPerView(getCardsPerView())
-    onResize() // initial call (client only)
+    onResize()
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
   // --------------------------------------------------------------
-  // 3. Continuous smooth scroll (requestAnimationFrame)
+  // 3. Continuous smooth scroll
   // --------------------------------------------------------------
   const speed = 0.1
 
@@ -56,22 +56,16 @@ export default function ImageSlider() {
     let last = performance.now()
 
     const loop = (now: number) => {
-      const delta = (now - last) / 1000 // seconds
+      const delta = (now - last) / 1000
       last = now
 
-      // Accumulate progress (0 to 1 per slot)
       accumRef.current += delta * speed
+      const fullSlots = Math.floor(accumRef.current)
+      const fractional = accumRef.current - fullSlots
 
-      const slotProgress = accumRef.current
-      const fullSlots = Math.floor(slotProgress)
-      const fractional = slotProgress - fullSlots
-
-      // Update index for looping
       setIndex((i) => (i + fullSlots) % slides.length)
-      // Update smooth progress
       setProgress(fractional)
 
-      // Reset accumulator
       accumRef.current = fractional
 
       rafRef.current = requestAnimationFrame(loop)
@@ -84,19 +78,14 @@ export default function ImageSlider() {
   }, [cardsPerView, slides.length, isDragging])
 
   // --------------------------------------------------------------
-  // 4. Render – SSR & client always render the same width
+  // 4. Render
   // --------------------------------------------------------------
-  // `visibleCount` is 2 on the server, then the real value on client
   const visibleCount = typeof window === 'undefined' ? 2 : cardsPerView
   const slotWidth = `${100 / visibleCount}%`
-
-  // Duplicate for infinite loop
+  const slotWidthPercent = 100 / visibleCount
   const infiniteSlides = [...slides, ...slides]
 
-  // Translate **only** by the current index * slot width
-  const slotWidthPercent = 100 / visibleCount
-  const translateX =
-    -(index * slotWidthPercent + progress * slotWidthPercent) + dragOffset * 40
+  const translateX = -(index + progress + dragOffset) * slotWidthPercent
 
   return (
     <div className='relative w-full overflow-hidden mt-32'>
@@ -110,27 +99,31 @@ export default function ImageSlider() {
         style={{
           transform: `translateX(${translateX}%)`,
           transition: 'none',
+          cursor: isDragging ? 'grabbing' : 'grab',
         }}
         onMouseDown={(e) => {
           setIsDragging(true)
           setDragStartX(e.clientX)
-          dragRef.current = index + progress // estado actual del slider
+          dragRef.current = index + progress
         }}
         onMouseMove={(e) => {
           if (!isDragging) return
-          const delta = (e.clientX - dragStartX) / 200 // sensibilidad
-          setDragOffset(delta)
+          const deltaX = e.clientX - dragStartX
+          const pxPerSlot = window.innerWidth / visibleCount
+          const offsetIndex = deltaX / pxPerSlot
+          setDragOffset(offsetIndex)
         }}
         onMouseUp={() => {
           if (!isDragging) return
-          setIsDragging(false)
-
-          // Aplicar el offset al índice final
           const newIndex = dragRef.current - dragOffset
           setIndex(((newIndex % slides.length) + slides.length) % slides.length)
+          setIsDragging(false)
           setDragOffset(0)
         }}
         onMouseLeave={() => {
+          if (!isDragging) return
+          const newIndex = dragRef.current - dragOffset
+          setIndex(((newIndex % slides.length) + slides.length) % slides.length)
           setIsDragging(false)
           setDragOffset(0)
         }}
@@ -157,7 +150,7 @@ export default function ImageSlider() {
 }
 
 // -----------------------------------------------------------------
-// Hover-fade image (unchanged)
+// Hover-fade image
 // -----------------------------------------------------------------
 function CarouselImage({
   normal,
@@ -177,7 +170,7 @@ function CarouselImage({
       className='group relative block w-full h-full'
       onClick={(e) => {
         if (isDragging) {
-          e.preventDefault() // no abrir el link si arrastró
+          e.preventDefault()
           e.stopPropagation()
         }
       }}
@@ -189,7 +182,6 @@ function CarouselImage({
         height={0}
         className='w-full h-auto object-cover transition-opacity duration-500 group-hover:opacity-0 static'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
-        priority={false}
       />
       <Image
         src={hover}
