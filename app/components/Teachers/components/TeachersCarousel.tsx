@@ -173,10 +173,10 @@ const TeachersCarousel = () => {
   const translateX = -currentIndex * (100 / cardsPerView) + currentTranslate
 
   return (
-    <section className='relative w-full overflow-hidden'>
+    <section className='relative w-full overflow-hidden border-x-2'>
       {/* Fade gradients */}
-      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10' />
-      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10' />
 
       {/* Left Arrow */}
       <button
