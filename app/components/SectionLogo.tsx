@@ -5,20 +5,13 @@ interface IProps {
   shadow: string
   sizes: { width: number; tinyWidth: number; height: number }
   alt?: string
-  noContainer?: boolean
 }
 
-const SectionLogo = ({
-  image,
-  shadow,
-  sizes,
-  alt = '',
-  noContainer = false,
-}: IProps) => {
+const SectionLogo = ({ image, shadow, sizes, alt = '' }: IProps) => {
   const { width, tinyWidth, height } = sizes
 
   return (
-    <div className={` ${noContainer ? 'no-top' : ''} component-container'`}>
+    <div className='component-container'>
       <div
         className='relative inline-block mb-4 md:mb-14'
         style={{ '--tiny': `${tinyWidth}px` } as React.CSSProperties}
