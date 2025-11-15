@@ -37,4 +37,7 @@ body {
     padding-left: 3.5rem; /* lg:px-14 */
     padding-right: 3.5rem; /* lg:px-14 */
   }
+  .component-container.no-top {
+    margin-top: 0;
+  }
 }
