@@ -24,9 +24,10 @@ const TeachersCarousel = () => {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [currentTranslate, setCurrentTranslate] = useState(0)
-  const [dragDistance, setDragDistance] = useState(0)
   const trackRef = useRef<HTMLDivElement>(null)
   const animationRef = useRef<number>(0)
+  const dragDistanceRef = useRef(0) // Usamos useRef para mantener el valor entre renders
+  const hasDraggedRef = useRef(false) // Nueva referencia para trackear si hubo drag
 
   // Responsive cards per view
   const getCardsPerView = () => {
@@ -104,7 +105,9 @@ const TeachersCarousel = () => {
     setIsDragging(true)
     setStartX(e.clientX)
     setCurrentTranslate(0)
-    setDragDistance(0)
+    dragDistanceRef.current = 0
+    hasDraggedRef.current = false // Resetear al inicio del drag
+
     if (trackRef.current) {
       trackRef.current.style.transition = 'none'
     }
@@ -117,7 +120,12 @@ const TeachersCarousel = () => {
     if (!isDragging) return
 
     const deltaX = e.clientX - startX
-    setDragDistance(Math.abs(deltaX))
+    dragDistanceRef.current = Math.abs(deltaX)
+
+    // Marcar que hubo drag si se movió más de 5px
+    if (dragDistanceRef.current > 5) {
+      hasDraggedRef.current = true
+    }
 
     // Calcular el desplazamiento en porcentaje del viewport
     const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
@@ -156,7 +164,6 @@ const TeachersCarousel = () => {
     // Reset
     setIsDragging(false)
     setCurrentTranslate(0)
-    setDragDistance(0)
 
     if (trackRef.current) {
       trackRef.current.style.transition = 'transform 0.4s ease-out'
@@ -204,7 +211,7 @@ const TeachersCarousel = () => {
       {/* Track */}
       <div
         ref={trackRef}
-        className='flex select-none' // Agregado select-none para prevenir selección de texto
+        className='flex select-none'
         style={{
           transform: `translateX(${translateX}%)`,
           transition: isDragging ? 'none' : 'transform 0.4s ease-out',
@@ -214,7 +221,7 @@ const TeachersCarousel = () => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        onDragStart={(e) => e.preventDefault()} // Prevenir drag nativo
+        onDragStart={(e) => e.preventDefault()}
       >
         {infiniteCards.map((card, i) => (
           <div
@@ -225,7 +232,7 @@ const TeachersCarousel = () => {
             <TeacherCard
               {...card}
               image={getAdjustedIndex(i) + 1}
-              dragDistance={dragDistance}
+              hasDraggedRef={hasDraggedRef}
               isDragging={isDragging}
             />
           </div>
@@ -240,34 +247,35 @@ const TeacherCard = ({
   name,
   type,
   image,
-  dragDistance,
+  hasDraggedRef,
   isDragging,
 }: {
   name: string
   type: string
   image: number
-  dragDistance: number
+  hasDraggedRef: React.MutableRefObject<boolean>
   isDragging: boolean
 }) => {
   const handleClick = (e: React.MouseEvent) => {
-    // Solo prevenir si fue un arrastre significativo O si estamos arrastrando actualmente
-    if (dragDistance > 10 || isDragging) {
+    // Solo prevenir si hubo un arrastre significativo O si estamos arrastrando actualmente
+    if (hasDraggedRef.current || isDragging) {
       e.preventDefault()
       e.stopPropagation()
     }
+
+    // Resetear la referencia después de procesar el click
+    hasDraggedRef.current = false
   }
 
   return (
     <div className='h-full'>
-      {' '}
-      {/* Contenedor adicional para el arrastre */}
       <Link
         className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full'
         href='https://www.google.com'
         target='_blank'
         onClick={handleClick}
         draggable={false}
-        onDragStart={(e) => e.preventDefault()} // Prevenir drag nativo del Link
+        onDragStart={(e) => e.preventDefault()}
       >
         <Image
           src={`/teachers/${image}.png`}
