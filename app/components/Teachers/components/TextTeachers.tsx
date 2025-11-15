@@ -4,8 +4,7 @@ const TextTeachers = () => {
   return (
     <div className='flex flex-col gap-3 lg:flex-row lg:justify-between relative'>
       <SectionLogo
-        image='/teachers/teachers.png'
-        shadow='/teachers/shadow.png'
+        image='/intros/Profesores.svg'
         sizes={{ width: 382, tinyWidth: 219, height: 70 }}
         alt='Profesores'
       />

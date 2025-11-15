@@ -5,8 +5,7 @@ const Masters = () => {
   return (
     <section className='mt-4 md:mb-14'>
       <SectionLogo
-        image='/masters/masters-black.png'
-        shadow='/masters/shadow.png'
+        image='/intros/Masters.svg'
         sizes={{ width: 289, tinyWidth: 165, height: 70 }}
         alt={'Masters'}
       />
