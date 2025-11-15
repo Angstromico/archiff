@@ -146,7 +146,7 @@ const TeachersCarousel = () => {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
-        {[...cardsInfo, ...cardsInfo].map((card, i) => (
+        {[...cardsInfo].map((card, i) => (
           <div
             key={i}
             className='shrink-0'
