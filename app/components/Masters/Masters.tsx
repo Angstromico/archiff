@@ -7,6 +7,8 @@ const Masters = () => {
       <SectionLogo
         image='/masters/masters-black.png'
         shadow='/masters/shadow.png'
+        sizes={{ width: 289, tinyWidth: 165, height: 70 }}
+        alt={'Masters'}
       />
       <MastersList />
     </section>

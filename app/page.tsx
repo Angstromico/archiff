@@ -1,4 +1,10 @@
-import { Header, ImageSlider, Masters, TextCounterVideo } from './components'
+import {
+  Header,
+  ImageSlider,
+  Masters,
+  Teachers,
+  TextCounterVideo,
+} from './components'
 
 export default function Home() {
   return (
@@ -8,6 +14,7 @@ export default function Home() {
         <ImageSlider />
         <TextCounterVideo />
         <Masters />
+        <Teachers />
       </main>
     </div>
   )
