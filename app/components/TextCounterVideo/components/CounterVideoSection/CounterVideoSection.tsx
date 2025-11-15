@@ -38,11 +38,14 @@ const CounterVideoSection = () => {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12'>
       {/* ---------- COUNTER SECTION ---------- */}
-      <div ref={counterRef} className='border-t-[3px] border-black py-4'>
+      <div
+        ref={counterRef}
+        className='border-t-2 md:border-t-3 border-black py-4'
+      >
         {data.map((item, i) => (
           <div
             key={i}
-            className='flex justify-between mb-4 last:mb-0 border-b-[3px] border-black'
+            className='flex justify-between mb-4 last:mb-0 border-b-2 md:border-b-3 border-black'
           >
             <div className='text-[#2222C2] text-6xl lg:text-[96px]'>
               {isVisible ? (
