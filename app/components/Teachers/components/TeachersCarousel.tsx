@@ -9,7 +9,7 @@ const cardsInfo = [
   { name: 'Eduardo Tazón y Antonio Mora', type: 'STUDIO.NOJU' },
   { name: 'Marcos Parera', type: 'Mesura' },
   { name: 'Juan Ranchal', type: 'Janfri & Ranchal Studio' },
-  { name: 'ikér Ochotorena', type: 'OOAA Arquitectura' },
+  { name: 'Ikér Ochotorena', type: 'OOAA Arquitectura' },
   { name: 'Sigfrido Serra', type: 'Sigfrido Serra Studio' },
   { name: 'Alberto Eltini', type: 'El Departamento' },
   { name: 'Ángela Montagud y Jordi Iranzo', type: 'Clap Studio' },
@@ -20,11 +20,11 @@ const cardsInfo = [
 ]
 
 const TeachersCarousel = () => {
-  const [index, setIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
-  const [pointerId, setPointerId] = useState<number | null>(null)
+  const [currentX, setCurrentX] = useState(0)
+  const [dragDistance, setDragDistance] = useState(0)
   const trackRef = useRef<HTMLDivElement>(null)
 
   // Responsive cards per view
@@ -46,53 +46,107 @@ const TeachersCarousel = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Infinite carousel logic
   const totalCards = cardsInfo.length
-  const maxIndex = totalCards - cardsPerView
+  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo] // Triple for smooth infinite
+
+  // Calculate the middle section for infinite loop
+  const getAdjustedIndex = (index: number) => {
+    return ((index % totalCards) + totalCards) % totalCards
+  }
 
   // Arrow navigation
   const goPrev = () => {
-    setIndex((i) => Math.max(0, i - 1))
-    setDragOffset(0)
+    setCurrentIndex((prev) => {
+      const newIndex = prev - 1
+      if (newIndex < 0) {
+        // Jump to the middle section smoothly
+        setTimeout(() => {
+          setCurrentIndex(totalCards - 1)
+        }, 50)
+        return newIndex
+      }
+      return newIndex
+    })
   }
 
   const goNext = () => {
-    setIndex((i) => Math.min(maxIndex, i + 1))
-    setDragOffset(0)
+    setCurrentIndex((prev) => {
+      const newIndex = prev + 1
+      if (newIndex >= totalCards) {
+        // Jump to the middle section smoothly
+        setTimeout(() => {
+          setCurrentIndex(0)
+        }, 50)
+        return newIndex
+      }
+      return newIndex
+    })
   }
 
-  // Drag handling
+  // Drag handling - FIXED
   const handlePointerDown = (e: React.PointerEvent) => {
     setIsDragging(true)
     setStartX(e.clientX)
-    setPointerId(e.pointerId)
-    trackRef.current?.setPointerCapture(e.pointerId)
+    setCurrentX(e.clientX)
+    setDragDistance(0)
+    if (trackRef.current) {
+      trackRef.current.style.transition = 'none'
+    }
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || pointerId === null) return
-    const delta = e.clientX - startX
-    const containerWidth = trackRef.current?.offsetWidth || 1
-    const offsetInSlots = delta / (containerWidth / cardsPerView)
-    setDragOffset(offsetInSlots)
+    if (!isDragging) return
+
+    const deltaX = e.clientX - startX
+    setCurrentX(e.clientX)
+    setDragDistance(Math.abs(deltaX))
+
+    // Update transform in real-time during drag
+    if (trackRef.current) {
+      const translateX =
+        -currentIndex * (100 / cardsPerView) +
+        deltaX / (trackRef.current.offsetWidth / cardsPerView)
+      trackRef.current.style.transform = `translateX(${translateX}%)`
+    }
   }
 
   const handlePointerUp = () => {
-    if (!isDragging || pointerId === null || !trackRef.current) return
+    if (!isDragging) return
+
+    const deltaX = currentX - startX
+    const dragThreshold = 50 // pixels threshold to change slide
+
+    if (Math.abs(deltaX) > dragThreshold) {
+      if (deltaX > 0) {
+        // Drag right - go previous
+        goPrev()
+      } else {
+        // Drag left - go next
+        goNext()
+      }
+    } else {
+      // Return to current position
+      if (trackRef.current) {
+        trackRef.current.style.transition = 'transform 0.4s ease-out'
+        trackRef.current.style.transform = `translateX(${
+          -currentIndex * (100 / cardsPerView)
+        }%)`
+      }
+    }
+
     setIsDragging(false)
-    trackRef.current.releasePointerCapture(pointerId)
-    setPointerId(null)
-
-    const threshold = 0.3
-    let newIndex = index
-    if (dragOffset > threshold) newIndex = Math.max(0, index - 1)
-    else if (dragOffset < -threshold) newIndex = Math.min(maxIndex, index + 1)
-    else newIndex = index
-
-    setIndex(newIndex)
-    setDragOffset(0)
+    setDragDistance(0)
   }
 
-  const translateX = -(index + dragOffset) * (100 / cardsPerView)
+  // Reset transition after drag
+  useEffect(() => {
+    if (!isDragging && trackRef.current) {
+      trackRef.current.style.transition = 'transform 0.4s ease-out'
+    }
+  }, [isDragging])
+
+  const translateX = -currentIndex * (100 / cardsPerView)
 
   return (
     <section className='relative w-full overflow-hidden'>
@@ -103,8 +157,7 @@ const TeachersCarousel = () => {
       {/* Left Arrow */}
       <button
         onClick={goPrev}
-        disabled={index === 0}
-        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 disabled:opacity-30'
+        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
         aria-label='Previous'
       >
         <Image
@@ -119,8 +172,7 @@ const TeachersCarousel = () => {
       {/* Right Arrow */}
       <button
         onClick={goNext}
-        disabled={index >= maxIndex}
-        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 disabled:opacity-30 cursor-pointer'
+        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity cursor-pointer'
         aria-label='Next'
       >
         <Image
@@ -138,21 +190,25 @@ const TeachersCarousel = () => {
         className='flex'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: isDragging ? 'none' : 'transform 0.4s ease-out',
+          transition: 'transform 0.4s ease-out',
           cursor: isDragging ? 'grabbing' : 'grab',
         }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
+        onPointerLeave={handlePointerUp}
       >
-        {[...cardsInfo].map((card, i) => (
+        {infiniteCards.map((card, i) => (
           <div
             key={i}
             className='shrink-0'
             style={{ width: `${100 / cardsPerView}%` }}
           >
-            <TeacherCard {...card} image={i + 1} />
+            <TeacherCard
+              {...card}
+              image={getAdjustedIndex(i) + 1}
+              dragDistance={dragDistance}
+            />
           </div>
         ))}
       </div>
@@ -160,31 +216,44 @@ const TeachersCarousel = () => {
   )
 }
 
-// Teacher Card Component
+// Teacher Card Component - FIXED click handling
 const TeacherCard = ({
   name,
   type,
   image,
+  dragDistance,
 }: {
   name: string
   type: string
   image: number
+  dragDistance: number
 }) => {
+  const handleClick = (e: React.MouseEvent) => {
+    // Only prevent if it was a significant drag
+    if (dragDistance > 10) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    // Otherwise, it's a normal click and the link will open
+  }
+
   return (
     <Link
       className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block'
       href='https://www.google.com'
       target='_blank'
+      onClick={handleClick}
     >
       <Image
         src={`/teachers/${image}.png`}
         alt={name}
         width={443}
         height={296}
-        className='w-full h-auto object-cover block'
+        className='w-full h-auto object-cover block pointer-events-none'
         style={{
           maxWidth: '100%',
         }}
+        draggable={false}
       />
       <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-[100px] lg:h-[150px]'>
         <h3 className='font-bold text-2xl lg:text-4xl leading-tight'>{name}</h3>
