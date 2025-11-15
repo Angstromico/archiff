@@ -96,8 +96,11 @@ const TeachersCarousel = () => {
     return () => cancelAnimationFrame(animationRef.current)
   }, [currentIndex, currentTranslate, cardsPerView])
 
-  // Drag handling - CORREGIDO
+  // Drag handling - MEJORADO
   const handlePointerDown = (e: React.PointerEvent) => {
+    // Solo capturar el evento si es el botón principal del mouse
+    if (e.button !== 0) return
+
     setIsDragging(true)
     setStartX(e.clientX)
     setCurrentTranslate(0)
@@ -105,6 +108,9 @@ const TeachersCarousel = () => {
     if (trackRef.current) {
       trackRef.current.style.transition = 'none'
     }
+
+    // Prevenir selección de texto durante el arrastre
+    e.preventDefault()
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -198,7 +204,7 @@ const TeachersCarousel = () => {
       {/* Track */}
       <div
         ref={trackRef}
-        className='flex'
+        className='flex select-none' // Agregado select-none para prevenir selección de texto
         style={{
           transform: `translateX(${translateX}%)`,
           transition: isDragging ? 'none' : 'transform 0.4s ease-out',
@@ -208,6 +214,7 @@ const TeachersCarousel = () => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
+        onDragStart={(e) => e.preventDefault()} // Prevenir drag nativo
       >
         {infiniteCards.map((card, i) => (
           <div
@@ -228,7 +235,7 @@ const TeachersCarousel = () => {
   )
 }
 
-// Teacher Card Component - MEJORADO el manejo de clicks
+// Teacher Card Component - MEJORADO para prevenir interferencia de eventos
 const TeacherCard = ({
   name,
   type,
@@ -251,28 +258,37 @@ const TeacherCard = ({
   }
 
   return (
-    <Link
-      className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block'
-      href='https://www.google.com'
-      target='_blank'
-      onClick={handleClick}
-    >
-      <Image
-        src={`/teachers/${image}.png`}
-        alt={name}
-        width={443}
-        height={296}
-        className='w-full h-auto object-cover block pointer-events-none'
-        style={{
-          maxWidth: '100%',
-        }}
+    <div className='h-full'>
+      {' '}
+      {/* Contenedor adicional para el arrastre */}
+      <Link
+        className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full'
+        href='https://www.google.com'
+        target='_blank'
+        onClick={handleClick}
         draggable={false}
-      />
-      <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-[100px] lg:h-[150px]'>
-        <h3 className='font-bold text-2xl lg:text-4xl leading-tight'>{name}</h3>
-        <p className='text-xl lg:text-2xl mt-1'>{type}</p>
-      </div>
-    </Link>
+        onDragStart={(e) => e.preventDefault()} // Prevenir drag nativo del Link
+      >
+        <Image
+          src={`/teachers/${image}.png`}
+          alt={name}
+          width={443}
+          height={296}
+          className='w-full h-auto object-cover block pointer-events-none select-none'
+          style={{
+            maxWidth: '100%',
+          }}
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
+        />
+        <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-[100px] lg:h-[150px] select-none'>
+          <h3 className='font-bold text-2xl lg:text-4xl leading-tight pointer-events-none'>
+            {name}
+          </h3>
+          <p className='text-xl lg:text-2xl mt-1 pointer-events-none'>{type}</p>
+        </div>
+      </Link>
+    </div>
   )
 }
 
