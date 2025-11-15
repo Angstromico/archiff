@@ -23,9 +23,10 @@ const TeachersCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
-  const [currentX, setCurrentX] = useState(0)
+  const [currentTranslate, setCurrentTranslate] = useState(0)
   const [dragDistance, setDragDistance] = useState(0)
   const trackRef = useRef<HTMLDivElement>(null)
+  const animationRef = useRef<number>(0)
 
   // Responsive cards per view
   const getCardsPerView = () => {
@@ -46,9 +47,8 @@ const TeachersCarousel = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Infinite carousel logic
   const totalCards = cardsInfo.length
-  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo] // Triple for smooth infinite
+  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo]
 
   // Calculate the middle section for infinite loop
   const getAdjustedIndex = (index: number) => {
@@ -60,7 +60,6 @@ const TeachersCarousel = () => {
     setCurrentIndex((prev) => {
       const newIndex = prev - 1
       if (newIndex < 0) {
-        // Jump to the middle section smoothly
         setTimeout(() => {
           setCurrentIndex(totalCards - 1)
         }, 50)
@@ -74,7 +73,6 @@ const TeachersCarousel = () => {
     setCurrentIndex((prev) => {
       const newIndex = prev + 1
       if (newIndex >= totalCards) {
-        // Jump to the middle section smoothly
         setTimeout(() => {
           setCurrentIndex(0)
         }, 50)
@@ -84,11 +82,25 @@ const TeachersCarousel = () => {
     })
   }
 
-  // Drag handling - FIXED
+  // Smooth animation for drag
+  const animate = () => {
+    if (trackRef.current) {
+      const translateX = -currentIndex * (100 / cardsPerView) + currentTranslate
+      trackRef.current.style.transform = `translateX(${translateX}%)`
+    }
+    animationRef.current = requestAnimationFrame(animate)
+  }
+
+  useEffect(() => {
+    animationRef.current = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(animationRef.current)
+  }, [currentIndex, currentTranslate, cardsPerView])
+
+  // Drag handling - CORREGIDO
   const handlePointerDown = (e: React.PointerEvent) => {
     setIsDragging(true)
     setStartX(e.clientX)
-    setCurrentX(e.clientX)
+    setCurrentTranslate(0)
     setDragDistance(0)
     if (trackRef.current) {
       trackRef.current.style.transition = 'none'
@@ -99,54 +111,53 @@ const TeachersCarousel = () => {
     if (!isDragging) return
 
     const deltaX = e.clientX - startX
-    setCurrentX(e.clientX)
     setDragDistance(Math.abs(deltaX))
 
-    // Update transform in real-time during drag
-    if (trackRef.current) {
-      const translateX =
-        -currentIndex * (100 / cardsPerView) +
-        deltaX / (trackRef.current.offsetWidth / cardsPerView)
-      trackRef.current.style.transform = `translateX(${translateX}%)`
-    }
+    // Calcular el desplazamiento en porcentaje del viewport
+    const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
+    const translatePercent = (deltaX / containerWidth) * 100
+
+    setCurrentTranslate(translatePercent)
   }
 
   const handlePointerUp = () => {
     if (!isDragging) return
 
-    const deltaX = currentX - startX
-    const dragThreshold = 50 // pixels threshold to change slide
+    const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
+    const slideWidthPercent = 100 / cardsPerView
+    const dragOffsetSlides = currentTranslate / slideWidthPercent
 
-    if (Math.abs(deltaX) > dragThreshold) {
-      if (deltaX > 0) {
+    let newIndex = currentIndex
+    if (Math.abs(dragOffsetSlides) > 0.3) {
+      if (dragOffsetSlides > 0) {
         // Drag right - go previous
-        goPrev()
+        newIndex = currentIndex - 1
       } else {
         // Drag left - go next
-        goNext()
-      }
-    } else {
-      // Return to current position
-      if (trackRef.current) {
-        trackRef.current.style.transition = 'transform 0.4s ease-out'
-        trackRef.current.style.transform = `translateX(${
-          -currentIndex * (100 / cardsPerView)
-        }%)`
+        newIndex = currentIndex + 1
       }
     }
 
-    setIsDragging(false)
-    setDragDistance(0)
-  }
+    // Aplicar límites y lógica infinita
+    if (newIndex < 0) {
+      setCurrentIndex(totalCards - 1)
+    } else if (newIndex >= totalCards) {
+      setCurrentIndex(0)
+    } else {
+      setCurrentIndex(newIndex)
+    }
 
-  // Reset transition after drag
-  useEffect(() => {
-    if (!isDragging && trackRef.current) {
+    // Reset
+    setIsDragging(false)
+    setCurrentTranslate(0)
+    setDragDistance(0)
+
+    if (trackRef.current) {
       trackRef.current.style.transition = 'transform 0.4s ease-out'
     }
-  }, [isDragging])
+  }
 
-  const translateX = -currentIndex * (100 / cardsPerView)
+  const translateX = -currentIndex * (100 / cardsPerView) + currentTranslate
 
   return (
     <section className='relative w-full overflow-hidden'>
@@ -190,7 +201,7 @@ const TeachersCarousel = () => {
         className='flex'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: 'transform 0.4s ease-out',
+          transition: isDragging ? 'none' : 'transform 0.4s ease-out',
           cursor: isDragging ? 'grabbing' : 'grab',
         }}
         onPointerDown={handlePointerDown}
@@ -208,6 +219,7 @@ const TeachersCarousel = () => {
               {...card}
               image={getAdjustedIndex(i) + 1}
               dragDistance={dragDistance}
+              isDragging={isDragging}
             />
           </div>
         ))}
@@ -216,25 +228,26 @@ const TeachersCarousel = () => {
   )
 }
 
-// Teacher Card Component - FIXED click handling
+// Teacher Card Component - MEJORADO el manejo de clicks
 const TeacherCard = ({
   name,
   type,
   image,
   dragDistance,
+  isDragging,
 }: {
   name: string
   type: string
   image: number
   dragDistance: number
+  isDragging: boolean
 }) => {
   const handleClick = (e: React.MouseEvent) => {
-    // Only prevent if it was a significant drag
-    if (dragDistance > 10) {
+    // Solo prevenir si fue un arrastre significativo O si estamos arrastrando actualmente
+    if (dragDistance > 10 || isDragging) {
       e.preventDefault()
       e.stopPropagation()
     }
-    // Otherwise, it's a normal click and the link will open
   }
 
   return (
