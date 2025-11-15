@@ -4,6 +4,7 @@ import {
   Masters,
   Teachers,
   TextCounterVideo,
+  VideoBanner,
 } from './components'
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
         <TextCounterVideo />
         <Masters />
         <Teachers />
+        <VideoBanner />
       </main>
     </div>
   )

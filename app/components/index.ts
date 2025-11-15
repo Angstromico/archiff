@@ -3,5 +3,6 @@ import ImageSlider from './Slider/Slider'
 import Masters from './Masters/Masters'
 import Teachers from './Teachers/Teachers'
 import TextCounterVideo from './TextCounterVideo/TextCounterVideo'
+import VideoBanner from './VideoBanner'
 
-export { Header, ImageSlider, Masters, Teachers, TextCounterVideo }
+export { Header, ImageSlider, Masters, Teachers, TextCounterVideo, VideoBanner }
