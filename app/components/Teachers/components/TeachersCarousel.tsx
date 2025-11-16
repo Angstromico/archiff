@@ -20,15 +20,21 @@ const cardsInfo = [
 ]
 
 const TeachersCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const totalCards = cardsInfo.length
+  // Start in the middle copy for seamless loop: totalCards (12)
+  const [currentIndex, setCurrentIndex] = useState(totalCards)
+
+  // Drag state
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [currentTranslate, setCurrentTranslate] = useState(0)
+
+  // Refs
   const trackRef = useRef<HTMLDivElement>(null)
   const animationRef = useRef<number>(0)
-  const dragDistanceRef = useRef(0)
   const hasDraggedRef = useRef(false)
-  const startIndexRef = useRef(0)
+  const startIndexRef = useRef(totalCards) // Tracks index at drag start
+  const isTransitioningRef = useRef(false) // Blocks interaction during the jump
 
   // Responsive cards per view
   const getCardsPerView = () => {
@@ -49,46 +55,71 @@ const TeachersCarousel = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const totalCards = cardsInfo.length
+  // Create a larger array for seamless infinite scrolling (3 copies)
+  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo]
 
-  // Create infinite array with enough duplicates for smooth looping
-  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo, ...cardsInfo]
-
-  // Calculate the visual index for infinite loop
+  // Get original index for image source
   const getVisualIndex = (index: number) => {
     return ((index % totalCards) + totalCards) % totalCards
   }
 
-  // Arrow navigation with smooth infinite loop
+  // Improved arrow navigation with seamless looping
   const goPrev = () => {
+    if (isTransitioningRef.current || isDragging) return
+
     setCurrentIndex((prev) => {
       const newIndex = prev - 1
-      // If we go below 0, jump to the equivalent position in the duplicated section
-      if (newIndex < 0) {
-        return newIndex + totalCards
+
+      // If moving into the first copy (index < totalCards)
+      if (newIndex < totalCards) {
+        isTransitioningRef.current = true
+
+        // Start the visual transition to newIndex
+        // After transition, immediately jump to the equivalent slide in the middle copy
+        setTimeout(() => {
+          setCurrentIndex(newIndex + totalCards) // Jump without transition
+          isTransitioningRef.current = false
+        }, 400) // Match transition duration
+
+        return newIndex
       }
       return newIndex
     })
   }
 
   const goNext = () => {
+    if (isTransitioningRef.current || isDragging) return
+
     setCurrentIndex((prev) => {
       const newIndex = prev + 1
-      // If we go beyond original length, jump to the equivalent position in the duplicated section
-      if (newIndex >= totalCards) {
-        return newIndex - totalCards
+
+      // If moving into the third copy (index >= totalCards * 2)
+      if (newIndex >= totalCards * 2) {
+        isTransitioningRef.current = true
+
+        // Start the visual transition to newIndex
+        // After transition, immediately jump to the equivalent slide in the middle copy
+        setTimeout(() => {
+          setCurrentIndex(newIndex - totalCards) // Jump without transition
+          isTransitioningRef.current = false
+        }, 400) // Match transition duration
+
+        return newIndex
       }
       return newIndex
     })
   }
 
-  // Smooth animation for drag
+  // Animation Frame for smooth drag
   useEffect(() => {
+    let lastTranslate = currentTranslate
+
     const animate = () => {
-      if (trackRef.current) {
+      if (trackRef.current && lastTranslate !== currentTranslate) {
         const slideWidthPercent = 100 / cardsPerView
         const translateX = -currentIndex * slideWidthPercent + currentTranslate
         trackRef.current.style.transform = `translateX(${translateX}%)`
+        lastTranslate = currentTranslate
       }
       animationRef.current = requestAnimationFrame(animate)
     }
@@ -97,30 +128,30 @@ const TeachersCarousel = () => {
     return () => cancelAnimationFrame(animationRef.current)
   }, [currentIndex, currentTranslate, cardsPerView])
 
-  // Improved drag handling
+  // Drag handlers
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0) return
+    if (e.button !== 0 || isTransitioningRef.current) return
 
     setIsDragging(true)
     setStartX(e.clientX)
     setCurrentTranslate(0)
-    dragDistanceRef.current = 0
     hasDraggedRef.current = false
     startIndexRef.current = currentIndex
 
     if (trackRef.current) {
+      // Disable transition for immediate drag
       trackRef.current.style.transition = 'none'
     }
     e.preventDefault()
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return
+    if (!isDragging || isTransitioningRef.current) return
 
     const deltaX = e.clientX - startX
-    dragDistanceRef.current = Math.abs(deltaX)
+    const dragDistance = Math.abs(deltaX)
 
-    if (dragDistanceRef.current > 5) {
+    if (dragDistance > 5) {
       hasDraggedRef.current = true
     }
 
@@ -129,69 +160,89 @@ const TeachersCarousel = () => {
     const slideWidthPixels = containerWidth / cardsPerView
     const slidesMoved = deltaX / slideWidthPixels
 
-    // Apply resistance for smoother feeling
-    const resistance = 0.6 // Lower = more resistance
-    const resistedSlidesMoved = slidesMoved * resistance
-
-    // Convert to percentage for translation
-    const translatePercent = resistedSlidesMoved * (100 / cardsPerView)
+    // Convert to percentage for translation with resistance
+    const resistance = 0.5 // Adjust resistance for feel
+    const translatePercent = slidesMoved * (100 / cardsPerView) * resistance
 
     setCurrentTranslate(translatePercent)
   }
 
   const handlePointerUp = () => {
-    if (!isDragging) return
+    if (!isDragging || isTransitioningRef.current) return
 
-    const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
-    const slideWidthPixels = containerWidth / cardsPerView
-    const deltaX = dragDistanceRef.current * (currentTranslate > 0 ? 1 : -1)
-    const slidesMoved = deltaX / slideWidthPixels
+    const finalTranslate = currentTranslate
 
-    // Calculate new index based on drag distance
+    // Determine the number of slides to move based on translation amount
+    const slideWidthPercent = 100 / cardsPerView
+    // Negative translate means user dragged right (slides moved left)
+    const slidesMoved = -finalTranslate / slideWidthPercent
+
+    // Snap to the nearest whole slide
     let slidesToMove = Math.round(slidesMoved)
 
-    // Apply momentum - allow moving multiple cards based on drag speed
-    const dragSpeed = Math.abs(slidesMoved)
-    if (dragSpeed > 0.8) {
-      slidesToMove = Math.round(slidesMoved * 1.2) // Add momentum
+    // Apply momentum: if drag was fast enough, ensure at least one slide moves
+    if (Math.abs(slidesMoved) > 0.3 && slidesToMove === 0) {
+      slidesToMove = slidesMoved > 0 ? 1 : -1
     }
 
-    let newIndex = startIndexRef.current - slidesToMove
+    const targetIndex = startIndexRef.current + slidesToMove
 
-    // Infinite loop logic - wrap around seamlessly
-    if (newIndex < 0) {
-      newIndex = totalCards + (newIndex % totalCards)
-    } else if (newIndex >= totalCards) {
-      newIndex = newIndex % totalCards
+    // --- Seamless Infinite Jump Logic (After snap) ---
+    let newIndex = targetIndex
+
+    // If resulting index is in the first copy
+    if (newIndex < totalCards) {
+      newIndex += totalCards
+      isTransitioningRef.current = true
+
+      // After the snap transition completes, reset the index to the middle copy
+      setTimeout(() => {
+        setCurrentIndex(newIndex)
+        isTransitioningRef.current = false
+      }, 400)
+
+      // If resulting index is in the third copy
+    } else if (newIndex >= totalCards * 2) {
+      newIndex -= totalCards
+      isTransitioningRef.current = true
+
+      // After the snap transition completes, reset the index to the middle copy
+      setTimeout(() => {
+        setCurrentIndex(newIndex)
+        isTransitioningRef.current = false
+      }, 400)
     }
 
-    // Ensure index is within bounds
-    newIndex = ((newIndex % totalCards) + totalCards) % totalCards
+    // Set the index to start the snap/transition
+    setCurrentIndex(targetIndex)
 
-    setCurrentIndex(newIndex)
+    // Reset drag state
     setIsDragging(false)
     setCurrentTranslate(0)
-    dragDistanceRef.current = 0
 
     if (trackRef.current) {
+      // Re-enable transition for the final snap
       trackRef.current.style.transition = 'transform 0.4s ease-out'
     }
   }
 
   const slideWidthPercent = 100 / cardsPerView
+
+  // Final translateX calculation
   const translateX = -currentIndex * slideWidthPercent + currentTranslate
 
   return (
     <section className='relative w-full overflow-hidden border-x-2'>
       {/* Fade gradients */}
-      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10' />
-      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10' />
 
       {/* Left Arrow */}
       <button
         onClick={goPrev}
-        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
+        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity disabled:opacity-30'
         aria-label='Previous'
+        disabled={isTransitioningRef.current || isDragging}
       >
         <Image
           src='/teachers/left-arrow.png'
@@ -205,8 +256,9 @@ const TeachersCarousel = () => {
       {/* Right Arrow */}
       <button
         onClick={goNext}
-        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity cursor-pointer'
+        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity cursor-pointer disabled:opacity-30'
         aria-label='Next'
+        disabled={isTransitioningRef.current || isDragging}
       >
         <Image
           src='/teachers/right-arrow.png'
@@ -223,7 +275,10 @@ const TeachersCarousel = () => {
         className='flex select-none'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: isDragging ? 'none' : 'transform 0.4s ease-out',
+          transition:
+            isDragging || isTransitioningRef.current
+              ? 'none'
+              : 'transform 0.4s ease-out',
           cursor: isDragging ? 'grabbing' : 'grab',
         }}
         onPointerDown={handlePointerDown}
