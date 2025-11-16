@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -15,20 +17,17 @@ const TeacherCard = ({
   isDragging: boolean
 }) => {
   const handleClick = (e: React.MouseEvent) => {
-    // Solo prevenir si hubo un arrastre significativo O si estamos arrastrando actualmente
     if (hasDraggedRef.current || isDragging) {
       e.preventDefault()
       e.stopPropagation()
     }
-
-    // Resetear la referencia después de procesar el click
     hasDraggedRef.current = false
   }
 
   return (
     <div className='h-full'>
       <Link
-        className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full'
+        className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full group hover:bg-gray-50 transition-colors duration-200'
         href='https://www.google.com'
         target='_blank'
         onClick={handleClick}
@@ -40,7 +39,7 @@ const TeacherCard = ({
           alt={name}
           width={443}
           height={296}
-          className='w-full h-auto object-cover block pointer-events-none select-none'
+          className='w-full h-auto object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200'
           style={{
             maxWidth: '100%',
           }}
@@ -48,7 +47,7 @@ const TeacherCard = ({
           onDragStart={(e) => e.preventDefault()}
         />
         <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-[100px] lg:h-[150px] select-none'>
-          <h3 className='font-bold text-2xl lg:text-4xl leading-tight pointer-events-none'>
+          <h3 className='font-bold text-2xl lg:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
             {name}
           </h3>
           <p className='text-xl lg:text-2xl mt-1 pointer-events-none'>{type}</p>
