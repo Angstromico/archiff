@@ -26,8 +26,9 @@ const TeachersCarousel = () => {
   const [currentTranslate, setCurrentTranslate] = useState(0)
   const trackRef = useRef<HTMLDivElement>(null)
   const animationRef = useRef<number>(0)
-  const dragDistanceRef = useRef(0) // Usamos useRef para mantener el valor entre renders
-  const hasDraggedRef = useRef(false) // Nueva referencia para trackear si hubo drag
+  const dragDistanceRef = useRef(0)
+  const hasDraggedRef = useRef(false)
+  const startIndexRef = useRef(0)
 
   // Responsive cards per view
   const getCardsPerView = () => {
@@ -49,22 +50,22 @@ const TeachersCarousel = () => {
   }, [])
 
   const totalCards = cardsInfo.length
-  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo]
 
-  // Calculate the middle section for infinite loop
-  const getAdjustedIndex = (index: number) => {
+  // Create infinite array with enough duplicates for smooth looping
+  const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo, ...cardsInfo]
+
+  // Calculate the visual index for infinite loop
+  const getVisualIndex = (index: number) => {
     return ((index % totalCards) + totalCards) % totalCards
   }
 
-  // Arrow navigation
+  // Arrow navigation with smooth infinite loop
   const goPrev = () => {
     setCurrentIndex((prev) => {
       const newIndex = prev - 1
+      // If we go below 0, jump to the equivalent position in the duplicated section
       if (newIndex < 0) {
-        setTimeout(() => {
-          setCurrentIndex(totalCards - 1)
-        }, 50)
-        return newIndex
+        return newIndex + totalCards
       }
       return newIndex
     })
@@ -73,22 +74,20 @@ const TeachersCarousel = () => {
   const goNext = () => {
     setCurrentIndex((prev) => {
       const newIndex = prev + 1
+      // If we go beyond original length, jump to the equivalent position in the duplicated section
       if (newIndex >= totalCards) {
-        setTimeout(() => {
-          setCurrentIndex(0)
-        }, 50)
-        return newIndex
+        return newIndex - totalCards
       }
       return newIndex
     })
   }
 
+  // Smooth animation for drag
   useEffect(() => {
-    // Smooth animation for drag
     const animate = () => {
       if (trackRef.current) {
-        const translateX =
-          -currentIndex * (100 / cardsPerView) + currentTranslate
+        const slideWidthPercent = 100 / cardsPerView
+        const translateX = -currentIndex * slideWidthPercent + currentTranslate
         trackRef.current.style.transform = `translateX(${translateX}%)`
       }
       animationRef.current = requestAnimationFrame(animate)
@@ -98,22 +97,20 @@ const TeachersCarousel = () => {
     return () => cancelAnimationFrame(animationRef.current)
   }, [currentIndex, currentTranslate, cardsPerView])
 
-  // Drag handling - MEJORADO
+  // Improved drag handling
   const handlePointerDown = (e: React.PointerEvent) => {
-    // Solo capturar el evento si es el botón principal del mouse
     if (e.button !== 0) return
 
     setIsDragging(true)
     setStartX(e.clientX)
     setCurrentTranslate(0)
     dragDistanceRef.current = 0
-    hasDraggedRef.current = false // Resetear al inicio del drag
+    hasDraggedRef.current = false
+    startIndexRef.current = currentIndex
 
     if (trackRef.current) {
       trackRef.current.style.transition = 'none'
     }
-
-    // Prevenir selección de texto durante el arrastre
     e.preventDefault()
   }
 
@@ -123,14 +120,21 @@ const TeachersCarousel = () => {
     const deltaX = e.clientX - startX
     dragDistanceRef.current = Math.abs(deltaX)
 
-    // Marcar que hubo drag si se movió más de 5px
     if (dragDistanceRef.current > 5) {
       hasDraggedRef.current = true
     }
 
-    // Calcular el desplazamiento en porcentaje del viewport
+    // Calculate drag distance in terms of slides
     const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
-    const translatePercent = (deltaX / containerWidth) * 100
+    const slideWidthPixels = containerWidth / cardsPerView
+    const slidesMoved = deltaX / slideWidthPixels
+
+    // Apply resistance for smoother feeling
+    const resistance = 0.6 // Lower = more resistance
+    const resistedSlidesMoved = slidesMoved * resistance
+
+    // Convert to percentage for translation
+    const translatePercent = resistedSlidesMoved * (100 / cardsPerView)
 
     setCurrentTranslate(translatePercent)
   }
@@ -138,45 +142,50 @@ const TeachersCarousel = () => {
   const handlePointerUp = () => {
     if (!isDragging) return
 
-    const slideWidthPercent = 100 / cardsPerView
-    const dragOffsetSlides = currentTranslate / slideWidthPercent
+    const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
+    const slideWidthPixels = containerWidth / cardsPerView
+    const deltaX = dragDistanceRef.current * (currentTranslate > 0 ? 1 : -1)
+    const slidesMoved = deltaX / slideWidthPixels
 
-    let newIndex = currentIndex
-    if (Math.abs(dragOffsetSlides) > 0.3) {
-      if (dragOffsetSlides > 0) {
-        // Drag right - go previous
-        newIndex = currentIndex - 1
-      } else {
-        // Drag left - go next
-        newIndex = currentIndex + 1
-      }
+    // Calculate new index based on drag distance
+    let slidesToMove = Math.round(slidesMoved)
+
+    // Apply momentum - allow moving multiple cards based on drag speed
+    const dragSpeed = Math.abs(slidesMoved)
+    if (dragSpeed > 0.8) {
+      slidesToMove = Math.round(slidesMoved * 1.2) // Add momentum
     }
 
-    // Aplicar límites y lógica infinita
+    let newIndex = startIndexRef.current - slidesToMove
+
+    // Infinite loop logic - wrap around seamlessly
     if (newIndex < 0) {
-      setCurrentIndex(totalCards - 1)
+      newIndex = totalCards + (newIndex % totalCards)
     } else if (newIndex >= totalCards) {
-      setCurrentIndex(0)
-    } else {
-      setCurrentIndex(newIndex)
+      newIndex = newIndex % totalCards
     }
 
-    // Reset
+    // Ensure index is within bounds
+    newIndex = ((newIndex % totalCards) + totalCards) % totalCards
+
+    setCurrentIndex(newIndex)
     setIsDragging(false)
     setCurrentTranslate(0)
+    dragDistanceRef.current = 0
 
     if (trackRef.current) {
       trackRef.current.style.transition = 'transform 0.4s ease-out'
     }
   }
 
-  const translateX = -currentIndex * (100 / cardsPerView) + currentTranslate
+  const slideWidthPercent = 100 / cardsPerView
+  const translateX = -currentIndex * slideWidthPercent + currentTranslate
 
   return (
     <section className='relative w-full overflow-hidden border-x-2'>
       {/* Fade gradients */}
-      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10' />
-      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10' />
+      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10' />
 
       {/* Left Arrow */}
       <button
@@ -231,7 +240,7 @@ const TeachersCarousel = () => {
           >
             <TeacherCard
               {...card}
-              image={getAdjustedIndex(i) + 1}
+              image={getVisualIndex(i) + 1}
               hasDraggedRef={hasDraggedRef}
               isDragging={isDragging}
             />
