@@ -2,7 +2,7 @@
 
 import SectionLogo from '../SectionLogo'
 import useScreenSize from '@/app/hooks/useScreenSize'
-import { ExpectationsText } from './components'
+import { ExpectationsBtns, ExpectationsText } from './components'
 
 const ExpectationsMessage = () => {
   // Use the hook to determine if the screen is large (e.g., >= 1024px for lg)
@@ -23,6 +23,7 @@ const ExpectationsMessage = () => {
       />
       <div className='px-4 lg:px-14'>
         <ExpectationsText />
+        <ExpectationsBtns />
       </div>
     </section>
   )

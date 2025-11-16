@@ -1,3 +1,4 @@
+import ExpectationsBtns from './ExpectationsBtns'
 import ExpectationsText from './ExpectationsText'
 
-export { ExpectationsText }
+export { ExpectationsBtns, ExpectationsText }
