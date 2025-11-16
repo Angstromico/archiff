@@ -23,6 +23,7 @@ const VimeoVideoPlayer = ({ counterRef }: VimeoVideoPlayerProps) => {
       controls: false,
       loop: true,
       responsive: true,
+      autopause: false,
     })
 
     observerRef.current = new IntersectionObserver(

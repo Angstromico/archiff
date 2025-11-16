@@ -3,9 +3,12 @@
 import { useEffect, useRef } from 'react'
 import Player from '@vimeo/player'
 
-const VideoBanner = () => {
+const VideoBanner = ({ videoCode }: { videoCode?: string }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const playerRef = useRef<Player | null>(null)
+
+  const defaultVideo = videoCode || '1098179983'
+  const link = `https://player.vimeo.com/video/${defaultVideo}?autoplay=1&loop=1&muted=100&background=1&controls=0`
 
   useEffect(() => {
     if (!iframeRef.current) return
@@ -24,6 +27,7 @@ const VideoBanner = () => {
       title: false,
       byline: false,
       portrait: false,
+      autopause: false,
     })
 
     // Prevenir que el video se pause al hacer scroll
@@ -49,7 +53,7 @@ const VideoBanner = () => {
       <div className='relative w-full h-[117px] lg:h-[654px] mx-auto'>
         <iframe
           ref={iframeRef}
-          src='https://player.vimeo.com/video/823111497?autoplay=1&loop=1&muted=100&background=1&controls=0'
+          src={link}
           className='absolute top-1/2 left-1/2'
           style={{
             width: '100vw',
