@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
+import FadeGradients from '../../FadeGradients'
 import TeacherCard from './TeacherCard'
 
 const cardsInfo = [
@@ -134,8 +135,7 @@ const TeachersCarousel = () => {
 
   return (
     <section className='relative w-full overflow-hidden border-x-2'>
-      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10' />
-      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10' />
+      <FadeGradients />
 
       <button
         onClick={goPrev}

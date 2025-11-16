@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import FadeGradients from '../FadeGradients'
 import CarouselImage from './components/CarruselImage'
 
 export default function ImageSlider() {
@@ -152,8 +153,7 @@ export default function ImageSlider() {
   return (
     <section className='relative w-full overflow-hidden mt-32'>
       {/* Fade gradients */}
-      <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10' />
-      <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10' />
+      <FadeGradients />
 
       {/* Track */}
       <div
