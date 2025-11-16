@@ -4,15 +4,25 @@ interface IProps {
   image: string
   sizes: { width: number; tinyWidth: number; height: number }
   alt?: string
+  lessBottom?: boolean
 }
 
-const SectionLogo = ({ image, sizes, alt = '' }: IProps) => {
+const SectionLogo = ({
+  image,
+  sizes,
+  alt = '',
+  lessBottom = false,
+}: IProps) => {
   const { width, tinyWidth, height } = sizes
+
+  const innerStyle = `relative inline-block ${
+    lessBottom ? 'lg:mb-4' : 'mb-4 md:mb-14'
+  }`
 
   return (
     <div className='component-container'>
       <div
-        className='relative inline-block mb-4 md:mb-14'
+        className={innerStyle}
         style={
           {
             '--tiny': `${tinyWidth}px`,
