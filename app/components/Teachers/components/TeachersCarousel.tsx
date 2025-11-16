@@ -21,20 +21,18 @@ const cardsInfo = [
 
 const TeachersCarousel = () => {
   const totalCards = cardsInfo.length
-  // Start in the middle copy for seamless loop
   const [currentIndex, setCurrentIndex] = useState(totalCards)
 
-  // Drag state
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [currentTranslate, setCurrentTranslate] = useState(0)
-  const [dragDistance, setDragDistance] = useState(0)
 
-  // Refs
   const trackRef = useRef<HTMLDivElement>(null)
+  const animationRef = useRef<number>(0)
   const hasDraggedRef = useRef(false)
+  const startIndexRef = useRef(totalCards)
+  const isTransitioningRef = useRef(false)
 
-  // Responsive cards per view
   const getCardsPerView = () => {
     if (typeof window === 'undefined') return 1
     const w = window.innerWidth
@@ -53,182 +51,125 @@ const TeachersCarousel = () => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Create a larger array for seamless infinite scrolling (3 copies)
   const infiniteCards = [...cardsInfo, ...cardsInfo, ...cardsInfo]
 
-  // Get original index for image source
-  const getVisualIndex = (index: number) => {
-    return ((index % totalCards) + totalCards) % totalCards
+  const getVisualIndex = (index: number) =>
+    ((index % totalCards) + totalCards) % totalCards
+
+  // --- NEW: Normalize index to always stay in middle copy ---
+  const normalizeIndex = (index: number) => {
+    if (index < totalCards) return index + totalCards
+    if (index >= totalCards * 2) return index - totalCards
+    return index
   }
 
-  // Handle looping when animation completes
-  useEffect(() => {
-    if (isDragging) return
-
-    // If we're in the first copy, jump to middle copy
-    if (currentIndex < totalCards) {
-      const timer = setTimeout(() => {
-        if (trackRef.current) {
-          trackRef.current.style.transition = 'none'
-          setCurrentIndex(currentIndex + totalCards)
-          // Force reflow
-          trackRef.current.offsetHeight
-          requestAnimationFrame(() => {
-            if (trackRef.current) {
-              trackRef.current.style.transition = 'transform 0.4s ease-out'
-            }
-          })
-        }
-      }, 450) // Slightly after transition ends
-      return () => clearTimeout(timer)
-    }
-
-    // If we're in the third copy, jump to middle copy
-    if (currentIndex >= totalCards * 2) {
-      const timer = setTimeout(() => {
-        if (trackRef.current) {
-          trackRef.current.style.transition = 'none'
-          setCurrentIndex(currentIndex - totalCards)
-          // Force reflow
-          trackRef.current.offsetHeight
-          requestAnimationFrame(() => {
-            if (trackRef.current) {
-              trackRef.current.style.transition = 'transform 0.4s ease-out'
-            }
-          })
-        }
-      }, 450)
-      return () => clearTimeout(timer)
-    }
-  }, [currentIndex, isDragging, totalCards])
-
-  // Arrow navigation
   const goPrev = () => {
-    if (isDragging) return
-    setCurrentIndex((prev) => prev - 1)
+    if (isTransitioningRef.current || isDragging) return
+    setCurrentIndex((prev) => normalizeIndex(prev - 1))
   }
 
   const goNext = () => {
-    if (isDragging) return
-    setCurrentIndex((prev) => prev + 1)
+    if (isTransitioningRef.current || isDragging) return
+    setCurrentIndex((prev) => normalizeIndex(prev + 1))
   }
 
-  // Drag handlers
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0) return
+  useEffect(() => {
+    let lastTranslate = currentTranslate
+    const animate = () => {
+      if (trackRef.current && lastTranslate !== currentTranslate) {
+        const slideWidthPercent = 100 / cardsPerView
+        const translateX = -currentIndex * slideWidthPercent + currentTranslate
+        trackRef.current.style.transform = `translateX(${translateX}%)`
+        lastTranslate = currentTranslate
+      }
+      animationRef.current = requestAnimationFrame(animate)
+    }
+    animationRef.current = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(animationRef.current)
+  }, [currentIndex, currentTranslate, cardsPerView])
 
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.button !== 0 || isTransitioningRef.current) return
     setIsDragging(true)
     setStartX(e.clientX)
     setCurrentTranslate(0)
-    setDragDistance(0)
     hasDraggedRef.current = false
-
+    startIndexRef.current = currentIndex
+    if (trackRef.current) trackRef.current.style.transition = 'none'
     e.preventDefault()
   }
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging) return
-
+    if (!isDragging || isTransitioningRef.current) return
     const deltaX = e.clientX - startX
-    const absDelta = Math.abs(deltaX)
-
-    setDragDistance(absDelta)
-
-    if (absDelta > 5) {
-      hasDraggedRef.current = true
-    }
-
-    // Calculate drag offset as percentage
+    if (Math.abs(deltaX) > 5) hasDraggedRef.current = true
     const containerWidth = trackRef.current?.offsetWidth || window.innerWidth
-    const translatePercent = (deltaX / containerWidth) * 100
-
+    const slideWidthPixels = containerWidth / cardsPerView
+    const slidesMoved = deltaX / slideWidthPixels
+    const resistance = 0.5
+    const translatePercent = slidesMoved * (100 / cardsPerView) * resistance
     setCurrentTranslate(translatePercent)
   }
 
   const handlePointerUp = () => {
-    if (!isDragging) return
-
+    if (!isDragging || isTransitioningRef.current) return
+    const finalTranslate = currentTranslate
     const slideWidthPercent = 100 / cardsPerView
-    const slidesMoved = currentTranslate / slideWidthPercent
-
-    let newIndex = currentIndex
-
-    // Determine if we should snap to next/prev slide
-    if (Math.abs(slidesMoved) > 0.3) {
-      if (slidesMoved > 0) {
-        // Dragged right -> go previous
-        newIndex = currentIndex - Math.ceil(Math.abs(slidesMoved))
-      } else {
-        // Dragged left -> go next
-        newIndex = currentIndex + Math.ceil(Math.abs(slidesMoved))
-      }
+    const slidesMoved = -finalTranslate / slideWidthPercent
+    let slidesToMove = Math.round(slidesMoved)
+    if (Math.abs(slidesMoved) > 0.3 && slidesToMove === 0) {
+      slidesToMove = slidesMoved > 0 ? 1 : -1
     }
-
-    setCurrentIndex(newIndex)
+    const targetIndex = startIndexRef.current + slidesToMove
+    setCurrentIndex(normalizeIndex(targetIndex))
     setIsDragging(false)
     setCurrentTranslate(0)
-
-    // Reset drag flag after a short delay to allow click detection
-    setTimeout(() => {
-      hasDraggedRef.current = false
-      setDragDistance(0)
-    }, 100)
+    if (trackRef.current) {
+      trackRef.current.style.transition = 'transform 0.4s ease-out'
+    }
   }
 
   const slideWidthPercent = 100 / cardsPerView
   const translateX = -currentIndex * slideWidthPercent + currentTranslate
 
   return (
-    <section className='relative w-full overflow-hidden'>
-      {/* Fade gradients */}
+    <section className='relative w-full overflow-hidden border-x-2'>
       <div className='pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white to-transparent z-10' />
       <div className='pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent z-10' />
 
-      {/* Left Arrow */}
       <button
         onClick={goPrev}
-        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
+        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity disabled:opacity-30'
         aria-label='Previous'
+        disabled={isTransitioningRef.current || isDragging}
       >
-        <Image
-          src='/teachers/left-arrow.png'
-          alt=''
-          width={68}
-          height={50}
-          className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px] cursor-pointer'
-        />
+        <Image src='/teachers/left-arrow.png' alt='' width={68} height={50} />
       </button>
 
-      {/* Right Arrow */}
       <button
         onClick={goNext}
-        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity cursor-pointer'
+        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity disabled:opacity-30'
         aria-label='Next'
+        disabled={isTransitioningRef.current || isDragging}
       >
-        <Image
-          src='/teachers/right-arrow.png'
-          alt=''
-          width={68}
-          height={50}
-          className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
-        />
+        <Image src='/teachers/right-arrow.png' alt='' width={68} height={50} />
       </button>
 
-      {/* Track */}
       <div
         ref={trackRef}
         className='flex select-none'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: isDragging ? 'none' : 'transform 0.4s ease-out',
+          transition:
+            isDragging || isTransitioningRef.current
+              ? 'none'
+              : 'transform 0.4s ease-out',
           cursor: isDragging ? 'grabbing' : 'grab',
-          touchAction: 'pan-y',
         }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        onPointerCancel={handlePointerUp}
         onDragStart={(e) => e.preventDefault()}
       >
         {infiniteCards.map((card, i) => (
@@ -240,8 +181,8 @@ const TeachersCarousel = () => {
             <TeacherCard
               {...card}
               image={getVisualIndex(i) + 1}
-              dragDistance={dragDistance}
               hasDraggedRef={hasDraggedRef}
+              isDragging={isDragging}
             />
           </div>
         ))}

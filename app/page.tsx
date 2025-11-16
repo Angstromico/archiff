@@ -1,4 +1,5 @@
 import {
+  ExpectationsMessage,
   Header,
   ImageSlider,
   Masters,
@@ -17,6 +18,7 @@ export default function Home() {
         <Masters />
         <Teachers />
         <VideoBanner />
+        <ExpectationsMessage />
       </main>
     </div>
   )
