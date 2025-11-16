@@ -1,5 +1,6 @@
 import {
   ExpectationsMessage,
+  Formations,
   Header,
   ImageSlider,
   Masters,
@@ -19,6 +20,7 @@ export default function Home() {
         <Teachers />
         <VideoBanner />
         <ExpectationsMessage />
+        <Formations />
       </main>
     </div>
   )
