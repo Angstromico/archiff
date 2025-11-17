@@ -1,3 +1,4 @@
+import AdvertisingVideo from './AdvertisingVideo'
 import ExpectationsMessage from './ExpectationsMessage/ExpectationsMessage'
 import Formations from './Formations/Formations'
 import Header from './Header'
@@ -8,6 +9,7 @@ import TextCounterVideo from './TextCounterVideo/TextCounterVideo'
 import VideoBanner from './VideoBanner'
 
 export {
+  AdvertisingVideo,
   ExpectationsMessage,
   Formations,
   Header,

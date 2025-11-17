@@ -1,4 +1,5 @@
 import {
+  AdvertisingVideo,
   ExpectationsMessage,
   Formations,
   Header,
@@ -21,6 +22,7 @@ export default function Home() {
         <VideoBanner />
         <ExpectationsMessage />
         <Formations />
+        <AdvertisingVideo />
       </main>
     </div>
   )
