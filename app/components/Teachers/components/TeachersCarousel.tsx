@@ -2,23 +2,11 @@
 
 import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
+import { teachersData } from '@/app/data/CarruselData'
 import FadeGradients from '../../FadeGradients'
 import TeacherCard from './TeacherCard'
 
-const cardsInfo = [
-  { name: 'Ramón Esteve', type: 'Ramón Esteve Estudio' },
-  { name: 'Eduardo Tazón y Antonio Mora', type: 'STUDIO.NOJU' },
-  { name: 'Marcos Parera', type: 'Mesura' },
-  { name: 'Juan Ranchal', type: 'Janfri & Ranchal Studio' },
-  { name: 'Ikér Ochotorena', type: 'OOAA Arquitectura' },
-  { name: 'Sigfrido Serra', type: 'Sigfrido Serra Studio' },
-  { name: 'Alberto Eltini', type: 'El Departamento' },
-  { name: 'Ángela Montagud y Jordi Iranzo', type: 'Clap Studio' },
-  { name: 'Francesc Rifé', type: 'Francesc Rifé Studio' },
-  { name: 'Enric Pastor', type: 'Fundador y editor de MANERA EDICIONES' },
-  { name: 'Albert Gil', type: 'CEO de Batlle i Roig' },
-  { name: 'Hernani Fernández', type: 'Fundador de Arqueha' },
-]
+const cardsInfo = teachersData
 
 const TeachersCarousel = () => {
   const totalCards = cardsInfo.length
