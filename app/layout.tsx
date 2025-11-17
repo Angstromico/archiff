@@ -9,19 +9,6 @@ const arimo = Arimo({
   variable: '--font-arimo',
 })
 
-¡Claro! Aquí tienes el metadata completo en español, optimizado para SEO y redes sociales, usando tu imagen OG que ya tienes en public/og/home-og.png.
-tsx// app/layout.tsx
-import type { Metadata } from 'next'
-import { Arimo } from 'next/font/google'
-import './globals.css'
-import ScrollReset from './components/ScrollReset'
-
-const arimo = Arimo({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-arimo',
-})
-
 export const metadata: Metadata = {
   // Básicos
   title: '.archiff | Formación de élite para arquitectos e interioristas',
@@ -45,7 +32,7 @@ export const metadata: Metadata = {
       'Aprende de los mejores: Ramón Esteve, Mesura, OOAA, Clap Studio, Francesc Rifé, Sigfrido Serra y más. Cursos online, másters y workshops con acceso de por vida.',
     images: [
       {
-        url: '/og/home-og.png',        // ← tu imagen en public/og/home-og.png
+        url: '/og/home-og.png', // ← tu imagen en public/og/home-og.png
         width: 1200,
         height: 630,
         alt: '.archiff – Formación para arquitectos e interioristas',
@@ -82,6 +69,13 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+
+  // Favicon (si los tienes en /public)
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-32x32.png',
+    apple: '/apple-touch-icon.png',
   },
 }
 
