@@ -5,7 +5,7 @@ import Bubble from './components/Buble'
 
 const CollectSection = () => {
   return (
-    <section className='w-full bg-[#1E2BC7] px-4 lg:px-14 pt-2.5 lg:pt-4 pb-32 xl:pb-16 text-white mb-8 lg:mb-16 relative grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-0'>
+    <section className='w-full bg-[#1E2BC7] px-4 lg:px-14 pt-2.5 lg:pt-4 pb-32 xl:pb-16 text-white mb-8 lg:mb-16 relative grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-0'>
       {/* Left Column */}
       <div>
         <h2 className='font-bold text-[4rem] lg:text-7xl mb-2 lg:mb-3'>
