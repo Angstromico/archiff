@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       'Aprende de los mejores: Ramón Esteve, Mesura, OOAA, Clap Studio, Francesc Rifé, Sigfrido Serra y más. Cursos online, másters y workshops con acceso de por vida.',
     images: [
       {
-        url: '/og/home-og.png', // ← tu imagen en public/og/home-og.png
+        url: 'https://raw.githubusercontent.com/Angstromico/archiff/refs/heads/main/public/og/home-og.png',
         width: 1200,
         height: 630,
         alt: '.archiff – Formación para arquitectos e interioristas',
@@ -46,7 +46,9 @@ export const metadata: Metadata = {
     title: '.archiff | Formación de élite para arquitectos e interioristas',
     description:
       'Cursos y másters impartidos por Ramón Esteve, Mesura, OOAA, Clap Studio, Francesc Rifé y más.',
-    images: ['/og/home-og.png'],
+    images: [
+      'https://raw.githubusercontent.com/Angstromico/archiff/refs/heads/main/public/og/home-og.png',
+    ],
     creator: '@archiff', // Cambia si tienes cuenta
   },
 
