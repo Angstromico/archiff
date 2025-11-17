@@ -57,20 +57,12 @@ const Carousel = <T extends BaseCardProps>({
   useEffect(() => {
     if (!emblaApi) return
 
-    const handleDragStart = () => setIsDragging(true)
-    const handleDragEnd = () => setIsDragging(false)
     const handleSelect = () => (hasDraggedRef.current = true)
 
-    emblaApi
-      .on('dragStart', handleDragStart)
-      .on('dragEnd', handleDragEnd)
-      .on('select', handleSelect)
+    emblaApi.on('select', handleSelect)
 
     return () => {
-      emblaApi
-        .off('dragStart', handleDragStart)
-        .off('dragEnd', handleDragEnd)
-        .off('select', handleSelect)
+      emblaApi.off('select', handleSelect)
     }
   }, [emblaApi])
 
