@@ -52,7 +52,7 @@ const FormationsCard = ({
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
         />
-        <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-74 lg:h-[500px] xl:h-98 2xl:h-[450px] 3xl:h-98 select-none relative'>
+        <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-74 lg:h-[500px] xl:h-[450px] 2xl:h-[450px] 3xl:h-98 select-none relative'>
           <div className='flex justify-between mb-3.5 lg:mb-5'>
             <p className='text-xl'>{hours} Horas</p>
             {label && (
