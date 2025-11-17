@@ -71,3 +71,27 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     price: 50,
   },
 ]
+
+export const FAQSInformation = [
+  {
+    question: '¿Cuándo empiezan y acaban nuestras formaciones?',
+    answer:
+      'En ARCHIFF ofrecemos cursos, másters y workshops con distintas modalidades. Los cursos online comienzan cuando tú lo decidas: son totalmente a tu ritmo y con acceso de por vida al contenido. Los másters cuentan con dos ediciones al año, iniciando en abril o en octubre según el programa, mientras que los workshops se programan en fechas específicas. Te recomendamos consultar la página de cada formación para conocer el calendario exacto.',
+  },
+  {
+    question:
+      '¿Son necesarios conocimientos previos para poder realizar la formación?',
+    answer:
+      'No es necesario tener conocimientos previos para realizar nuestros cursos: están diseñados para avanzar a tu ritmo. En el caso de los másters, recomendamos contar con una base en la materia para aprovechar al máximo la experiencia. Y si tienes dudas, nuestro equipo de atención al alumno puede asesorarte personalmente y ayudarte a elegir la formación más adecuada para ti. Reserva una videollamada aquí.',
+  },
+  {
+    question: '¿Existe la posibilidad de financiarlo?',
+    answer:
+      'Sí, puedes financiar tu formación hasta en 3 meses sin intereses a través de PayPal. Además, nuestro equipo de atención al alumno puede informarte sobre las becas disponibles y ayudarte a encontrar la mejor opción para ti. Consúltalo aquí.',
+  },
+  {
+    question: '¿Necesito alguna app para realizarlas formaciones?',
+    answer:
+      'No. La plataforma de ARCHIFF está diseñada para ser cómoda, sencilla y accesible desde tu ordenador, tablet o móvil, sin necesidad de instalar ninguna aplicación extra. Así, puedes centrarte en lo importante: aprender y avanzar hacia tus objetivos.',
+  },
+]

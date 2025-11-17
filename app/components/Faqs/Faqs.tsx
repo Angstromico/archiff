@@ -1,4 +1,5 @@
 import SectionLogo from '../SectionLogo'
+import QuestionsAndAnswers from './components/QuestionsAndAnswers'
 
 const Faqs = () => {
   return (
@@ -8,6 +9,7 @@ const Faqs = () => {
         alt='Faqs'
         sizes={{ width: 309, height: 109, tinyWidth: 105 }}
       />
+      <QuestionsAndAnswers />
     </section>
   )
 }
