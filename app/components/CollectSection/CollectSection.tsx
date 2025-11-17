@@ -56,7 +56,7 @@ const CollectSection = () => {
 
       {/* Arrow */}
       <Image
-        className='absolute left-6 2xl:left-14 bottom-9 2xl:bottom-20 w-[70px] h-[51px] 2xl:w-[114.37px] 2xl:h-[82.94px]'
+        className='absolute left-6 2xl:left-14 bottom-9 2xl:bottom-20 w-[70px] h-[51px] 2xl:w-[114.37px] 2xl:h-[82.94px] transition-all hover:left-7 2xl:hover:left-16'
         src='/collections/blue-arrow.png'
         alt='Arrow'
         width={114.37}
