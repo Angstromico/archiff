@@ -1,5 +1,7 @@
 import SectionLogo from '../SectionLogo'
-import FormationsCarousel from './components/FormationsCarusel'
+import Carousel from '../Carrusel'
+import { formationsCardsNumbers } from '@/app/data/CarruselData'
+import FormationsCard from './components/FormationsCard'
 
 const Formations = () => {
   return (
@@ -10,7 +12,10 @@ const Formations = () => {
         sizes={{ width: 444, height: 109, tinyWidth: 250 }}
         lessBottom
       />
-      <FormationsCarousel />
+      <Carousel
+        cardsInfo={formationsCardsNumbers}
+        CardComponent={FormationsCard}
+      />
     </section>
   )
 }

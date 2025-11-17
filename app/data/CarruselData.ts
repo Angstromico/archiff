@@ -13,7 +13,7 @@ export const teachersData = [
   { name: 'Hernani Fernández', type: 'Fundador de Arqueha' },
 ]
 
-interface FormationCardProps {
+export interface FormationCardProps {
   hours: number
   label?: string
   title: string

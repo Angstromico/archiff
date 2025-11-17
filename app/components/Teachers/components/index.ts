@@ -1,4 +1,4 @@
-import TeachersCarousel from './TeachersCarousel'
+import TeacherCard from './TeacherCard'
 import TextTeachers from './TextTeachers'
 
-export { TeachersCarousel, TextTeachers }
+export { TeacherCard, TextTeachers }

@@ -1,21 +1,47 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, ReactNode } from 'react'
 import Image from 'next/image'
-import { teachersData } from '@/app/data/CarruselData'
-import FadeGradients from '../../FadeGradients'
-import TeacherCard from './TeacherCard'
+import FadeGradients from './FadeGradients'
+import { FormationCardProps } from '../data/CarruselData'
 
-const cardsInfo = teachersData
+interface BaseCardProps {
+  name: string
+  type: string
+}
 
-const TeachersCarousel = () => {
+export interface FormationCardInfo extends BaseCardProps {
+  hours: number
+  label?: string
+  title: string
+  teacher: string
+  price: number
+}
+
+interface CommonCardProps extends FormationCardInfo {
+  image: number
+  hasDraggedRef: React.MutableRefObject<boolean>
+  isDragging: boolean
+}
+
+interface CarouselProps<T extends BaseCardProps> {
+  cardsInfo: T[] | FormationCardProps[]
+  CardComponent: (props: T & CommonCardProps) => ReactNode
+  useFadeGradients?: boolean
+  borderClass?: string
+}
+
+const Carousel = <T extends { name: string; type: string }>({
+  cardsInfo,
+  CardComponent,
+  useFadeGradients = true,
+  borderClass = '',
+}: CarouselProps<T>) => {
   const totalCards = cardsInfo.length
   const [currentIndex, setCurrentIndex] = useState(totalCards)
-
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [currentTranslate, setCurrentTranslate] = useState(0)
-
   const trackRef = useRef<HTMLDivElement>(null)
   const animationRef = useRef<number>(0)
   const hasDraggedRef = useRef(false)
@@ -45,7 +71,6 @@ const TeachersCarousel = () => {
   const getVisualIndex = (index: number) =>
     ((index % totalCards) + totalCards) % totalCards
 
-  // --- NEW: Normalize index to always stay in middle copy ---
   const normalizeIndex = (index: number) => {
     if (index < totalCards) return index + totalCards
     if (index >= totalCards * 2) return index - totalCards
@@ -122,27 +147,36 @@ const TeachersCarousel = () => {
   const translateX = -currentIndex * slideWidthPercent + currentTranslate
 
   return (
-    <section className='relative w-full overflow-hidden border-x-2'>
-      <FadeGradients />
-
+    <section className={`relative w-full overflow-hidden ${borderClass}`}>
+      {useFadeGradients && <FadeGradients />}
       <button
         onClick={goPrev}
         className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity disabled:opacity-30'
         aria-label='Previous'
         disabled={isTransitioningRef.current || isDragging}
       >
-        <Image src='/teachers/left-arrow.png' alt='' width={68} height={50} />
+        <Image
+          src='/teachers/left-arrow.png'
+          alt=''
+          width={68}
+          height={50}
+          className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
+        />
       </button>
-
       <button
         onClick={goNext}
         className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity disabled:opacity-30'
         aria-label='Next'
         disabled={isTransitioningRef.current || isDragging}
       >
-        <Image src='/teachers/right-arrow.png' alt='' width={68} height={50} />
+        <Image
+          src='/teachers/right-arrow.png'
+          alt=''
+          width={68}
+          height={50}
+          className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
+        />
       </button>
-
       <div
         ref={trackRef}
         className='flex select-none'
@@ -166,7 +200,7 @@ const TeachersCarousel = () => {
             className='shrink-0'
             style={{ width: `${100 / cardsPerView}%` }}
           >
-            <TeacherCard
+            <CardComponent
               {...card}
               image={getVisualIndex(i) + 1}
               hasDraggedRef={hasDraggedRef}
@@ -179,4 +213,4 @@ const TeachersCarousel = () => {
   )
 }
 
-export default TeachersCarousel
+export default Carousel
