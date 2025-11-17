@@ -1,6 +1,7 @@
 import AdvertisingVideo from './AdvertisingVideo'
 import CollectSection from './CollectSection/CollectSection'
 import ExpectationsMessage from './ExpectationsMessage/ExpectationsMessage'
+import Faqs from './Faqs/Faqs'
 import Formations from './Formations/Formations'
 import Header from './Header'
 import ImageSlider from './Slider/Slider'
@@ -13,6 +14,7 @@ export {
   AdvertisingVideo,
   CollectSection,
   ExpectationsMessage,
+  Faqs,
   Formations,
   Header,
   ImageSlider,
