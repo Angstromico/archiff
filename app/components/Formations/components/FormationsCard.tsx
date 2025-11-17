@@ -31,7 +31,7 @@ const FormationsCard = ({
   }
 
   return (
-    <div className='h-full'>
+    <div className='h-full w-full'>
       <Link
         className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full group hover:bg-gray-50 transition-colors duration-200'
         href='https://www.google.com'
@@ -45,7 +45,7 @@ const FormationsCard = ({
           alt={'Formación'}
           width={406}
           height={307}
-          className='w-full h-auto object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 min-h-[262px] lg:min-h-[307px]'
+          className='w-full h-72 lg:h-80 object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 min-h-[262px] lg:min-h-[307px]'
           style={{
             maxWidth: '100%',
           }}

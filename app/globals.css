@@ -31,3 +31,39 @@ body {
     padding-right: 3.5rem; /* lg:px-14 */
   }
 }
+
+/* Embla Carousel base styles */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  min-width: 0;
+
+  /* Estilos responsive - MUY IMPORTANTE */
+  width: 100%; /* 1 slide por defecto en móvil */
+}
+
+/* Responsive breakpoints */
+@media (min-width: 640px) {
+  .embla__slide {
+    width: 50%; /* 2 slides en tablets pequeñas */
+  }
+}
+
+@media (min-width: 768px) {
+  .embla__slide {
+    width: 33.333%; /* 3 slides en tablets */
+  }
+}
+
+@media (min-width: 1280px) {
+  .embla__slide {
+    width: 25%; /* 4 slides en desktop */
+  }
+}
