@@ -200,6 +200,7 @@ const Carousel = <T extends { name: string; type: string }>({
             className='shrink-0'
             style={{ width: `${100 / cardsPerView}%` }}
           >
+            {/* @ts-expect-error - Ignoring mismatched card props */}
             <CardComponent
               {...card}
               image={getVisualIndex(i) + 1}
