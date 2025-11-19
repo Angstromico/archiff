@@ -84,7 +84,7 @@ const MastersList = () => {
                 alt='arrow'
                 width={41}
                 height={30}
-                className='mt-3 transition-transform duration-300 group-hover:translate-x-2'
+                className='mt-3 transition-transform duration-300 group-hover:translate-x-1'
                 loading='lazy'
               />
             </div>
@@ -92,8 +92,8 @@ const MastersList = () => {
 
           {/* Info below (mobile) */}
           <div className='lg:hidden mt-6 px-4'>
-            <p className='text-[#666] text-[14px]'>{item.type}</p>
-            <p className='text-[32px] font-semibold underline-offset-4 hover:underline cursor-pointer transition-all'>
+            <p className='text-[#666] text-sm'>{item.type}</p>
+            <p className='text-3xl underline-offset-4 hover:underline cursor-pointer transition-all'>
               {item.title}
             </p>
           </div>
@@ -101,17 +101,17 @@ const MastersList = () => {
           {/* ─────────────────────────────────────────────
               DESKTOP (lg+)
           ───────────────────────────────────────────── */}
-          <div className='hidden lg:grid grid-cols-3 items-center gap-6 px-6'>
+          <div className='hidden lg:grid grid-cols-3 gap-6 px-6 items-start'>
             {/* LEFT — Fecha */}
             <div>
               <p className='text-[#666] text-[16px] font-medium'>Inicio</p>
-              <p className='text-[30px] font-semibold'>{item.date}</p>
+              <p className='text-3xl'>{item.date}</p>
             </div>
 
             {/* CENTER — Type + Title */}
             <div>
               <p className='text-[#666] text-[16px]'>{item.type}</p>
-              <p className='text-[48px] font-bold hover:underline underline-offset-4 cursor-pointer transition-all'>
+              <p className='text-4xl hover:underline underline-offset-4 cursor-pointer transition-all leading-[110%]'>
                 {item.title}
               </p>
             </div>
@@ -124,11 +124,11 @@ const MastersList = () => {
                 alt='arrow'
                 width={68}
                 height={50}
-                className='transition-transform duration-300 group-hover:translate-x-2'
+                className='transition-transform duration-300 group-hover:translate-x-1'
                 loading='lazy'
               />
               {/* Stacked Hover Images */}
-              <div className='relative w-[296px] h-[144]'>
+              <div className='relative w-[290px] h-[140]'>
                 {[1, 2, 3, 4].map((n) => (
                   <Image
                     key={n}
