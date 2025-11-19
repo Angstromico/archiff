@@ -47,15 +47,17 @@ const CounterVideoSection = () => {
             key={i}
             className='flex justify-between mb-4 last:mb-0 border-b-2 md:border-b-3 border-black'
           >
-            <div className='text-[#2222C2] text-6xl lg:text-[96px]'>
+            <div className='text-[#2222C2] text-6xl lg:text-[6rem] serotiva'>
+              +
               {isVisible ? (
                 <CountUp end={item.number} duration={4} />
               ) : (
                 <span>0</span>
               )}
-              +
             </div>
-            <p className='text-base lg:text-2xl self-center'>{item.text}</p>
+            <p className='text-base lg:text-2xl self-baseline-last mb-2 lg:mb-3'>
+              {item.text}
+            </p>
           </div>
         ))}
       </div>
