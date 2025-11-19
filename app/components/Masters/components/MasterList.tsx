@@ -1,39 +1,32 @@
 'use client'
 
 import Image from 'next/image'
-
-const info = [
-  {
-    date: 'Abr. 26',
-    type: 'Gestión y Estrategia Creativa',
-    title: 'MBA. Máster en Gestión y Diseño de Arquitectura e Interiorismo.',
-  },
-  {
-    date: 'Abr. 26',
-    type: 'Gestión y Estrategia Creativa',
-    title: 'MBAg. Máster en Gestión de Estudios Creativos + IA.',
-  },
-  {
-    date: 'Oct. 26',
-    type: 'Arquitectura e Interiorismo',
-    title: 'MIA. Máster en interiorismo aplicado, prácticas creativas e IA.',
-  },
-  {
-    date: 'Oct. 26',
-    type: 'Arquitectura e Interiorismo',
-    title: 'MAP. Máster de Profesionalizaciónen la Arquitectura',
-  },
-]
+import { mastersListInfo } from '@/app/data/MastersData'
+import { useEffect, useState } from 'react'
 
 const MastersList = () => {
+  const [frameIndex, setFrameIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFrameIndex((prev) => (prev + 1) % 4) // 0→1→2→3→0
+    }, 1200)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <div className='w-full mt-5'>
-      {info.map((item, index) => (
+      {mastersListInfo.map((item, index) => (
         <div
           key={index}
           className={`
             border-t-2 lg:border-t-[3px] border-black py-8
-            ${index === info.length - 1 ? 'border-b-2 lg:border-b-[3px]' : ''}
+            ${
+              index === mastersListInfo.length - 1
+                ? 'border-b-2 lg:border-b-[3px]'
+                : ''
+            }
           `}
         >
           {/* ─────────────────────────────────────────────
@@ -49,33 +42,17 @@ const MastersList = () => {
             {/* RIGHT — Stacked Images + Arrow */}
             <div className='flex flex-col items-end'>
               <div className='relative w-[125px] h-auto group cursor-pointer'>
-                {[1, 2, 3, 4].map((n) => (
-                  <Image
-                    key={n}
-                    src={`/masters/hover-images/part${index + 1}-${n}.png`}
-                    alt=''
-                    width={125}
-                    height={61}
-                    className={`
-          absolute top-0 left-0 transition-all duration-500
-
-          ${
-            n === 1
-              ? // imagen principal → se mueve hacia abajo/izquierda al hacer hover
-                'relative z-40 group-hover:-translate-y-1 group-hover:-translate-x-1'
-              : n === 2
-              ? // segunda imagen → se mueve poquito hacia arriba/derecha
-                'opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 group-hover:translate-x-1 z-30'
-              : n === 3
-              ? // tercera imagen → más desplazamiento
-                'opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 group-hover:translate-x-2 z-20'
-              : // cuarta imagen → desplazamiento máximo
-                'opacity-0 group-hover:opacity-100 group-hover:-translate-y-3 group-hover:translate-x-3 z-10'
-          }
-        `}
-                    loading='lazy'
-                  />
-                ))}
+                <Image
+                  key={frameIndex}
+                  src={`/masters/hover-images/part${index + 1}-${
+                    frameIndex + 1
+                  }.png`}
+                  alt=''
+                  width={125}
+                  height={61}
+                  className='absolute inset-0 transition-opacity duration-500'
+                  loading='lazy'
+                />
               </div>
 
               {/* Arrow */}
@@ -129,29 +106,17 @@ const MastersList = () => {
               />
               {/* Stacked Hover Images */}
               <div className='relative w-[290px] h-[140]'>
-                {[1, 2, 3, 4].map((n) => (
-                  <Image
-                    key={n}
-                    src={`/masters/hover-images/part${index + 1}-${n}.png`}
-                    alt='parts'
-                    width={296}
-                    height={144}
-                    className={`
-          absolute top-0 left-0 transition-all duration-500 h-full
-
-          ${
-            n === 1
-              ? 'relative z-40 group-hover:translate-y-1 group-hover:-translate-x-2'
-              : n === 2
-              ? 'opacity-0 group-hover:opacity-100 group-hover:-translate-y-1 group-hover:translate-x-1 z-30'
-              : n === 3
-              ? 'opacity-0 group-hover:opacity-100 group-hover:-translate-y-3 group-hover:translate-x-3 z-20'
-              : 'opacity-0 group-hover:opacity-100 group-hover:-translate-y-5 group-hover:translate-x-5 z-10'
-          }
-        `}
-                    loading='lazy'
-                  />
-                ))}
+                <Image
+                  key={frameIndex}
+                  src={`/masters/hover-images/part${index + 1}-${
+                    frameIndex + 1
+                  }.png`}
+                  alt='parts'
+                  width={296}
+                  height={144}
+                  className='absolute inset-0 transition-opacity duration-500'
+                  loading='lazy'
+                />
               </div>
             </div>
           </div>
