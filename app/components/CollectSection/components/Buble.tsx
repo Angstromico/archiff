@@ -43,9 +43,9 @@ const Bubble = ({
       `}
       style={{ maxWidth: width }}
     >
-      <h3 className='font-extralight text-[48px] 2xl:text-[80px] 3xl:text-[117px] leading-none'>
+      <h3 className='serotiva text-[48px] 2xl:text-[80px] 3xl:text-[117px] leading-none'>
         {isNumber && (
-          <span className='text-[32px] 3xl:text-[45px] 3xl:text-[64px]'>+</span>
+          <span className='text-[32px] lg:text-[64px] 3xl:text-[64px]'>+</span>
         )}{' '}
         {isNumber ? (
           visible ? (

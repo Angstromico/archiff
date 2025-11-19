@@ -65,7 +65,7 @@ const FormationsCard = ({
             {title}
           </h3>
           <h4 className='mt-2 lg:mt-3 text-[16px] lg:text-[20px]'>{teacher}</h4>
-          <p className='mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
+          <p className='serotiva mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
             {price}€
           </p>
           <button className='hidden lg:block absolute bottom-6 left-6 border py-1 px-2 rounded-full text-xl'>

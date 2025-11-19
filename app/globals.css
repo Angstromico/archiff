@@ -69,3 +69,12 @@ body {
     width: 25%; /* 4 slides en desktop */
   }
 }
+
+@font-face {
+  font-family: serotiva;
+  src: url('/fonts/Serotiva-Regular.ttf');
+}
+
+.serotiva {
+  font-family: serotiva;
+}
