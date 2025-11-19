@@ -82,6 +82,7 @@ const Carousel = <T extends BaseCardProps>({
           width={68}
           height={50}
           className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
+          loading='lazy'
         />
       </button>
 
@@ -97,6 +98,7 @@ const Carousel = <T extends BaseCardProps>({
           width={68}
           height={50}
           className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
+          loading='lazy'
         />
       </button>
 

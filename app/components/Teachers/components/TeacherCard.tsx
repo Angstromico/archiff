@@ -45,6 +45,7 @@ const TeacherCard = ({
           }}
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
+          loading='lazy'
         />
         <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-[120px] lg:h-[170px] select-none'>
           <h3 className='font-bold text-2xl lg:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>

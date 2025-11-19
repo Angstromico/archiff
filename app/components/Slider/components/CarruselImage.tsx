@@ -42,6 +42,7 @@ function CarouselImage({
         className='w-full h-auto object-cover transition-opacity duration-500 group-hover:opacity-0 static'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
         draggable={false}
+        loading='lazy'
       />
       <Image
         src={hover}
@@ -51,6 +52,7 @@ function CarouselImage({
         className='absolute inset-0 w-full h-auto object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
         draggable={false}
+        loading='lazy'
       />
     </Link>
   )

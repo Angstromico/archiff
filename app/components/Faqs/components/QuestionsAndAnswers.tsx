@@ -38,6 +38,7 @@ const QuestionsAndAnswers = () => {
                   w-12 h-7
                   ${isOpen ? 'rotate-180' : ''}
                 `}
+                loading='lazy'
               />
 
               {/* Desktop arrow (down) */}
@@ -51,6 +52,7 @@ const QuestionsAndAnswers = () => {
                   w-20 h-14
                   ${isOpen ? 'rotate-180' : ''}
                 `}
+                loading='lazy'
               />
             </div>
 

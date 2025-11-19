@@ -73,6 +73,7 @@ const MastersList = () => {
                 'opacity-0 group-hover:opacity-100 group-hover:-translate-y-3 group-hover:translate-x-3 z-10'
           }
         `}
+                    loading='lazy'
                   />
                 ))}
               </div>
@@ -84,6 +85,7 @@ const MastersList = () => {
                 width={41}
                 height={30}
                 className='mt-3 transition-transform duration-300 group-hover:translate-x-2'
+                loading='lazy'
               />
             </div>
           </div>
@@ -123,6 +125,7 @@ const MastersList = () => {
                 width={68}
                 height={50}
                 className='transition-transform duration-300 group-hover:translate-x-2'
+                loading='lazy'
               />
               {/* Stacked Hover Images */}
               <div className='relative w-[296px] h-[144]'>
@@ -146,6 +149,7 @@ const MastersList = () => {
               : 'opacity-0 group-hover:opacity-100 group-hover:-translate-y-5 group-hover:translate-x-5 z-10'
           }
         `}
+                    loading='lazy'
                   />
                 ))}
               </div>

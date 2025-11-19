@@ -61,6 +61,7 @@ const CollectSection = () => {
         alt='Arrow'
         width={114.37}
         height={82.94}
+        loading='lazy'
       />
     </section>
   )
