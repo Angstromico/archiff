@@ -1,8 +1,8 @@
 const ExpectationsText = () => {
   return (
     <p
-      className='mt-0 mb-8 lg:mt-1 lg:mb-16 text-justify text-[20px] lg:text-[32px] max-w-[
-1,623px]'
+      className='mt-0 mb-8 lg:mt-1 lg:mb-16 text-justify text-xl lg:text-3xl max-w-[
+1,623px] leading-[109%]'
     >
       En una formación de ARCHIFF encontrarás la flexibilidad de aprender a tu
       ritmo, 100% online y desde cualquier dispositivo, con acceso ilimitado al

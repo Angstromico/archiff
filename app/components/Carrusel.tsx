@@ -117,8 +117,8 @@ const Carousel = <T extends BaseCardProps>({
         style={{
           cursor: isDragging ? 'grabbing' : 'grab',
           ...(isFourParts && {
-            paddingLeft: '40px',
-            paddingRight: '40px',
+            paddingLeft: '30px',
+            paddingRight: '30px',
           }),
         }}
       >

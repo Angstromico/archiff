@@ -18,7 +18,7 @@ const ExpectationsMessage = () => {
       <SectionLogo
         image={imagePath}
         alt='Expectations'
-        sizes={{ width: 1948, height: 110, tinyWidth: 334 }}
+        sizes={{ width: 1000, height: 100, tinyWidth: 334 }}
         lessBottom
       />
       <div className='px-4 lg:px-[147px]'>

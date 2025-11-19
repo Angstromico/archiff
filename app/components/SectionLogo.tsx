@@ -41,7 +41,7 @@ const SectionLogo = ({
           alt={alt}
           width={width}
           height={height}
-          className='block w-(--tiny) xl:w-(--width) max-w-full'
+          className='block w-(--tiny) lg:w-(--width) max-w-full'
           loading='lazy'
         />
       </div>
