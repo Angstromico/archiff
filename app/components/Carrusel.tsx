@@ -77,7 +77,7 @@ const Carousel = <T extends BaseCardProps>({
         aria-label='Previous'
       >
         <Image
-          src='/teachers/left-arrow.png'
+          src='/teachers/left-arrow.svg'
           alt=''
           width={68}
           height={50}
@@ -93,7 +93,7 @@ const Carousel = <T extends BaseCardProps>({
         aria-label='Next'
       >
         <Image
-          src='/teachers/right-arrow.png'
+          src='/teachers/right-arrow.svg'
           alt=''
           width={68}
           height={50}

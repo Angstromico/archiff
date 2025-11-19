@@ -94,7 +94,7 @@ const MastersList = () => {
 
             <div className='flex items-end justify-end gap-4 group cursor-pointer'>
               <Image
-                src='/masters/arrow.png'
+                src='/masters/arrow.svg'
                 alt='arrow'
                 width={68}
                 height={50}
