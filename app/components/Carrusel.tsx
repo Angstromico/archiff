@@ -30,6 +30,7 @@ interface CarouselProps<T extends BaseCardProps> {
   CardComponent: (props: T & CommonCardProps) => ReactNode
   useFadeGradients?: boolean
   borderClass?: string
+  parts?: 4 | 5
 }
 
 const Carousel = <T extends BaseCardProps>({
@@ -37,9 +38,26 @@ const Carousel = <T extends BaseCardProps>({
   CardComponent,
   useFadeGradients = true,
   borderClass = '',
+  parts = 4,
 }: CarouselProps<T>) => {
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  // Detect screen size
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    handleResize() // initial
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const isFourParts = parts === 4
+  const slideWidth =
+    parts === 5 && windowWidth >= 1468
+      ? '20%' // show 5 full parts
+      : '25%' // fallback to 4 parts
+
   const hasDraggedRef = useRef(false)
-  const [isDragging, setIsDragging] = useState(false)
+  const [isDragging] = useState(false)
 
   // Embla configuration
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -106,11 +124,23 @@ const Carousel = <T extends BaseCardProps>({
       <div
         className='embla'
         ref={emblaRef}
-        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+        style={{
+          cursor: isDragging ? 'grabbing' : 'grab',
+          ...(isFourParts && {
+            paddingLeft: '40px',
+            paddingRight: '40px',
+          }),
+        }}
       >
         <div className='embla__container'>
           {cardsInfo.map((card, index) => (
-            <div className='embla__slide' key={index}>
+            <div
+              className='embla__slide'
+              key={index}
+              style={{
+                width: slideWidth, // ⬅ override del media query desktop
+              }}
+            >
               {/* @ts-expect-error - This is a valid operation */}
               <CardComponent
                 {...card}

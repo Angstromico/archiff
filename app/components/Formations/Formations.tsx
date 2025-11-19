@@ -15,6 +15,7 @@ const Formations = () => {
       <Carousel
         cardsInfo={formationsCardsNumbers}
         CardComponent={FormationsCard}
+        parts={5}
       />
     </section>
   )
