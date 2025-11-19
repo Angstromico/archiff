@@ -15,11 +15,11 @@ const ExpectationsBtns = () => {
         onClick={handleFaqsClick}
         className='
           bg-white border-2 lg:border-3 border-black 
-          text-[20px] lg:text-[32px]
-          px-5 lg:px-7 py-1 lg:py-2
+          text-xl lg:text-3xl
+          p-2
           rounded-full
-          hover:bg-black hover:border-blue-900 hover:text-white transition-colors duration-200
-          cursor-pointer
+          hover:bg-black hover:border-black hover:text-white transition-colors duration-200
+          cursor-pointer w-20 lg:w-32
         '
       >
         Faqs
@@ -32,10 +32,10 @@ const ExpectationsBtns = () => {
         rel='noopener noreferrer'
         className='
           bg-white border-2 lg:border-3 border-black 
-          text-[20px] lg:text-[32px]
-          px-5 lg:px-7 py-1 lg:py-2
+          text-xl lg:text-3xl
+          p-2
           rounded-full
-          hover:bg-black hover:border-blue-900 hover:text-white transition-colors duration-200
+          hover:bg-black hover:border-black hover:text-white transition-colors duration-200
           cursor-pointer
           no-underline
           inline-block
