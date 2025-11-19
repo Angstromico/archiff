@@ -55,17 +55,19 @@ const FormationsCard = ({
         />
         <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-74 lg:h-[500px] 2xl:h-[450px] 3xl:h-98 select-none relative'>
           <div className='flex justify-between mb-3.5 lg:mb-5'>
-            <p className='text-xl'>{hours} Horas</p>
+            <p className='text-xl lg:text-lg 2xl:text-xl'>{hours} Horas</p>
             {label && (
-              <p className='text-[#2222C2] text-sm border-[#2222C2] border absolute lg:static top-2 right-8 px-2 lg:px-6 lg:py-1'>
+              <p className='text-[#2222C2] text-sm lg:text-[10px] 3xl:text-sm border-[#2222C2] border absolute lg:static top-2 right-8 px-2 lg:px-6 lg:py-1'>
                 {label}
               </p>
             )}
           </div>
-          <h3 className='font-bold text-2xl lg:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
+          <h3 className='font-bold text-2xl xl:text-3xl 2xl:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
             {title}
           </h3>
-          <h4 className='mt-2 lg:mt-3 text-[16px] lg:text-[20px]'>{teacher}</h4>
+          <h4 className='mt-2 lg:mt-3 text-[16px] 3xl:text-[20px]'>
+            {teacher}
+          </h4>
           <p className='serotiva mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
             {price}€
           </p>

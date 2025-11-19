@@ -9,7 +9,7 @@ const Formations = () => {
       <SectionLogo
         image='/intros/Formaciones.svg'
         alt='Formations'
-        sizes={{ width: 444, height: 109, tinyWidth: 250 }}
+        sizes={{ width: 430, height: 109, tinyWidth: 250 }}
         lessBottom
       />
       <Carousel

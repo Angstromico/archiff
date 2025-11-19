@@ -28,7 +28,7 @@ body {
 
 @media (min-width: 1024px) {
   .component-container {
-    margin-top: 238px; /* lg:mt-20 */
+    margin-top: 238px;
     padding-left: 147px;
     padding-right: 147px;
   }
@@ -67,6 +67,9 @@ body {
 @media (min-width: 1280px) {
   .embla__slide {
     width: 25%; /* 4 slides en desktop */
+  }
+  .embla__slide.five {
+    width: 20%;
   }
 }
 

@@ -40,21 +40,11 @@ const Carousel = <T extends BaseCardProps>({
   borderClass = '',
   parts = 4,
 }: CarouselProps<T>) => {
-  const [windowWidth, setWindowWidth] = useState(0)
-
-  // Detect screen size
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth)
-    handleResize() // initial
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   const isFourParts = parts === 4
-  const slideWidth =
-    parts === 5 && windowWidth >= 1468
-      ? '20%' // show 5 full parts
-      : '25%' // fallback to 4 parts
+  const slideClass =
+    parts === 5
+      ? 'embla__slide five' // 5 slides on desktop
+      : 'embla__slide' // 4 slides on desktop
 
   const hasDraggedRef = useRef(false)
   const [isDragging] = useState(false)
@@ -134,13 +124,7 @@ const Carousel = <T extends BaseCardProps>({
       >
         <div className='embla__container'>
           {cardsInfo.map((card, index) => (
-            <div
-              className='embla__slide'
-              key={index}
-              style={{
-                width: slideWidth, // ⬅ override del media query desktop
-              }}
-            >
+            <div className={slideClass} key={index}>
               {/* @ts-expect-error - This is a valid operation */}
               <CardComponent
                 {...card}

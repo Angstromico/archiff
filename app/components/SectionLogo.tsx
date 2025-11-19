@@ -21,7 +21,9 @@ const SectionLogo = ({
     lessBottom ? 'lg:mb-4' : 'mb-4 md:mb-14'
   }`
 
-  const mainClass = `${noTop ? 'px-4 lg:px-[147px]' : 'component-container'}`
+  const mainClass = `${
+    noTop ? 'px-4 lg:px-[147px]' : 'px-4 lg:px-[147px] pt-[100px]'
+  }`
 
   return (
     <div className={mainClass}>
@@ -39,7 +41,7 @@ const SectionLogo = ({
           alt={alt}
           width={width}
           height={height}
-          className='block w-(--tiny) lg:w-(--width) max-w-full'
+          className='block w-(--tiny) xl:w-(--width) max-w-full'
           loading='lazy'
         />
       </div>

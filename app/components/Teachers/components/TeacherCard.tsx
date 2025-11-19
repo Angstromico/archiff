@@ -48,10 +48,12 @@ const TeacherCard = ({
           loading='lazy'
         />
         <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-[120px] lg:h-[170px] select-none'>
-          <h3 className='font-bold text-2xl lg:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
+          <h3 className='font-bold text-2xl lg:text-3xl 2xl:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
             {name}
           </h3>
-          <p className='text-xl lg:text-2xl mt-1 pointer-events-none'>{type}</p>
+          <p className='text-xl 2xl:text-2xl mt-1 pointer-events-none'>
+            {type}
+          </p>
         </div>
       </Link>
     </div>
