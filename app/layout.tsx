@@ -1,13 +1,6 @@
 import type { Metadata } from 'next'
-import { Arimo } from 'next/font/google'
 import './globals.css'
 import ScrollReset from './components/ScrollReset'
-
-const arimo = Arimo({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-arimo',
-})
 
 export const metadata: Metadata = {
   // Básicos
@@ -73,7 +66,6 @@ export const metadata: Metadata = {
     },
   },
 
-  // Favicon (si los tienes en /public)
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-32x32.png',
@@ -88,7 +80,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${arimo.variable} antialiased`}>
+      <body>
         <ScrollReset />
         {children}
       </body>
