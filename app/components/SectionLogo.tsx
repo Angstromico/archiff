@@ -5,6 +5,7 @@ interface IProps {
   sizes: { width: number; tinyWidth: number; height: number }
   alt?: string
   lessBottom?: boolean
+  noTop?: boolean
 }
 
 const SectionLogo = ({
@@ -12,6 +13,7 @@ const SectionLogo = ({
   sizes,
   alt = '',
   lessBottom = false,
+  noTop = false,
 }: IProps) => {
   const { width, tinyWidth, height } = sizes
 
@@ -19,8 +21,10 @@ const SectionLogo = ({
     lessBottom ? 'lg:mb-4' : 'mb-4 md:mb-14'
   }`
 
+  const mainClass = `${noTop ? 'px-4 lg:px-[147px]' : 'component-container'}`
+
   return (
-    <div className='component-container'>
+    <div className={mainClass}>
       <div
         className={innerStyle}
         style={

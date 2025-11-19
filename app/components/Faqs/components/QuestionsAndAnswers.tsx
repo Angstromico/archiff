@@ -22,7 +22,7 @@ const QuestionsAndAnswers = () => {
             className='border-b-2 lg:border-b-3 py-6 lg:py-10 w-full'
           >
             <div
-              className='flex justify-between items-center px-4 lg:px-14 cursor-pointer'
+              className='flex justify-between items-center px-4 lg:px-[147px] cursor-pointer'
               onClick={() => toggle(index)}
             >
               <h3 className='text-xl lg:text-4xl w-full'>{item.question}</h3>
@@ -57,7 +57,7 @@ const QuestionsAndAnswers = () => {
             {/* Answer section – visible only when open */}
             <p
               className={`
-                text-[16px] lg:text-[32px] mt-3 lg:mt-5 px-4 lg:px-14 
+                text-[16px] lg:text-[32px] mt-3 lg:mt-5 px-4 lg:px-[147px] 
                 transition-all duration-300 overflow-hidden
                 ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
               `}

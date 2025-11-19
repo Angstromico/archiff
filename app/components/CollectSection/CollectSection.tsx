@@ -5,7 +5,7 @@ import Bubble from './components/Buble'
 
 const CollectSection = () => {
   return (
-    <section className='w-full bg-[#1E2BC7] px-4 lg:px-14 pt-2.5 lg:pt-4 pb-32 xl:pb-16 text-white mb-8 lg:mb-16 relative grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-0'>
+    <section className='w-full bg-[#1E2BC7] px-4 lg:px-[147px] pt-2.5 lg:pt-4 pb-32 xl:pb-16 text-white mb-8 lg:mb-16 relative grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-0'>
       {/* Left Column */}
       <div>
         <h2 className='font-bold text-[4rem] lg:text-7xl mb-2 lg:mb-3'>
@@ -56,7 +56,7 @@ const CollectSection = () => {
 
       {/* Arrow */}
       <Image
-        className='absolute left-6 2xl:left-14 bottom-9 2xl:bottom-20 w-[70px] h-[51px] 2xl:w-[114.37px] 2xl:h-[82.94px] transition-all hover:left-7 2xl:hover:left-16'
+        className='absolute left-6 lg:left-[147px] bottom-9 2xl:bottom-20 w-[70px] h-[51px] 2xl:w-[114.37px] 2xl:h-[82.94px] transition-all hover:left-7 2xl:hover:left-16'
         src='/collections/blue-arrow.png'
         alt='Arrow'
         width={114.37}

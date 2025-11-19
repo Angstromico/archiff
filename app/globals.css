@@ -28,9 +28,9 @@ body {
 
 @media (min-width: 1024px) {
   .component-container {
-    margin-top: 5rem; /* lg:mt-20 */
-    padding-left: 3.5rem; /* lg:px-14 */
-    padding-right: 3.5rem; /* lg:px-14 */
+    margin-top: 238px; /* lg:mt-20 */
+    padding-left: 147px;
+    padding-right: 147px;
   }
 }
 

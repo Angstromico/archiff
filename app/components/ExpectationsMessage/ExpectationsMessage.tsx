@@ -21,7 +21,7 @@ const ExpectationsMessage = () => {
         sizes={{ width: 1948, height: 110, tinyWidth: 334 }}
         lessBottom
       />
-      <div className='px-4 lg:px-14'>
+      <div className='px-4 lg:px-[147px]'>
         <ExpectationsText />
         <ExpectationsBtns />
       </div>
