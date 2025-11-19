@@ -80,7 +80,7 @@ const MastersList = () => {
 
               {/* Arrow */}
               <Image
-                src='/masters/arrow.png'
+                src='/masters/arrow.svg'
                 alt='arrow'
                 width={41}
                 height={30}
