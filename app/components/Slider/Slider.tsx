@@ -158,7 +158,7 @@ export default function ImageSlider() {
       {/* Track */}
       <div
         ref={trackRef}
-        className='flex gap-8'
+        className='flex gap-2 lg:gap-4'
         style={{
           transform: `translateX(${translateX}%)`,
           transition: 'none',
