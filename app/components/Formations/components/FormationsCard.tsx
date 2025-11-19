@@ -57,7 +57,10 @@ const FormationsCard = ({
           <div className='flex justify-between mb-3.5 lg:mb-5'>
             <p className='text-xl lg:text-lg 2xl:text-xl'>{hours} Horas</p>
             {label && (
-              <p className='text-[#2222C2] text-sm lg:text-[10px] 3xl:text-sm border-[#2222C2] border absolute lg:static top-2 right-8 px-2 lg:px-6 lg:py-1'>
+              <p
+                className='text-[#2222C2] text-[12px] lg:text-[10px] 3xl:text-sm border-[#2222C2] border absolute lg:static top-2 right-8 text-center h-6 flex flex-col items-center pt-0.5 lg:py-1'
+                style={{ width: `${label.length > 5 ? '104px' : '56px'}` }}
+              >
                 {label}
               </p>
             )}
