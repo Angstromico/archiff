@@ -53,7 +53,7 @@ const FormationsCard = ({
           onDragStart={(e) => e.preventDefault()}
           loading='lazy'
         />
-        <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-74 lg:h-[450px] 2xl:h-[450px] 3xl:h-98 select-none relative'>
+        <div className='p-4 lg:p-6 border-t-2 lg:border-t-3 border-black h-74 lg:h-[450px] 2xl:h-[430px] select-none relative'>
           <div className='flex justify-between mb-3.5 lg:mb-5'>
             <p className='text-xl lg:text-lg 2xl:text-xl'>{hours} Horas</p>
             {label && (
@@ -68,9 +68,7 @@ const FormationsCard = ({
           <h3 className='font-bold text-2xl xl:text-3xl 2xl:text-4xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
             {title}
           </h3>
-          <h4 className='mt-2 lg:mt-3 text-[16px] 3xl:text-[20px]'>
-            {teacher}
-          </h4>
+          <h4 className='mt-2 text-[16px] 3xl:text-[20px]'>{teacher}</h4>
           <p className='serotiva mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
             {price}€
           </p>
