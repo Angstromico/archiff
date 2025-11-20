@@ -15,11 +15,10 @@ const ExpectationsBtns = () => {
         onClick={handleFaqsClick}
         className='
           bg-white border-2 lg:border-3 border-black 
-          text-xl lg:text-3xl
-          pb-1 pt-2
+          text-lg lg:text-2xl
           rounded-full
           hover:bg-black hover:border-black hover:text-white transition-colors duration-200
-          cursor-pointer w-16 lg:w-28 h-6 lg:h-13 text-center
+          cursor-pointer w-18 lg:w-30 h-7 lg:h-10 text-center flex justify-center items-center
         '
       >
         Faqs
@@ -32,14 +31,12 @@ const ExpectationsBtns = () => {
         rel='noopener noreferrer'
         className='
           bg-white border-2 lg:border-3 border-black 
-          text-xl lg:text-3xl
-          pb-1 pt-2
+          text-lg lg:text-2xl
           rounded-full
           hover:bg-black hover:border-black hover:text-white transition-colors duration-200
           cursor-pointer
           no-underline
-          inline-block
-          w-32 lg:w-56 h-6 lg:h-13 text-center
+          w-27 lg:w-46 h-7 lg:h-10 text-center flex justify-center items-center
         '
       >
         Contacto
