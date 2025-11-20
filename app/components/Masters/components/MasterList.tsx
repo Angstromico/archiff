@@ -38,7 +38,7 @@ const MastersList = () => {
           onMouseLeave={() => setHoveredIndex(null)}
         >
           {/* MOBILE */}
-          <div className='lg:hidden grid grid-cols-2 gap-4 items-start px-4'>
+          <div className='lg:hidden grid grid-cols-2 gap-4 items-start px-4 w-full'>
             {/* DATE */}
             <div>
               <p className='text-[#666] text-[14px] font-medium'>Inicio</p>
@@ -46,7 +46,7 @@ const MastersList = () => {
             </div>
 
             {/* IMAGE */}
-            <div className='flex flex-col items-end'>
+            <div>
               <div className='relative w-[125px] h-[61px] overflow-visible'>
                 <Image
                   key={frames[index]}
@@ -86,26 +86,26 @@ const MastersList = () => {
           </div>
 
           {/* DESKTOP */}
-          <div className='hidden lg:grid grid-cols-3 gap-6 px-6 items-start'>
-            <div>
+          <div className='hidden lg:grid grid-cols-10 gap-2 px-6 items-start'>
+            <div className='col-span-2'>
               <p className='text-[#666] text-[16px] font-medium'>Inicio</p>
               <p className='text-3xl'>{item.date}</p>
             </div>
 
-            <div>
+            <div className='col-span-4'>
               <p className='text-[#666] text-[16px]'>{item.type}</p>
-              <p className='text-4xl group-hover:underline underline-offset-4 cursor-pointer transition-all leading-[110%]'>
+              <p className='text-3xl 2xl:text-4xl group-hover:underline underline-offset-4 cursor-pointer transition-all leading-[110%]'>
                 {item.title}
               </p>
             </div>
 
-            <div className='flex items-end justify-end gap-4 group cursor-pointer'>
+            <div className='flex items-end justify-end gap-4 group cursor-pointer col-span-4'>
               <Image
                 src='/masters/arrow.svg'
                 alt='arrow'
                 width={68}
                 height={50}
-                className='transition-transform duration-300 group-hover:translate-x-1'
+                className='transition-transform duration-300 group-hover:translate-x-1 w-14 h-9 2xl:w-[68px] mb-2 2xl:mb-0 2xl:h-[50px]'
               />
 
               <div className='relative w-[290px] h-[140px]'>
@@ -117,7 +117,7 @@ const MastersList = () => {
                   alt='parts'
                   width={296}
                   height={144}
-                  className='absolute inset-0 transition-opacity duration-500'
+                  className='absolute inset-0 transition-opacity duration-500 max-w-[90%] 2xl:max-w-full'
                 />
               </div>
             </div>
