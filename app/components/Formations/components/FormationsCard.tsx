@@ -36,7 +36,7 @@ const FormationsCard = ({
   const maxHeight = useMaxImageHeight('formation-image')
 
   return (
-    <div className='h-full w-full'>
+    <div className='h-full w-full cursor-pointer'>
       <Link
         className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full group hover:bg-gray-50 transition-colors duration-200'
         href={link}
@@ -80,7 +80,7 @@ const FormationsCard = ({
           <p className='serotiva mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
             {price}€
           </p>
-          <button className='absolute bottom-6 left-6 border p-1 w-28 h-8 lg:w-32 lg:h-10 rounded-full text-base lg:text-xl'>
+          <button className='absolute bottom-6 left-6 border p-1 w-28 h-8 lg:w-32 lg:h-10 rounded-full text-base lg:text-xl cursor-pointer'>
             + Ver más
           </button>
         </div>
