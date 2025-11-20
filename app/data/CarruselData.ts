@@ -1,16 +1,60 @@
 export const teachersData = [
-  { name: 'Ramón Esteve', type: 'Ramón Esteve Estudio' },
-  { name: 'Eduardo Tazón y Antonio Mora', type: 'STUDIO.NOJU' },
-  { name: 'Marcos Parera', type: 'Mesura' },
-  { name: 'Juan Ranchal', type: 'Janfri & Ranchal Studio' },
-  { name: 'Ikér Ochotorena', type: 'OOAA Arquitectura' },
-  { name: 'Sigfrido Serra', type: 'Sigfrido Serra Studio' },
-  { name: 'Alberto Eltini', type: 'El Departamento' },
-  { name: 'Ángela Montagud y Jordi Iranzo', type: 'Clap Studio' },
-  { name: 'Francesc Rifé', type: 'Francesc Rifé Studio' },
-  { name: 'Enric Pastor', type: 'Fundador y editor de MANERA EDICIONES' },
-  { name: 'Albert Gil', type: 'CEO de Batlle i Roig' },
-  { name: 'Hernani Fernández', type: 'Fundador de Arqueha' },
+  {
+    name: 'Ramón Esteve',
+    type: 'Ramón Esteve Estudio',
+    link: 'https://ramonesteve.com',
+  },
+  {
+    name: 'Eduardo Tazón y Antonio Mora',
+    type: 'STUDIO.NOJU',
+    link: 'https://studionoju.com',
+  },
+  { name: 'Marcos Parera', type: 'Mesura', link: 'https://www.mesura.eu' },
+  {
+    name: 'Juan Ranchal',
+    type: 'Janfri & Ranchal Studio',
+    link: 'https://www.janfriranchal.com',
+  },
+  {
+    name: 'Ikér Ochotorena',
+    type: 'OOAA Arquitectura',
+    link: 'https://ooaa.es',
+  },
+  {
+    name: 'Sigfrido Serra',
+    type: 'Sigfrido Serra Studio',
+    link: 'https://www.sigfridoserra.com/en/studio/',
+  },
+  {
+    name: 'Alberto Eltini',
+    type: 'El Departamento',
+    link: 'https://www.eldepartamento.net/about/',
+  },
+  {
+    name: 'Ángela Montagud y Jordi Iranzo',
+    type: 'Clap Studio',
+    link: 'https://weareclap.com/studio/',
+  },
+  {
+    name: 'Francesc Rifé',
+    type: 'Francesc Rifé Studio',
+    link: 'https://www.francescrifestudio.com/es/',
+  },
+  {
+    name: 'Enric Pastor',
+    type: 'Fundador y editor de MANERA EDICIONES',
+    link: 'https://www.linkedin.com/in/enricpastor/?originalSubdomain=es',
+  },
+  {
+    name: 'Albert Gil',
+    type: 'CEO de Batlle i Roig',
+    link: 'https://www.batlleiroig.com/en/about/team/',
+  },
+  {
+    name: 'Hernani Fernández',
+    type: 'Fundador de Arqueha',
+    link: 'https://www.linkedin.com/in/hernani-fern%C3%A1ndez-gomes-dos-santos-0aa79218/',
+  },
 ]
 
 export interface FormationCardProps {

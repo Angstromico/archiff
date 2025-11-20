@@ -8,12 +8,14 @@ const TeacherCard = ({
   name,
   type,
   image,
+  link,
   hasDraggedRef,
   isDragging,
 }: {
   name: string
   type: string
   image: number
+  linbk: string
   hasDraggedRef: React.MutableRefObject<boolean>
   isDragging: boolean
 }) => {
@@ -31,7 +33,7 @@ const TeacherCard = ({
     <div className='h-full'>
       <Link
         className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full group hover:bg-gray-50 transition-colors duration-200'
-        href='https://www.google.com'
+        href={link}
         target='_blank'
         onClick={handleClick}
         draggable={false}
