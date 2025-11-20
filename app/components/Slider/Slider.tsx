@@ -151,7 +151,7 @@ export default function ImageSlider() {
   const translateX = -currentPosition * slotWidthPercent
 
   return (
-    <section className='relative w-full overflow-hidden mt-32'>
+    <section className='relative w-full overflow-hidden mt-10 lg:mt-32'>
       {/* Fade gradients */}
       <FadeGradients />
 
