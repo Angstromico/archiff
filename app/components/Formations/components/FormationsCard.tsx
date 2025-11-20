@@ -45,7 +45,7 @@ const FormationsCard = ({
           alt={'Formación'}
           width={406}
           height={307}
-          className='w-full h-72 lg:h-80 object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 min-h-[262px] lg:min-h-[307px]'
+          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200'
           style={{
             maxWidth: '100%',
           }}
