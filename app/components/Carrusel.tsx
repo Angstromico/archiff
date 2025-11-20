@@ -40,6 +40,15 @@ const Carousel = <T extends BaseCardProps>({
   borderClass = '',
   parts = 4,
 }: CarouselProps<T>) => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
+
+  useEffect(() => {
+    const checkScreen = () => setIsSmallScreen(window.innerWidth <= 400)
+    checkScreen()
+    window.addEventListener('resize', checkScreen)
+    return () => window.removeEventListener('resize', checkScreen)
+  }, [])
+
   const isFourParts = parts === 4
   const slideClass =
     parts === 5
@@ -116,7 +125,7 @@ const Carousel = <T extends BaseCardProps>({
         ref={emblaRef}
         style={{
           cursor: isDragging ? 'grabbing' : 'grab',
-          ...(isFourParts && {
+          ...((isFourParts || (!isFourParts && isSmallScreen)) && {
             paddingLeft: '30px',
             paddingRight: '30px',
           }),
