@@ -10,8 +10,8 @@ const TextTeachers = () => {
         noTop
         lessBottom
       />
-      <div className='mt-6 sm:mt-0 sm:w-full lg:max-w-1/2 2xl:max-w-[973px] border-2 border-b-0 lg:border-3 lg:border-b-0 mx-[30px] sm:mx-0 lg:pl-8 lg:pb-0 text-lg 2xl:text-[30px] text-justify'>
-        <p className='w-full max-w-[600px] text-justify md:mt-4 px-1'>
+      <div className='mt-6 sm:mt-0 sm:w-full lg:max-w-1/2 border-2 border-b-0 lg:border-3 lg:border-b-0 mx-[30px] sm:mx-0 lg:pl-8 lg:pb-4 text-lg 2xl:text-[30px] text-justify h-[90%] self-baseline-last'>
+        <p className='w-full max-w-[600px] text-justify md:mt-4 px-1 leading-[100%]'>
           Equipo docente compuesto por más de 50 profesionales de referencia en
           el sector.
         </p>
