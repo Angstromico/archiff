@@ -7,9 +7,12 @@ import { mastersListInfo } from '@/app/data/MastersData'
 
 const MastersList = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  // Initialize frames at 0 (first image)
   const [frames, setFrames] = useState<number[]>(
     Array(mastersListInfo.length).fill(0)
   )
+
+  const frameNumbers = [1, 2, 3, 4]
 
   useEffect(() => {
     if (hoveredIndex === null) return
@@ -55,16 +58,25 @@ const MastersList = () => {
             {/* IMAGE */}
             <div>
               <div className='relative w-[125px] h-[61px] overflow-visible'>
-                <Image
-                  key={frames[index]}
-                  src={`/masters/hover-images/part${index + 1}-${
-                    frames[index] + 1
-                  }.png`}
-                  alt=''
-                  width={125}
-                  height={61}
-                  className='absolute inset-0 transition-opacity duration-500 z-10'
-                />
+                {/* Render ALL 4 images stacked, toggle opacity */}
+                {frameNumbers.map((num, fIndex) => (
+                  <Image
+                    key={num}
+                    src={`/masters/hover-images/part${index + 1}-${num}.png`}
+                    alt=''
+                    width={125}
+                    height={61}
+                    className={`
+                      absolute inset-0 
+                      transition-opacity duration-1000 ease-in-out
+                      ${
+                        frames[index] === fIndex
+                          ? 'opacity-100 z-10'
+                          : 'opacity-0 z-0'
+                      }
+                    `}
+                  />
+                ))}
 
                 <Image
                   src='/masters/arrow.svg'
@@ -120,16 +132,26 @@ const MastersList = () => {
               />
 
               <div className='relative w-[290px] h-[140px]'>
-                <Image
-                  key={frames[index]}
-                  src={`/masters/hover-images/part${index + 1}-${
-                    frames[index] + 1
-                  }.png`}
-                  alt='parts'
-                  width={296}
-                  height={144}
-                  className='absolute inset-0 transition-opacity duration-500 max-w-[90%] 2xl:max-w-full'
-                />
+                {/* Render ALL 4 images stacked, toggle opacity */}
+                {frameNumbers.map((num, fIndex) => (
+                  <Image
+                    key={num}
+                    src={`/masters/hover-images/part${index + 1}-${num}.png`}
+                    alt='parts'
+                    width={296}
+                    height={144}
+                    className={`
+                      absolute inset-0 
+                      max-w-[90%] 2xl:max-w-full
+                      transition-opacity duration-1000 ease-in-out
+                      ${
+                        frames[index] === fIndex
+                          ? 'opacity-100 z-10'
+                          : 'opacity-0 z-0'
+                      }
+                    `}
+                  />
+                ))}
               </div>
             </div>
           </Link>
