@@ -21,7 +21,7 @@ export default function Home() {
         <TextCounterVideo />
         <Masters />
         <Teachers />
-        <VideoBanner />
+        <VideoBanner notMobile />
         <ExpectationsMessage />
         <Formations />
         <AdvertisingVideo />

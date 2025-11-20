@@ -3,6 +3,7 @@
 import SectionLogo from '../SectionLogo'
 import useScreenSize from '@/app/hooks/useScreenSize'
 import { ExpectationsBtns, ExpectationsText } from './components'
+import VideoBanner from '../VideoBanner'
 
 const ExpectationsMessage = () => {
   // Use the hook to determine if the screen is large (e.g., >= 1024px for lg)
@@ -22,6 +23,7 @@ const ExpectationsMessage = () => {
         lessBottom
       />
       <div className='px-4 lg:px-[147px]'>
+        <VideoBanner notDesktop />
         <ExpectationsText />
         <ExpectationsBtns />
       </div>

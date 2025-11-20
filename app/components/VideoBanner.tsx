@@ -3,7 +3,15 @@
 import { useEffect, useRef } from 'react'
 import Player from '@vimeo/player'
 
-const VideoBanner = ({ videoCode }: { videoCode?: string }) => {
+const VideoBanner = ({
+  videoCode,
+  notMobile,
+  notDesktop,
+}: {
+  videoCode?: string
+  notMobile?: boolean
+  notDesktop?: boolean
+}) => {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const playerRef = useRef<Player | null>(null)
 
@@ -48,7 +56,11 @@ const VideoBanner = ({ videoCode }: { videoCode?: string }) => {
   }, [])
 
   return (
-    <section className='my-16 lg:my-44 w-full overflow-hidden'>
+    <section
+      className={`my-16 lg:my-44 w-full overflow-hidden ${
+        notMobile && 'hidden lg:block'
+      } ${notDesktop && 'lg:hidden'}`}
+    >
       {/* Contenedor principal que asegura el ancho completo sin scroll horizontal */}
       <div className='relative w-full h-[117px] lg:h-[654px] mx-auto'>
         <iframe
