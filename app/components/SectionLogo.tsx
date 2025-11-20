@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 interface IProps {
@@ -16,6 +19,36 @@ const SectionLogo = ({
   noTop = false,
 }: IProps) => {
   const { width, tinyWidth, height } = sizes
+  const [isVisible, setIsVisible] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          // Once visible, stop observing
+          if (containerRef.current) {
+            observer.unobserve(containerRef.current)
+          }
+        }
+      },
+      {
+        rootMargin: '50px', // Start loading slightly before element enters viewport
+        threshold: 0.01, // Trigger when even 1% is visible
+      }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [])
 
   const innerStyle = `relative inline-block ${
     lessBottom ? 'lg:mb-4' : 'mb-4 md:mb-14'
@@ -26,7 +59,7 @@ const SectionLogo = ({
   }`
 
   return (
-    <div className={mainClass}>
+    <div className={mainClass} ref={containerRef}>
       <div
         className={innerStyle}
         style={
@@ -36,14 +69,16 @@ const SectionLogo = ({
           } as React.CSSProperties
         }
       >
-        <Image
-          src={image}
-          alt={alt}
-          width={width}
-          height={height}
-          className='block w-(--tiny) lg:w-(--width) max-w-full'
-          loading='lazy'
-        />
+        {isVisible && (
+          <Image
+            src={image}
+            alt={alt}
+            width={width}
+            height={height}
+            className='block w-(--tiny) lg:w-(--width) max-w-full'
+            loading='lazy'
+          />
+        )}
       </div>
     </div>
   )
