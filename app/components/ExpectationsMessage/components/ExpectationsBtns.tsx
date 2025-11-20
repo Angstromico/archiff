@@ -16,10 +16,10 @@ const ExpectationsBtns = () => {
         className='
           bg-white border-2 lg:border-3 border-black 
           text-xl lg:text-3xl
-          p-2
+          pb-1 pt-2
           rounded-full
           hover:bg-black hover:border-black hover:text-white transition-colors duration-200
-          cursor-pointer w-20 lg:w-32
+          cursor-pointer w-16 lg:w-28 h-6 lg:h-13 text-center
         '
       >
         Faqs
@@ -33,12 +33,13 @@ const ExpectationsBtns = () => {
         className='
           bg-white border-2 lg:border-3 border-black 
           text-xl lg:text-3xl
-          p-2
+          pb-1 pt-2
           rounded-full
           hover:bg-black hover:border-black hover:text-white transition-colors duration-200
           cursor-pointer
           no-underline
           inline-block
+          w-32 lg:w-56 h-6 lg:h-13 text-center
         '
       >
         Contacto
