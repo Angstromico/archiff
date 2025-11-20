@@ -66,7 +66,7 @@ const MastersList = () => {
                   height={30}
                   className='
                     absolute 
-                    -bottom-9
+                    -bottom-10
                     right-0
                     transition-transform duration-300
                     group-hover:translate-x-1
@@ -78,7 +78,7 @@ const MastersList = () => {
           </div>
 
           {/* MOBILE INFO */}
-          <div className='lg:hidden mt-6 px-4'>
+          <div className='lg:hidden mt-4 px-4'>
             <p className='text-[#666] text-sm'>{item.type}</p>
             <p className='text-3xl underline-offset-4 group-hover:underline cursor-pointer transition-all'>
               {item.title}
