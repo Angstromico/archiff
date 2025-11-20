@@ -11,8 +11,10 @@ const CollectSection = () => {
         <h2 className='font-bold text-5xl lg:text-6xl mb-2 lg:mb-3'>
           Colectiff
         </h2>
-        <p className='mb-6 lg:mb-9 text-xl lg:text-lg'>[Bolsa de empleo]</p>
-        <p className='mb-16 lg:mb-20 text-xl lg:text-lg lg:pb-16 text-justify max-w-[600px] lg:max-w-[450px]'>
+        <p className='mb-6 lg:mb-9 text-xl lg:text-lg 2xl:text-xl'>
+          [Bolsa de empleo]
+        </p>
+        <p className='mb-16 lg:mb-20 text-xl lg:text-lg 2xl:text-xl lg:pb-16 text-justify max-w-[600px] lg:max-w-[450px] 2xl:max-w-[600px]'>
           Colectiff es una plataforma de empleo especializada en el sector de la
           Arquitectura y el Diseño, creada para conectar a profesionales con
           estudios de referencia que buscan talento.
