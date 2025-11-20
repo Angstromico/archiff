@@ -12,6 +12,7 @@ const Formations = () => {
         sizes={{ width: 430, height: 109, tinyWidth: 250 }}
         lessBottom
       />
+      <div className='mt-6 sm:hidden'></div>
       <Carousel
         cardsInfo={formationsCardsNumbers}
         CardComponent={FormationsCard}
