@@ -63,6 +63,7 @@ export interface FormationCardProps {
   title: string
   teacher: string
   price: number
+  link: string
 }
 
 export const formationsCardsNumbers: FormationCardProps[] = [
@@ -71,6 +72,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     title: 'Curso de Interiorismo para Arquitectos',
     teacher: 'Un curso de Sigfrido Serra, Sigfrido Serra Studio.',
     price: 199,
+    link: 'https://archiff.com/cursos/curso-de-interiorismo-para-arquitectos',
   },
   {
     hours: 6,
@@ -78,6 +80,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     title: 'Formación en Diseño de Porfolios Creativos',
     teacher: 'Un curso de Juan Ferrero, CEO de Ramón Esteve Estudio.',
     price: 120,
+    link: 'https://archiff.com/cursos/formacion-en-portfolios-de-arquitectura-e-interiorismo-como-presentar-un-portfolio-de-arquitectura',
   },
   {
     hours: 31,
@@ -85,6 +88,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     title: 'Pack. Calculo de honorarios y gestión de estudios.',
     teacher: 'Un curso de Susana Lluna, Raúl Bosque, Juan Ferrero y Maty Tchey',
     price: 499,
+    link: 'https://archiff.com/cursos/pack-calculo-de-honorarios-y-gestion-de-estudios',
   },
   {
     hours: 6,
@@ -92,6 +96,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     teacher:
       'Un curso de Jesús Rodríguez, director de la oficina de Madrid en Ramón Esteve Estudio.',
     price: 199,
+    link: 'https://archiff.com/cursos/gestion-de-proyectos',
   },
   {
     hours: 25,
@@ -99,6 +104,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     title: 'Formación en Gestión de Estudios',
     teacher: 'Un curso de Susana Lluna, Raúl Bosque, Juan Ferrero y Maty Tchey',
     price: 399,
+    link: 'https://archiff.com/cursos/curso-en-gestion-de-estudios',
   },
   {
     hours: 6,
@@ -106,6 +112,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     title: 'Formación en Cálculo de honorarios',
     teacher: 'Un curso de Juan Ferrero, CEO de Ramón Esteve Estudio.',
     price: 199,
+    link: 'https://archiff.com/cursos/curso-de-calculo-de-honorarios',
   },
   {
     hours: 2,
@@ -113,6 +120,7 @@ export const formationsCardsNumbers: FormationCardProps[] = [
     title: 'Formación de Hubspot para arquitectos e interioristas',
     teacher: 'Un curso de Marcos García.',
     price: 50,
+    link: 'https://archiff.com/cursos/hubspot-para-arquitectos',
   },
 ]
 

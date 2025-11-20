@@ -13,6 +13,7 @@ const FormationsCard = ({
   title,
   teacher,
   price,
+  link,
 }: {
   image: number
   hasDraggedRef: React.MutableRefObject<boolean>
@@ -22,6 +23,7 @@ const FormationsCard = ({
   title: string
   teacher: string
   price: number
+  link: string
 }) => {
   const handleClick = (e: React.MouseEvent) => {
     if (hasDraggedRef.current || isDragging) {
@@ -37,7 +39,7 @@ const FormationsCard = ({
     <div className='h-full w-full'>
       <Link
         className='border-y-2 lg:border-y-3 border-x lg:border-x-[1.5px] border-black block h-full group hover:bg-gray-50 transition-colors duration-200'
-        href='https://www.google.com'
+        href={link}
         target='_blank'
         onClick={handleClick}
         draggable={false}
