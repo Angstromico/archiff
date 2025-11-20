@@ -29,7 +29,7 @@ const MastersList = () => {
       {mastersListInfo.map((item, index) => (
         <div
           key={index}
-          className={`group border-t-2 lg:border-t-[3px] border-black py-8 ${
+          className={`group border-t-2 lg:border-t-[3px] border-black py-8 px-4 lg:px-[147px] ${
             index === mastersListInfo.length - 1
               ? 'border-b-2 lg:border-b-[3px]'
               : ''
