@@ -72,7 +72,7 @@ const FormationsCard = ({
           <p className='serotiva mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
             {price}€
           </p>
-          <button className='hidden lg:block absolute bottom-6 left-6 border p-1 w-32 h-10 rounded-full text-xl'>
+          <button className='absolute bottom-6 left-6 border p-1 w-28 h-8 lg:w-32 lg:h-10 rounded-full text-base lg:text-xl'>
             + Ver más
           </button>
         </div>
