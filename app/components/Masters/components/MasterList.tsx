@@ -37,6 +37,8 @@ const MastersList = () => {
           }`}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
+          onTouchStart={() => setHoveredIndex(index)}
+          onTouchCancel={() => setHoveredIndex(null)}
         >
           {/* MOBILE */}
           <Link
