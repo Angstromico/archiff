@@ -68,7 +68,7 @@ const MastersList = () => {
                   height={30}
                   className='
                     absolute 
-                    -bottom-9   /* mueve la flecha justo debajo de la imagen */
+                    -bottom-9
                     right-0
                     transition-transform duration-300
                     group-hover:translate-x-1
