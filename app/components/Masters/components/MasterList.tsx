@@ -39,16 +39,15 @@ const MastersList = () => {
         >
           {/* MOBILE */}
           <div className='lg:hidden grid grid-cols-2 gap-4 items-start px-4'>
-            {/* FECHA */}
+            {/* DATE */}
             <div>
               <p className='text-[#666] text-[14px] font-medium'>Inicio</p>
               <p className='text-[24px] font-semibold'>{item.date}</p>
             </div>
 
-            {/* IMAGEN */}
+            {/* IMAGE */}
             <div className='flex flex-col items-end'>
               <div className='relative w-[125px] h-[61px] overflow-visible'>
-                {/* Imagen en loop */}
                 <Image
                   key={frames[index]}
                   src={`/masters/hover-images/part${index + 1}-${
@@ -60,7 +59,6 @@ const MastersList = () => {
                   className='absolute inset-0 transition-opacity duration-500 z-10'
                 />
 
-                {/* Flecha — siempre debajo y alineada sin hacks */}
                 <Image
                   src='/masters/arrow.svg'
                   alt='arrow'
