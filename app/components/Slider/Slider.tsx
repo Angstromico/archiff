@@ -98,6 +98,14 @@ export default function ImageSlider() {
     dragStartIndexRef.current = index + progress
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true)
+    const touchX = e.touches[0].clientX
+    setDragStartX(touchX)
+    dragDistanceRef.current = 0
+    dragStartIndexRef.current = index + progress
+  }
+
   // Add global mouse events for better drag experience
   useEffect(() => {
     if (!isDragging) return
@@ -134,6 +142,39 @@ export default function ImageSlider() {
       window.removeEventListener('mouseup', handleGlobalMouseUp)
     }
   }, [isDragging, dragStartX, cardsPerView, dragOffset, slides.length])
+  useEffect(() => {
+    if (!isDragging) return
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchX = e.touches[0].clientX
+      const deltaX = touchX - dragStartX
+      dragDistanceRef.current = Math.abs(deltaX)
+      const pxPerSlot = window.innerWidth / cardsPerView
+      const offsetInSlots = -deltaX / pxPerSlot
+      setDragOffset(offsetInSlots)
+    }
+
+    const handleTouchEnd = () => {
+      const finalPosition = dragStartIndexRef.current + dragOffset
+      const normalizedIndex =
+        ((finalPosition % slides.length) + slides.length) % slides.length
+
+      setIndex(Math.floor(normalizedIndex))
+      setProgress(normalizedIndex - Math.floor(normalizedIndex))
+
+      setIsDragging(false)
+      setDragOffset(0)
+      accumRef.current = normalizedIndex - Math.floor(normalizedIndex)
+    }
+
+    window.addEventListener('touchmove', handleTouchMove)
+    window.addEventListener('touchend', handleTouchEnd)
+
+    return () => {
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [isDragging, dragStartX, cardsPerView, dragOffset, slides.length])
 
   // --------------------------------------------------------------
   // 5. Render
@@ -166,6 +207,7 @@ export default function ImageSlider() {
           userSelect: 'none',
         }}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
       >
         {infiniteSlides.map((img, i) => (
           <div
@@ -183,8 +225,74 @@ export default function ImageSlider() {
               dragDistance={dragDistanceRef.current}
             />
           </div>
+          /* In the cellphone I can't drag the Carousel, only in Desktop, what can be the problem? */
         ))}
       </div>
     </section>
   )
 }
+
+/* This is the image component: 
+
+  import Image from 'next/image'
+import Link from 'next/link'
+
+// -----------------------------------------------------------------
+// Hover-fade image
+// -----------------------------------------------------------------
+function CarouselImage({
+  normal,
+  hover,
+  link,
+  isDragging,
+  dragDistance,
+}: {
+  normal: string
+  hover: string
+  link: string
+  isDragging: boolean
+  dragDistance: number
+}) {
+  const handleClick = (e: React.MouseEvent) => {
+    // Only prevent if it was an actual drag (not just a click)
+    if (isDragging || dragDistance > 5) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    // Otherwise, it's a normal click and the link will open
+  }
+
+  return (
+    <Link
+      href={link}
+      target='_blank'
+      className='group relative block w-full h-full'
+      onClick={handleClick}
+      draggable={false}
+    >
+      <Image
+        src={normal}
+        alt='carousel'
+        width={0}
+        height={0}
+        className='w-full h-auto object-cover transition-opacity duration-500 group-hover:opacity-0 static'
+        sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
+        draggable={false}
+        loading='lazy'
+      />
+      <Image
+        src={hover}
+        alt='carousel hover'
+        width={0}
+        height={0}
+        className='absolute inset-0 w-full h-auto object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100'
+        sizes='(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 16.66vw'
+        draggable={false}
+        loading='lazy'
+      />
+    </Link>
+  )
+}
+
+export default CarouselImage
+*/
