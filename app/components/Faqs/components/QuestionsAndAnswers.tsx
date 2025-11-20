@@ -27,29 +27,14 @@ const QuestionsAndAnswers = () => {
             >
               <h3 className='text-xl lg:text-4xl w-full'>{item.question}</h3>
 
-              {/* Mobile arrow (left) */}
               <Image
-                src='/faqs/arrow-left.png'
-                alt='Arrow'
-                width={48}
-                height={28}
-                className={`
-                  block lg:hidden transition-transform duration-300
-                  w-12 h-7
-                  ${isOpen ? 'rotate-180' : ''}
-                `}
-                loading='lazy'
-              />
-
-              {/* Desktop arrow (down) */}
-              <Image
-                src='/faqs/arrow-down.png'
+                src='/faqs/arrow-up.svg'
                 alt='Arrow'
                 width={78}
                 height={58}
                 className={`
-                  hidden lg:block transition-transform duration-300
-                  w-20 h-14
+                  transition-transform duration-300
+                  w-12 h-8 lg:w-20 lg:h-14
                   ${isOpen ? 'rotate-180' : ''}
                 `}
                 loading='lazy'
