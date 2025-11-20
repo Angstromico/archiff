@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRef, useState, useEffect } from 'react'
 
 const TeacherCard = ({
   name,
@@ -24,6 +25,39 @@ const TeacherCard = ({
     hasDraggedRef.current = false
   }
 
+  const imgRef = useRef<HTMLImageElement>(null)
+  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined)
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
+    const calculateMaxHeight = () => {
+      const images = document.querySelectorAll('.teacher-image')
+      let maxH = 0
+      images.forEach((img) => {
+        const h = img.getBoundingClientRect().height
+        if (h > maxH) maxH = h
+      })
+      setMaxHeight(maxH)
+    }
+
+    const handleResize = () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      timeoutId = setTimeout(calculateMaxHeight, 300) // Debounce 300ms
+    }
+
+    // Initial calculation
+    calculateMaxHeight()
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (timeoutId) clearTimeout(timeoutId)
+    }
+    //Can you turn this resize thing in something reusable to use that in another component
+  }, [])
+
   return (
     <div className='h-full'>
       <Link
@@ -35,13 +69,15 @@ const TeacherCard = ({
         onDragStart={(e) => e.preventDefault()}
       >
         <Image
+          ref={imgRef}
           src={`/teachers/${image}.png`}
           alt={name}
           width={443}
           height={296}
-          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200'
+          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 teacher-image'
           style={{
             maxWidth: '100%',
+            height: maxHeight ? `${maxHeight}px` : 'auto',
           }}
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
