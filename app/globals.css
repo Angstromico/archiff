@@ -32,6 +32,9 @@ body {
     padding-left: 147px;
     padding-right: 147px;
   }
+  .component-container.less-top {
+    margin-top: 185px;
+  }
 }
 
 /* Embla Carousel base styles */
