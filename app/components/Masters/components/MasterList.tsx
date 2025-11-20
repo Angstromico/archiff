@@ -1,8 +1,9 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { mastersListInfo } from '@/app/data/MastersData'
-import { useEffect, useState } from 'react'
 
 const MastersList = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
@@ -38,7 +39,11 @@ const MastersList = () => {
           onMouseLeave={() => setHoveredIndex(null)}
         >
           {/* MOBILE */}
-          <div className='lg:hidden grid grid-cols-2 gap-4 items-start px-4 w-full'>
+          <Link
+            href={item.link}
+            target='_blank'
+            className='lg:hidden grid grid-cols-2 gap-4 items-start px-4 w-full'
+          >
             {/* DATE */}
             <div>
               <p className='text-[#666] text-[14px] font-medium'>Inicio</p>
@@ -75,7 +80,7 @@ const MastersList = () => {
                 />
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* MOBILE INFO */}
           <div className='lg:hidden mt-4 px-4'>
@@ -86,7 +91,11 @@ const MastersList = () => {
           </div>
 
           {/* DESKTOP */}
-          <div className='hidden lg:grid grid-cols-10 gap-2 px-6 items-start'>
+          <Link
+            href={item.link}
+            target='_blank'
+            className='hidden lg:grid grid-cols-10 gap-2 px-6 items-start'
+          >
             <div className='col-span-2'>
               <p className='text-[#666] text-[16px] font-medium'>Inicio</p>
               <p className='text-3xl'>{item.date}</p>
@@ -121,7 +130,7 @@ const MastersList = () => {
                 />
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       ))}
     </div>
