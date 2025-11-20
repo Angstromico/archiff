@@ -71,10 +71,12 @@ const FormationsCard = ({
               </p>
             )}
           </div>
-          <h3 className='font-bold text-2xl 2xl:text-3xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200'>
+          <h3 className='font-bold text-2xl 2xl:text-3xl leading-tight pointer-events-none group-hover:underline group-hover:underline-offset-4 group-hover:decoration-2 transition-all duration-200 leading-[109%]'>
             {title}
           </h3>
-          <h4 className='mt-2 text-[16px] 3xl:text-[20px]'>{teacher}</h4>
+          <h4 className='mt-2 text-[16px] 3xl:text-[20px] leading-[109%]'>
+            {teacher}
+          </h4>
           <p className='serotiva mt-2 lg:mt-3 text-[#2222C2] hidden lg:block text-3xl'>
             {price}€
           </p>
