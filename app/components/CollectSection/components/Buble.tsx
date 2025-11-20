@@ -7,12 +7,14 @@ const Bubble = ({
   isNumber,
   desktopHidden = false,
   width,
+  minW,
 }: {
   title: string | number
   subtitle: string
   isNumber?: boolean
   desktopHidden?: boolean
   width?: number
+  minW?: boolean
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const [visible, setVisible] = useState(false)
@@ -36,16 +38,18 @@ const Bubble = ({
       ref={ref}
       className={`
         border-white 
-        border-2 xl:border-4 
-        rounded-full 
-        px-4 py-2 xl:px-6 xl:py-4
-        text-center my-2 xl:my-6 ${desktopHidden ? 'xl:hidden' : ''}
+        border-3 xl:border-4 
+        rounded-[90px]
+        px-6 py-0.5 xl:px-12 xl:min-w-64 2xl:min-w-70 xl:py-4
+        text-center my-1 xl:my-2 flex flex-col justify-center items-center ${
+          desktopHidden ? 'xl:hidden' : ''
+        } ${minW ? 'min-w-[280px]' : ''}
       `}
       style={{ maxWidth: width }}
     >
-      <h3 className='serotiva text-[48px] 2xl:text-[80px] 3xl:text-[117px] leading-none'>
+      <h3 className='neue-gothana text-5xl xl:text-6xl 2xl:text-7xl leading-none'>
         {isNumber && (
-          <span className='text-[32px] lg:text-[64px] 3xl:text-[64px]'>+</span>
+          <span className='text-3xl lg:text-4xl xl:text-5xl'>+</span>
         )}{' '}
         {isNumber ? (
           visible ? (
@@ -58,7 +62,7 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='text-[16px] 3xl:text-[32px] leading-tight'>{subtitle}</p>
+      <p className='text-sm 2xl:text-lg leading-tight'>{subtitle}</p>
     </div>
   )
 }

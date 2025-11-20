@@ -23,7 +23,7 @@ const AdvertisingVideo = () => {
   }, [])
 
   return (
-    <section className='w-full h-16 lg:h-80 mt-16 lg:mt-24 relative overflow-hidden'>
+    <section className='w-full h-16 lg:h-58 mt-16 lg:mt-24 relative overflow-hidden'>
       <video
         ref={videoRef}
         src={isVisible ? '/videos/bolsa-empleo.mp4' : undefined}

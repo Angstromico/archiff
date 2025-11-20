@@ -78,6 +78,15 @@ body {
   src: url('/fonts/Serotiva-Regular.ttf');
 }
 
+@font-face {
+  font-family: neue-gothana;
+  src: url('/fonts/Neue-Gothama-Extralight.otf');
+}
+
 .serotiva {
   font-family: serotiva;
+}
+
+.neue-gothana {
+  font-family: neue-gothana;
 }
