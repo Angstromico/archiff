@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useMaxImageHeight } from '@/app/hooks/useMaxImageHeight'
 
 const FormationsCard = ({
   image,
@@ -30,6 +31,8 @@ const FormationsCard = ({
     hasDraggedRef.current = false
   }
 
+  const maxHeight = useMaxImageHeight('formation-image')
+
   return (
     <div className='h-full w-full'>
       <Link
@@ -45,9 +48,10 @@ const FormationsCard = ({
           alt={'Formación'}
           width={406}
           height={307}
-          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200'
+          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 formation-image'
           style={{
             maxWidth: '100%',
+            height: maxHeight ? `${maxHeight}px` : 'auto',
           }}
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
