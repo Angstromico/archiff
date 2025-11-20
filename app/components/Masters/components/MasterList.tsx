@@ -47,7 +47,8 @@ const MastersList = () => {
 
             {/* IMAGEN */}
             <div className='flex flex-col items-end'>
-              <div className='relative w-[125px] h-auto'>
+              <div className='relative w-[125px] h-[61px] overflow-visible'>
+                {/* Imagen en loop */}
                 <Image
                   key={frames[index]}
                   src={`/masters/hover-images/part${index + 1}-${
@@ -56,17 +57,25 @@ const MastersList = () => {
                   alt=''
                   width={125}
                   height={61}
-                  className='absolute inset-0 transition-opacity duration-500'
+                  className='absolute inset-0 transition-opacity duration-500 z-10'
+                />
+
+                {/* Flecha — siempre debajo y alineada sin hacks */}
+                <Image
+                  src='/masters/arrow.svg'
+                  alt='arrow'
+                  width={41}
+                  height={30}
+                  className='
+                    absolute 
+                    -bottom-9   /* mueve la flecha justo debajo de la imagen */
+                    right-0
+                    transition-transform duration-300
+                    group-hover:translate-x-1
+                    z-20
+                    '
                 />
               </div>
-
-              <Image
-                src='/masters/arrow.svg'
-                alt='arrow'
-                width={41}
-                height={30}
-                className='mt-3 transition-transform duration-300 group-hover:translate-x-1'
-              />
             </div>
           </div>
 
