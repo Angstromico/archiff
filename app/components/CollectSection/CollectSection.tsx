@@ -58,7 +58,7 @@ const CollectSection = () => {
       {/* Arrow */}
       <Image
         className='absolute left-6 lg:left-[147px] bottom-9 lg:bottom-30 xl:bottom-15 w-18 h-12 lg:w-20 lg:h-14 2xl:w-24 2xl:h-16 transition-all hover:left-8 lg:hover:left-40'
-        src='/collections/blue-arrow.png'
+        src='/collections/blue-arrow.svg'
         alt='Arrow'
         width={114.37}
         height={82.94}
