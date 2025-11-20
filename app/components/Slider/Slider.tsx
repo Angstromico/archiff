@@ -21,7 +21,7 @@ export default function ImageSlider() {
   const getCardsPerView = () => {
     if (typeof window === 'undefined') return 2
     const w = window.innerWidth
-    if (w >= 1280) return 6
+    if (w >= 1280) return 5
     if (w >= 768) return 4
     return 2
   }
