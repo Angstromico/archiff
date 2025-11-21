@@ -7,21 +7,17 @@ const Bubble = ({
   isNumber,
   desktopHidden = false,
   lgWidth,
-  minW,
   maxW,
-  xlWidth,
-  bigWidth,
+  maxWX,
 }: {
   title: string | number
   subtitle: string
   isNumber?: boolean
   desktopHidden?: boolean
   width?: number
-  minW?: boolean
   maxW?: boolean
+  maxWX?: boolean
   lgWidth?: boolean
-  xlWidth?: boolean
-  bigWidth?: boolean
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const [visible, setVisible] = useState(false)
@@ -47,20 +43,22 @@ const Bubble = ({
         border-white 
         border-3 xl:border-4 
         rounded-full
-        h-[98px] lg:h-[50%] lg:px-7 xl:h-40 2xl:px-8
-        text-center px-5 flex flex-col justify-center items-center ${
+        h-20 sm:w-full lg:h-[55%] xl:h-40 2xl:h-44
+        text-center px-5 flex flex-col justify-center items-center lg:px-4 xl:px-6 2xl:px-10 ${
           desktopHidden ? 'lg:hidden' : ''
-        } ${minW ? 'w-60' : ''}
-        ${maxW ? 'w-[260px]' : ''}
-        ${lgWidth ? 'lg:px-10' : ''}
-        ${xlWidth ? 'xl:px-12' : ''}
-        ${bigWidth ? '2xl:px-16' : ''}
+        }
+        ${maxW ? 'w-48 sm:min-w-full' : ''}
+        ${maxWX ? 'w-60 sm:min-w-full' : ''}
+        ${
+          lgWidth
+            ? 'max-w-[200px] xl:max-w-[280px] 2xl:max-w-[320px]'
+            : 'lg:px-10 2xl:p-12 max-w-[300px] xl:max-w-[400px] 2xl:max-w-[450px]'
+        }
       `}
     >
-      <h3 className='neue-gothana text-4xl lg:text-5xl xl:text-7xl 2xl:text-8xl leading-none flex gap-2'>
-        {/* Me lo toma pero cuando inspecciono el navegador me lo marca como no habilitado porque le da prioridad al lg:text-4xl  */}
+      <h3 className='neue-gothana text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-none flex gap-2'>
         {isNumber && (
-          <span className='text-4xl lg:text-5xl xl:text-7xl 2xl:text-8xl'>
+          <span className='text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl'>
             +
           </span>
         )}{' '}
@@ -75,7 +73,7 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='text-[8px] lg:text-[10px] xl:text-base 2xl:text-lg leading-tight text-nowrap'>
+      <p className='text-[10px] xl:text-base 2xl:text-lg leading-tight text-nowrap'>
         {subtitle}
       </p>
     </div>
