@@ -19,10 +19,10 @@ const QuestionsAndAnswers = () => {
         return (
           <div
             key={index}
-            className='border-b-2 lg:border-b-3 py-0.2 mt-1 w-full'
+            className='border-b-2 lg:border-b-3 py-1 lg:py-0.2 mt-1 w-full'
           >
             <div
-              className='flex justify-between items-center px-4 lg:px-[147px] cursor-pointer'
+              className='flex justify-between lg:items-center px-4 lg:px-[147px] cursor-pointer'
               onClick={() => toggle(index)}
             >
               <h3 className='text-xl lg:text-4xl w-full'>{item.question}</h3>
@@ -39,6 +39,7 @@ const QuestionsAndAnswers = () => {
                 `}
                 loading='lazy'
               />
+              {/* I need the arrow on mobile to be be aling with the top, baseline with the top of the h3 */}
             </div>
 
             {/* Answer section – visible only when open */}
