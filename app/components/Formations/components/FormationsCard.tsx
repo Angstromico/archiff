@@ -50,7 +50,7 @@ const FormationsCard = ({
           alt={'Formación'}
           width={406}
           height={307}
-          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 formation-image'
+          className='w-full h-auto object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 formation-image'
           style={{
             maxWidth: '100%',
             height: maxHeight ? `${maxHeight}px` : 'auto',

@@ -26,6 +26,7 @@ interface CarouselProps<T extends BaseCardProps> {
   useFadeGradients?: boolean
   borderClass?: string
   parts?: 4 | 5
+  arrowsLow?: boolean
 }
 
 const Carousel = <T extends BaseCardProps>({
@@ -34,6 +35,7 @@ const Carousel = <T extends BaseCardProps>({
   useFadeGradients = true,
   borderClass = '',
   parts = 4,
+  arrowsLow,
 }: CarouselProps<T>) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false)
 
@@ -87,6 +89,7 @@ const Carousel = <T extends BaseCardProps>({
         arrowDirection='left'
         scrollTo={scrollPrev}
         alt='Carusel Arrow Left'
+        arrowLow={arrowsLow}
       />
 
       {/* Right Arrow */}
@@ -94,6 +97,7 @@ const Carousel = <T extends BaseCardProps>({
         arrowDirection='right'
         scrollTo={scrollNext}
         alt='Carusel Arrow Right'
+        arrowLow={arrowsLow}
       />
 
       {/* Embla Carousel */}

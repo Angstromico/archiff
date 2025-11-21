@@ -17,6 +17,7 @@ const Formations = () => {
         cardsInfo={formationsCardsNumbers}
         CardComponent={FormationsCard}
         parts={5}
+        arrowsLow
       />
     </section>
   )
