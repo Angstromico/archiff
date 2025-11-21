@@ -22,7 +22,7 @@ const QuestionsAndAnswers = () => {
             className='border-b-2 lg:border-b-3 py-1 lg:py-0.2 mt-1 w-full'
           >
             <div
-              className='flex justify-between lg:items-center px-4 lg:px-[147px] cursor-pointer'
+              className='flex justify-between items-start px-4 lg:px-[147px] cursor-pointer'
               onClick={() => toggle(index)}
             >
               <h3 className='text-xl lg:text-4xl w-full'>{item.question}</h3>
