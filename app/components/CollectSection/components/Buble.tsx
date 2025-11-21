@@ -51,8 +51,8 @@ const Bubble = ({
         ${maxWX ? 'w-60 sm:min-w-full' : ''}
         ${
           lgWidth
-            ? 'max-w-[200px] xl:max-w-[280px] 2xl:max-w-[320px]'
-            : 'lg:px-10 2xl:p-12 max-w-[300px] xl:max-w-[400px] 2xl:max-w-[450px]'
+            ? 'lg:max-w-[200px] xl:max-w-[280px] 2xl:max-w-[320px]'
+            : 'lg:px-10 2xl:p-12 lg:max-w-[300px] xl:max-w-[400px] 2xl:max-w-[450px]'
         }
       `}
     >
