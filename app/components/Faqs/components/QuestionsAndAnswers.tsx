@@ -19,7 +19,7 @@ const QuestionsAndAnswers = () => {
         return (
           <div
             key={index}
-            className='border-b-2 lg:border-b-3 py-6 lg:py-10 w-full'
+            className='border-b-2 lg:border-b-3 py-0.2 mt-1 w-full'
           >
             <div
               className='flex justify-between items-center px-4 lg:px-[147px] cursor-pointer'
@@ -44,9 +44,13 @@ const QuestionsAndAnswers = () => {
             {/* Answer section – visible only when open */}
             <p
               className={`
-                text-base lg:text-3xl mt-3 lg:mt-5 px-4 lg:px-[147px] 
+                text-base lg:text-3xl mt-1 lg:mt-2 px-4 lg:px-[147px] 
                 transition-all sm:mr-[12%] duration-300 overflow-hidden leading-[109%] text-justify
-                ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
+                ${
+                  isOpen
+                    ? 'max-h-[500px] opacity-100 pb-4 lg:pb-8'
+                    : 'max-h-0 opacity-0'
+                }
               `}
             >
               {item.answer}
