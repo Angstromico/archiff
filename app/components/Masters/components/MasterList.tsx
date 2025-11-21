@@ -33,7 +33,7 @@ const MastersList = () => {
       {mastersListInfo.map((item, index) => (
         <div
           key={index}
-          className={`group border-t-2 lg:border-t-[3px] hover:cursor-pointer border-black py-8 px-4 lg:px-[147px] ${
+          className={`group border-t-2 lg:border-t-[3px] hover:cursor-pointer border-black py-4 px-2 lg:px-[147px] ${
             index === mastersListInfo.length - 1
               ? 'border-b-2 lg:border-b-[3px]'
               : ''
@@ -51,12 +51,12 @@ const MastersList = () => {
           >
             {/* DATE */}
             <div>
-              <p className='text-[#666] text-[14px] font-medium'>Inicio</p>
-              <p className='text-[24px] font-semibold'>{item.date}</p>
+              <p className='text-[#666] text-sm font-medium'>Inicio</p>
+              <p className='text-2xl'>{item.date}</p>
             </div>
 
             {/* IMAGE */}
-            <div>
+            <div className='flex w-full justify-end'>
               <div className='relative w-[125px] h-[61px] overflow-visible'>
                 {/* Render ALL 4 images stacked, toggle opacity */}
                 {frameNumbers.map((num, fIndex) => (
@@ -67,7 +67,7 @@ const MastersList = () => {
                     width={125}
                     height={61}
                     className={`
-                      absolute inset-0 
+                      absolute inset-0 right-0
                       transition-opacity duration-1000 ease-in-out
                       ${
                         frames[index] === fIndex
@@ -99,7 +99,7 @@ const MastersList = () => {
           {/* MOBILE INFO */}
           <div className='md:hidden mt-4 px-4'>
             <p className='text-[#666] text-sm'>{item.type}</p>
-            <p className='text-2xl sm:text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-50 sm:max-w-[400px] md:max-w-full wrap-break-word'>
+            <p className='text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-50 sm:max-w-[400px] md:max-w-full wrap-break-word pb-2'>
               {item.title}
             </p>
           </div>
