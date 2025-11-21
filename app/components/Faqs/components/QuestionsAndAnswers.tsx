@@ -35,7 +35,7 @@ const QuestionsAndAnswers = () => {
                 className={`
                   transition-transform duration-300
                   w-12 h-8 lg:w-20 lg:h-14
-                  ${isOpen ? 'rotate-180' : ''}
+                  ${isOpen ? '' : 'rotate-180'}
                 `}
                 loading='lazy'
               />
