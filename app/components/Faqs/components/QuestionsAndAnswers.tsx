@@ -39,7 +39,6 @@ const QuestionsAndAnswers = () => {
                 `}
                 loading='lazy'
               />
-              {/* I need the arrow on mobile to be be aling with the top, baseline with the top of the h3 */}
             </div>
 
             {/* Answer section – visible only when open */}
