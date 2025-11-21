@@ -43,22 +43,22 @@ const Bubble = ({
         border-white 
         border-3 xl:border-4 
         rounded-full
-        h-20 sm:w-full lg:h-[57%] xl:h-40 2xl:h-44
-        text-center px-5 flex flex-col justify-center items-center lg:px-4 xl:px-6 2xl:px-10 ${
-          desktopHidden ? 'lg:hidden' : ''
+        h-20 sm:w-full lgx:h-[57%] 2xl:h-40 3xl:h-46
+        text-center px-5 flex flex-col justify-center items-center lgx:px-5 2xl:px-6 3xl:px-8 ${
+          desktopHidden ? 'lgx:hidden' : ''
         }
         ${maxW ? 'w-46 sm:min-w-full' : ''}
         ${maxWX ? 'w-56 sm:min-w-full' : ''}
         ${
           lgWidth
-            ? 'lg:max-w-[200px] xl:max-w-[280px] 2xl:max-w-[320px]'
-            : 'lg:px-10 2xl:p-12 lg:max-w-[300px] xl:max-w-[400px] 2xl:max-w-[450px]'
+            ? 'lgx:max-w-[230px] 2xl:max-w-[280px] 3xl:max-w-[320px]'
+            : 'lgx:px-10 2xl:p-12 lgx:max-w-[300px] 2xl:max-w-[400px] 3xl:max-w-[450px]'
         }
       `}
     >
-      <h3 className='neue-gothana text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-none flex gap-2'>
+      <h3 className='neue-gothana text-5xl lgx:text-6xl 2xl:text-7xl 3xl:text-8xl leading-none flex gap-2'>
         {isNumber && (
-          <span className='text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl'>
+          <span className='text-4xl lgx:text-6xl 2xl:text-7xl 3xl:text-8xl'>
             +
           </span>
         )}{' '}
@@ -73,7 +73,7 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='mt-1 lg:mt-2 text-[10px] xl:text-base 2xl:text-lg leading-tight text-nowrap'>
+      <p className='mt-1 lgx:mt-2 text-[10px] lgx:text-[9px] 2xl:text-base 3xl:text-lg leading-tight text-nowrap'>
         {subtitle}
       </p>
     </div>
