@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef, useState, useEffect, ReactNode } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import useEmblaCarousel from 'embla-carousel-react'
 import FadeGradients from './FadeGradients'
+import CaruselArrow from './CaruselArrow'
 import { FormationCardProps } from '../data/CarruselData'
 
 interface BaseCardProps {
@@ -82,36 +83,18 @@ const Carousel = <T extends BaseCardProps>({
       {useFadeGradients && <FadeGradients />}
 
       {/* Left Arrow */}
-      <button
-        onClick={scrollPrev}
-        className='absolute left-4 top-[40%] -translate-y-[40%]  sm:top-1/2 sm:-translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
-        aria-label='Previous'
-      >
-        <Image
-          src='/teachers/left-arrow.svg'
-          alt=''
-          width={68}
-          height={50}
-          className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
-          loading='lazy'
-        />
-      </button>
+      <CaruselArrow
+        arrowDirection='left'
+        scrollTo={scrollPrev}
+        alt='Carusel Arrow Left'
+      />
 
       {/* Right Arrow */}
-      <button
-        onClick={scrollNext}
-        className='absolute right-4 top-[40%] -translate-y-[40%] sm:top-1/2 sm:-translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
-        aria-label='Next'
-      >
-        <Image
-          src='/teachers/right-arrow.svg'
-          alt=''
-          width={68}
-          height={50}
-          className='w-[51.52px] h-[37.96px] lg:w-[68px] lg:h-[50px]'
-          loading='lazy'
-        />
-      </button>
+      <CaruselArrow
+        arrowDirection='right'
+        scrollTo={scrollNext}
+        alt='Carusel Arrow Right'
+      />
 
       {/* Embla Carousel */}
       <div
