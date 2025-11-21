@@ -1,4 +1,11 @@
-export const mastersListInfo = [
+export interface MasterListInfo {
+  date: string
+  type: string
+  title: string
+  link: string
+}
+
+export const mastersListInfo: MasterListInfo[] = [
   {
     date: 'Abr. 26',
     type: 'Gestión y Estrategia Creativa',
