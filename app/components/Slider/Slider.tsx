@@ -12,7 +12,7 @@ export default function ImageSlider() {
   const slides = Array.from({ length: totalImages / 2 }, (_, i) => ({
     normal: `/slider/${i * 2 + 1}.png`,
     hover: `/slider/${i * 2 + 2}.png`,
-    link: 'https://google.com',
+    link: 'https://archiff.com',
   }))
 
   // --------------------------------------------------------------
