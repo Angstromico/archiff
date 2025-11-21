@@ -84,7 +84,7 @@ const Carousel = <T extends BaseCardProps>({
       {/* Left Arrow */}
       <button
         onClick={scrollPrev}
-        className='absolute left-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
+        className='absolute left-4 top-[40%] -translate-y-[40%]  sm:top-1/2 sm:-translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
         aria-label='Previous'
       >
         <Image
@@ -100,7 +100,7 @@ const Carousel = <T extends BaseCardProps>({
       {/* Right Arrow */}
       <button
         onClick={scrollNext}
-        className='absolute right-4 top-1/2 -translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
+        className='absolute right-4 top-[40%] -translate-y-[40%] sm:top-1/2 sm:-translate-y-1/2 z-20 hover:opacity-70 transition-opacity'
         aria-label='Next'
       >
         <Image

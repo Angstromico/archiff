@@ -44,7 +44,7 @@ const TeacherCard = ({
           alt={name}
           width={443}
           height={296}
-          className='w-full object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 teacher-image'
+          className='w-full h-auto object-cover block pointer-events-none select-none group-hover:opacity-90 transition-opacity duration-200 teacher-image'
           style={{
             maxWidth: '100%',
             height: maxHeight ? `${maxHeight}px` : 'auto',
