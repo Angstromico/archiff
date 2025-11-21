@@ -19,15 +19,9 @@ export interface FormationCardInfo extends BaseCardProps {
   price: number
 }
 
-interface CommonCardProps extends FormationCardInfo {
-  image: number
-  hasDraggedRef: React.MutableRefObject<boolean>
-  isDragging: boolean
-}
-
 interface CarouselProps<T extends BaseCardProps> {
   cardsInfo: T[] | FormationCardProps[]
-  CardComponent: (props: T & CommonCardProps) => ReactNode
+  CardComponent: any
   useFadeGradients?: boolean
   borderClass?: string
   parts?: 4 | 5
@@ -134,7 +128,6 @@ const Carousel = <T extends BaseCardProps>({
         <div className='embla__container'>
           {cardsInfo.map((card, index) => (
             <div className={slideClass} key={index}>
-              {/* @ts-expect-error - This is a valid operation */}
               <CardComponent
                 {...card}
                 image={index + 1}
