@@ -99,7 +99,7 @@ const MastersList = () => {
           {/* MOBILE INFO */}
           <div className='md:hidden mt-4 px-4'>
             <p className='text-[#666] text-sm'>{item.type}</p>
-            <p className='text-2xl sm:text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-50 sm:max-w-full wrap-break-word'>
+            <p className='text-2xl sm:text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-50 sm:max-w-[400px] md:max-w-full wrap-break-word'>
               {item.title}
             </p>
           </div>
