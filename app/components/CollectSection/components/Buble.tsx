@@ -43,12 +43,12 @@ const Bubble = ({
         border-white 
         border-3 xl:border-4 
         rounded-full
-        h-20 sm:w-full lg:h-[55%] xl:h-40 2xl:h-44
+        h-20 sm:w-full lg:h-[57%] xl:h-40 2xl:h-44
         text-center px-5 flex flex-col justify-center items-center lg:px-4 xl:px-6 2xl:px-10 ${
           desktopHidden ? 'lg:hidden' : ''
         }
-        ${maxW ? 'w-48 sm:min-w-full' : ''}
-        ${maxWX ? 'w-60 sm:min-w-full' : ''}
+        ${maxW ? 'w-46 sm:min-w-full' : ''}
+        ${maxWX ? 'w-52 sm:min-w-full' : ''}
         ${
           lgWidth
             ? 'lg:max-w-[200px] xl:max-w-[280px] 2xl:max-w-[320px]'
@@ -73,7 +73,7 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='text-[10px] xl:text-base 2xl:text-lg leading-tight text-nowrap'>
+      <p className='mt-1 lg:mt-2 text-[10px] xl:text-base 2xl:text-lg leading-tight text-nowrap'>
         {subtitle}
       </p>
     </div>

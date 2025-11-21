@@ -29,7 +29,7 @@ const CollectSection = () => {
           lg:grid lg:grid-cols-1 lg:gap-0 xl:gap-0 2xl:gap-10 lg:col-span-4 xl:col-span-5
         '
       >
-        <div className='flex gap-2 2xl:gap-4 lg:ml-19 xl:ml-25 lg:-mb-18 lg:justify-end'>
+        <div className='flex gap-1 2xl:gap-4 lg:ml-19 xl:ml-25 lg:-mb-18 lg:justify-end'>
           <Bubble
             title={200}
             subtitle='Perfiles de candidatos'
@@ -44,7 +44,7 @@ const CollectSection = () => {
             lgWidth
           />
         </div>
-        <div className='hidden lg:flex  lg:flex-row gap-2 2xl:gap-4 lg:justify-end'>
+        <div className='hidden lg:flex  lg:flex-row gap-1 2xl:gap-4 lg:justify-end'>
           <Bubble lgWidth title='IA' subtitle='En los procesos de selección' />
 
           <Bubble title='Estudios' subtitle='Referentes en el sector' />
@@ -69,7 +69,7 @@ const CollectSection = () => {
 
       {/* Arrow */}
       <Image
-        className='absolute left-6 lg:left-[138px] bottom-10 lg:bottom-22 xl:bottom-32 2xl:bottom-28 w-20 h-10 lg:w-18 lg:h-8 xl:w-24 xl:h-12 2xl:w-28 2xl:h-14 transition-all hover:left-8 lg:hover:left-40'
+        className='absolute left-6 lg:left-[138px] bottom-10 lg:bottom-23 xl:bottom-32 2xl:bottom-28 w-20 h-10 lg:w-20 lg:h-10 xl:w-24 xl:h-12 2xl:w-28 2xl:h-14 transition-all hover:left-8 lg:hover:left-40'
         src='/collections/blue-arrow.svg'
         alt='Arrow'
         width={114.37}
