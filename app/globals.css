@@ -11,6 +11,9 @@
   --color-foreground: var(--background);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --breakpoint-lgx: 1150px;
+  --breakpoint-xlx: 1350px;
+  --breakpoint-xlxx: 1450px;
 }
 
 body {

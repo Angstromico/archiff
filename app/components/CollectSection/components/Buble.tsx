@@ -6,8 +6,11 @@ const Bubble = ({
   subtitle,
   isNumber,
   desktopHidden = false,
-  width,
+  lgWidth,
   minW,
+  maxW,
+  xlWidth,
+  bigWidth,
 }: {
   title: string | number
   subtitle: string
@@ -15,6 +18,10 @@ const Bubble = ({
   desktopHidden?: boolean
   width?: number
   minW?: boolean
+  maxW?: boolean
+  lgWidth?: boolean
+  xlWidth?: boolean
+  bigWidth?: boolean
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const [visible, setVisible] = useState(false)
@@ -39,17 +46,23 @@ const Bubble = ({
       className={`
         border-white 
         border-3 xl:border-4 
-        rounded-[90px]
-        px-6 py-0.5 xl:px-12 xl:min-w-64 2xl:min-w-70 xl:py-4
-        text-center my-1 xl:my-2 flex flex-col justify-center items-center ${
-          desktopHidden ? 'xl:hidden' : ''
-        } ${minW ? 'min-w-[280px]' : ''}
+        rounded-full
+        h-[98px] lg:h-[50%] lg:px-7 xl:h-40 2xl:px-8
+        text-center px-5 flex flex-col justify-center items-center ${
+          desktopHidden ? 'lg:hidden' : ''
+        } ${minW ? 'w-60' : ''}
+        ${maxW ? 'w-[260px]' : ''}
+        ${lgWidth ? 'lg:px-10' : ''}
+        ${xlWidth ? 'xl:px-12' : ''}
+        ${bigWidth ? '2xl:px-16' : ''}
       `}
-      style={{ maxWidth: width }}
     >
-      <h3 className='neue-gothana text-5xl xl:text-6xl 2xl:text-7xl leading-none'>
+      <h3 className='neue-gothana text-4xl lg:text-5xl xl:text-7xl 2xl:text-8xl leading-none flex gap-2'>
+        {/* Me lo toma pero cuando inspecciono el navegador me lo marca como no habilitado porque le da prioridad al lg:text-4xl  */}
         {isNumber && (
-          <span className='text-5xl lg:text-6xl xl:text-7xl'>+</span>
+          <span className='text-4xl lg:text-5xl xl:text-7xl 2xl:text-8xl'>
+            +
+          </span>
         )}{' '}
         {isNumber ? (
           visible ? (
@@ -62,7 +75,9 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='text-sm 2xl:text-lg leading-tight'>{subtitle}</p>
+      <p className='text-[8px] lg:text-[10px] xl:text-base 2xl:text-lg leading-tight text-nowrap'>
+        {subtitle}
+      </p>
     </div>
   )
 }
