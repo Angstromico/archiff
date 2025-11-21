@@ -48,7 +48,7 @@ const Bubble = ({
           desktopHidden ? 'lg:hidden' : ''
         }
         ${maxW ? 'w-46 sm:min-w-full' : ''}
-        ${maxWX ? 'w-52 sm:min-w-full' : ''}
+        ${maxWX ? 'w-56 sm:min-w-full' : ''}
         ${
           lgWidth
             ? 'lg:max-w-[200px] xl:max-w-[280px] 2xl:max-w-[320px]'
@@ -56,7 +56,7 @@ const Bubble = ({
         }
       `}
     >
-      <h3 className='neue-gothana text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-none flex gap-2'>
+      <h3 className='neue-gothana text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-none flex gap-2'>
         {isNumber && (
           <span className='text-4xl lg:text-6xl xl:text-7xl 2xl:text-8xl'>
             +
