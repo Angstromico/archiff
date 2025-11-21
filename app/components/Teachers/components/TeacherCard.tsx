@@ -15,7 +15,7 @@ const TeacherCard = ({
   name: string
   type: string
   image: number
-  linbk: string
+  link: string
   hasDraggedRef: React.MutableRefObject<boolean>
   isDragging: boolean
 }) => {
