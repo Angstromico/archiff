@@ -10,15 +10,15 @@ export const metadata: Metadata = {
 
   // Canonical + idioma
   alternates: {
-    canonical: 'https://archiff.es', // Cambia por tu dominio real
+    canonical: 'https://archiff-page.netlify.app', // Cambia por tu dominio real
   },
-  metadataBase: new URL('https://archiff.es'), // Cambia por tu dominio
+  metadataBase: new URL('https://archiff-page.netlify.app'), // Cambia por tu dominio
 
   // Open Graph / Facebook
   openGraph: {
     type: 'website',
     locale: 'es_ES',
-    url: 'https://archiff.es',
+    url: 'https://archiff-page.netlify.app',
     siteName: '.archiff',
     title: '.archiff | Formación de élite para arquitectos e interioristas',
     description:
