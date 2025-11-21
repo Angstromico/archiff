@@ -47,7 +47,7 @@ const MastersList = () => {
           <Link
             href={item.link}
             target='_blank'
-            className='lg:hidden grid grid-cols-2 gap-4 items-start px-4 w-full'
+            className='md:hidden grid grid-cols-2 gap-4 items-start px-4 w-full'
           >
             {/* DATE */}
             <div>
@@ -97,7 +97,7 @@ const MastersList = () => {
           </Link>
 
           {/* MOBILE INFO */}
-          <div className='lg:hidden mt-4 px-4'>
+          <div className='md:hidden mt-4 px-4'>
             <p className='text-[#666] text-sm'>{item.type}</p>
             <p className='text-2xl sm:text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-50 sm:max-w-full wrap-break-word'>
               {item.title}
@@ -108,7 +108,7 @@ const MastersList = () => {
           <Link
             href={item.link}
             target='_blank'
-            className='hidden lg:grid grid-cols-10 gap-2 px-6 items-start'
+            className='hidden md:grid grid-cols-10 gap-2 px-6 items-start'
           >
             <div className='col-span-2'>
               <p className='text-[#666] text-[16px] font-medium'>Inicio</p>
