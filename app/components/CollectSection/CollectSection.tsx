@@ -5,16 +5,16 @@ import Bubble from './components/Buble'
 
 const CollectSection = () => {
   return (
-    <section className='w-full bg-[#1E2BC7] px-4 lg:px-[147px] pt-2.5 lgx:pt-4 pb-32 2xl:pb-16 text-white mb-8 lgx:mb-16 relative grid grid-cols-1 lgx:grid-cols-2 lgx:gap-12 xlxx:gap-13 lgx:h-[350px] 2xl:h-[500px]'>
+    <section className='w-full bg-[#1E2BC7] px-4 lg:px-[147px] pt-2.5 lgx:pt-4 pb-32 2xl:pb-16 text-white mb-8 lgx:mb-16 relative grid grid-cols-1 lgx:grid-cols-2 lgx:gap-12 2xl:gap-13 lgx:h-[350px] 2xl:h-[500px]'>
       {/* Left Column */}
       <div>
-        <h2 className='font-bold text-5xl lg:text-5xl 2xl:text-6xl 3xl:text-7xl mb-2 lgx:mb-3'>
+        <h2 className='font-bold text-5xl 3xl:text-7xl mb-2 lgx:mb-3'>
           Colectiff
         </h2>
-        <p className='mb-6 lgx:mb-9 text-xl lgx:text-xs 2xl:text-lg 3xl:text-xl'>
+        <p className='mb-6 lgx:mb-9 text-xl lgx:text-sm 2xl:text-lg 3xl:text-xl'>
           [Bolsa de empleo]
         </p>
-        <p className='mb-8 lgx:mb-20 text-xl lgx:text-xs 2xl:text-lg 3xl:text-xl lgx:pb-16 text-justify lgx:max-w-[300px] 2xl:max-w-[550px] 3xl:max-w-[650px]'>
+        <p className='mb-8 lgx:mb-20 text-xl lgx:text-sm 2xl:text-lg 3xl:text-xl lgx:pb-16 text-justify lgx:max-w-[400px] 2xl:max-w-[550px] 3xl:max-w-[650px]'>
           Colectiff es una plataforma de empleo especializada en el sector de la
           Arquitectura y el Diseño, creada para conectar a profesionales con
           estudios de referencia que buscan talento.
@@ -25,10 +25,10 @@ const CollectSection = () => {
       <div
         className='
           flex flex-col gap-2
-          lgx:grid lgx:grid-cols-1 lgx:gap-0 lgx:min-w-[500px] 2xl:gap-3 3xl:gap-12
+          lgx:grid lgx:grid-cols-1 lgx:gap-2 lgx:w-[505px] 2xl:w-full 2xl:gap-3 3xl:gap-12
         '
       >
-        <div className='flex gap-1 lgx:gap-2 2xl:gap-3 lgx:ml-19 2xl:ml-25 lgx:-mb-18 lg:justify-end'>
+        <div className='flex gap-1 lgx:gap-2 2xl:gap-3 lgx:ml-19 2xl:ml-25 lgx:-mb-18 lgx:justify-start'>
           <Bubble
             title={200}
             subtitle='Perfiles de candidatos'
@@ -68,7 +68,7 @@ const CollectSection = () => {
 
       {/* Arrow */}
       <Image
-        className='absolute left-6 lg:left-[138px] bottom-10 lgx:bottom-23 2xl:bottom-32 3xl:bottom-28 w-20 h-10 lgx:w-20 lgx:h-10 2xl:w-24 2xl:h-12 3xl:w-32 3xl:h-18 transition-all hover:left-8 lg:hover:left-40'
+        className='absolute left-6 lg:left-[138px] bottom-10 lgx:bottom-18 2xl:bottom-32 3xl:bottom-28 w-20 h-10 lgx:w-22 lgx:h-12 2xl:w-24 2xl:h-12 3xl:w-32 3xl:h-18 transition-all hover:left-8 lg:hover:left-40'
         src='/collections/blue-arrow.svg'
         alt='Arrow'
         width={114.37}
