@@ -52,7 +52,7 @@ const Bubble = ({
         ${
           lgWidth
             ? 'lgx:max-w-66 2xl:max-w-[280px] 3xl:max-w-[320px]'
-            : 'lgx:px-10 2xl:p-12 lgx:max-w-[300px] 2xl:max-w-[500px]'
+            : 'lgx:px-10 2xl:p-12 lgx:max-w-[290px] 2xl:max-w-[500px]'
         }
       `}
     >
