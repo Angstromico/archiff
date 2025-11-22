@@ -41,7 +41,7 @@ const Bubble = ({
       ref={ref}
       className={`
         border-white 
-        border-3 xl:border-4 
+        border-2 lgx:border-3 
         rounded-full
         h-20 sm:w-full lgx:h-[63%] 2xl:h-40 3xl:h-46
         text-center px-5 flex flex-col justify-center items-center lgx:px-5 2xl:px-6 3xl:px-8 ${
