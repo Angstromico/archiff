@@ -43,22 +43,22 @@ const Bubble = ({
         border-white 
         border-2 lgx:border-3 
         rounded-full
-        h-20 sm:w-full lgx:h-[63%] 2xl:h-40 3xl:h-46
-        text-center px-5 flex flex-col justify-center items-center lgx:px-5 2xl:px-6 3xl:px-8 ${
+        h-20 sm:w-full lgx:h-[56%] 2xl:h-42 3xl:h-46
+        text-center px-5 flex flex-col justify-center items-center lgx:px-10 2xl:px-6 3xl:px-8 ${
           desktopHidden ? 'lgx:hidden' : ''
         }
         ${maxW ? 'w-46 sm:min-w-full' : ''}
         ${maxWX ? 'w-56 sm:min-w-full' : ''}
         ${
           lgWidth
-            ? 'lgx:max-w-66 2xl:max-w-[280px] 3xl:max-w-[320px]'
-            : 'lgx:px-10 2xl:p-12 lgx:max-w-[290px] 2xl:max-w-[500px]'
+            ? 'lgx:w-[43%]'
+            : 'lgx:px-8 2xl:px-16 lgx:w-[57%]'
         }
       `}
     >
-      <h3 className='neue-gothana text-5xl lgx:text-7xl 3xl:text-8xl leading-none flex gap-2'>
+      <h3 className='neue-gothana text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl leading-none flex gap-2'>
         {isNumber && (
-          <span className='text-4xl lgx:text-7xl 3xl:text-8xl'>+</span>
+          <span className='text-4xl lgx:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl'>+</span>
         )}{' '}
         {isNumber ? (
           visible ? (
