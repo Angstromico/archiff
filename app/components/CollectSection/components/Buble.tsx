@@ -58,7 +58,7 @@ const Bubble = ({
     >
       <h3 className='neue-gothana text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl leading-none flex gap-2'>
         {isNumber && (
-          <span className='text-4xl lgx:text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl'>+</span>
+          <span className='text-5xl xl:text-6xl 2xl:text-7xl 3xl:text-8xl'>+</span>
         )}{' '}
         {isNumber ? (
           visible ? (
