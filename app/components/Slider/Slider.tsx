@@ -180,7 +180,7 @@ export default function ImageSlider() {
   // 5. Render
   // --------------------------------------------------------------
   const visibleCount = typeof window === 'undefined' ? 2 : cardsPerView
-  const slotWidth = `${100 / visibleCount}%`
+  //const slotWidth = `${100 / visibleCount}%`
   const slotWidthPercent = 100 / visibleCount
   const infiniteSlides = [...slides, ...slides]
 
@@ -212,7 +212,7 @@ export default function ImageSlider() {
         {infiniteSlides.map((img, i) => (
           <div
             key={i}
-            style={{ width: slotWidth, height: 'auto' }}
+            style={{ width: 'auto', height: 'auto' }}
             className={`shrink-0 transition-transform duration-200 ${
               isDragging ? 'scale-95' : 'scale-100'
             }`}
@@ -225,7 +225,6 @@ export default function ImageSlider() {
               dragDistance={dragDistanceRef.current}
             />
           </div>
-          /* In the cellphone I can't drag the Carousel, only in Desktop, what can be the problem? */
         ))}
       </div>
     </section>
