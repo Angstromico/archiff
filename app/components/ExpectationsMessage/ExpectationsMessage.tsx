@@ -22,8 +22,8 @@ const ExpectationsMessage = () => {
         sizes={{ width: 1000, height: 100, tinyWidth: 334 }}
         lessBottom
       />
+      <VideoBanner notDesktop />
       <div className='px-4 lg:px-[147px]'>
-        <VideoBanner notDesktop />
         <ExpectationsText />
         <ExpectationsBtns />
       </div>
