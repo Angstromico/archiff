@@ -27,7 +27,7 @@ export const mastersListInfo: MasterListInfo[] = [
   {
     date: 'Oct. 26',
     type: 'Arquitectura e Interiorismo',
-    title: 'MAP. Máster de Profesionalizaciónen la Arquitectura',
+    title: 'MAP. Máster de Profesionalización la Arquitectura',
     link: 'https://archiff.com/master-de-profesionalizacion-en-la-arquitectura',
   },
 ]

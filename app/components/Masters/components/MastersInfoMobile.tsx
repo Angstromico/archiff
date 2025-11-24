@@ -65,7 +65,7 @@ const MastersInfoMobile = ({
       {/* MOBILE INFO */}
       <div className='md:hidden mt-4 px-4'>
         <p className='text-[#666] text-sm'>{item.type}</p>
-        <p className='text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-50 sm:max-w-[400px] md:max-w-full wrap-break-word pb-2'>
+        <p className='text-3xl underline-offset-4 group-hover:underline cursor-pointer max-w-63 sm:max-w-[400px] md:max-w-full wrap-break-word pb-2'>
           {item.title}
         </p>
       </div>
