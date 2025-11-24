@@ -20,23 +20,21 @@ const SectionLogo = ({
 }: IProps) => {
   const { width, tinyWidth, height } = sizes
   const [isVisible, setIsVisible] = useState(false)
+  const [renderKey, setRenderKey] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          // 👉 Restart animation by forcing a re-mount
+          setRenderKey(prev => prev + 1)
           setIsVisible(true)
-          // Once visible, stop observing
-          if (containerRef.current) {
-            observer.unobserve(containerRef.current)
-          }
+        } else {
+          setIsVisible(false)
         }
       },
-      {
-        rootMargin: '50px', // Start loading slightly before element enters viewport
-        threshold: 0.01, // Trigger when even 1% is visible
-      }
+      { threshold: 0.29 }
     )
 
     if (containerRef.current) {
@@ -71,12 +69,14 @@ const SectionLogo = ({
       >
         {isVisible && (
           <Image
+            key={renderKey}     // 👉 new mount each time user scrolls back
             src={image}
             alt={alt}
             width={width}
             height={height}
-            className='block w-(--tiny) lg:w-(--width) max-w-full'
-            loading='lazy'
+            className="block w-(--tiny) lg:w-(--width) max-w-full"
+            loading="eager"
+            unoptimized
           />
         )}
       </div>
