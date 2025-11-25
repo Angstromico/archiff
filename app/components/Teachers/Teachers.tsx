@@ -9,7 +9,6 @@ const Teachers = () => {
       <Carousel
         cardsInfo={teachersData}
         CardComponent={TeacherCard}
-        borderClass='border-x-2'
       />
     </section>
   )

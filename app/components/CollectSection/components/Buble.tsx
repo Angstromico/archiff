@@ -71,7 +71,7 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='mt-1 lgx:mt-2 text-[10px] xlx:text-base 3xl:text-lg leading-tight text-nowrap'>
+      <p className='mt-1 lgx:mt-2 text-[10px] xlx:text-base leading-tight text-nowrap'>
         {subtitle}
       </p>
     </div>
