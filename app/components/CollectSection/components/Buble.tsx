@@ -43,7 +43,7 @@ const Bubble = ({
         border-white 
         border-2 lgx:border-3 
         rounded-full
-        h-20 sm:w-full lgx:h-[56%] 2xl:h-42 3xl:h-46
+        h-20 sm:w-full lgx:h-[56%] xlx:h-38 2xl:h-42 3xl:h-46
         text-center px-5 flex flex-col justify-center items-center lgx:px-10 2xl:px-6 3xl:px-8 ${
           desktopHidden ? 'lgx:hidden' : ''
         }
@@ -71,7 +71,7 @@ const Bubble = ({
         )}
       </h3>
 
-      <p className='mt-1 lgx:mt-2 text-[10px] 2xl:text-xs 3xl:text-lg leading-tight text-nowrap'>
+      <p className='mt-1 lgx:mt-2 text-[10px] xlx:text-base 2xl:text-xs 3xl:text-lg leading-tight text-nowrap'>
         {subtitle}
       </p>
     </div>
