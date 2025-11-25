@@ -23,7 +23,6 @@ interface CarouselProps<T extends BaseCardProps> {
   cardsInfo: T[] | FormationCardProps[]
   CardComponent: any
   useFadeGradients?: boolean
-  borderClass?: string
   parts?: 4 | 5
   arrowsLow?: boolean
 }
@@ -32,7 +31,6 @@ const Carousel = <T extends BaseCardProps>({
   cardsInfo,
   CardComponent,
   useFadeGradients = true,
-  borderClass = '',
   parts = 4,
   arrowsLow,
 }: CarouselProps<T>) => {
@@ -80,7 +78,7 @@ const Carousel = <T extends BaseCardProps>({
   }, [emblaApi])
 
   return (
-    <section className={`relative w-full overflow-hidden ${borderClass}`}>
+    <section className='relative w-full overflow-hidden'>
       {useFadeGradients && <FadeGradients />}
 
       {/* Left Arrow */}
