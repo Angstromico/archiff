@@ -13,7 +13,7 @@ export const useMaxImageHeight = (imageClass: string) => {
       let maxH = 0
       images.forEach((img) => {
         const h = img.getBoundingClientRect().height
-        if (h > maxH) maxH = h
+        if (h <= maxH) maxH = h
       })
       setMaxHeight(maxH)
     }
