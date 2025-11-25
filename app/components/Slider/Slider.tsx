@@ -213,7 +213,7 @@ export default function ImageSlider() {
           <div
             key={i}
             style={{ height: 'auto' }}
-            className={`w-1/2 lg:w-auto shrink-0 transition-transform duration-200 ${
+            className={`w-1/2 sm:w-1/3 lg:w-auto shrink-0 transition-transform duration-200 ${
               isDragging ? 'scale-95' : 'scale-100'
             }`}
           >
