@@ -15,7 +15,7 @@ const ExpectationsMessage = () => {
     : '/intros/Esperitas.svg' // For small screens
 
   return (
-    <section className='mt-5 lg:mt-10 mb-16 lg:mb-44'>
+    <section className='mt-5 mb-16'>
       <SectionLogo
         image={imagePath}
         alt='Expectations'

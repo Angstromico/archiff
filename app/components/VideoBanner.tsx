@@ -55,7 +55,7 @@ const VideoBanner = ({
 
   return (
     <section
-      className={`my-16 lg:my-44 w-full overflow-hidden ${
+      className={`my-16 lg:mt-44 lg:mb-22 w-full overflow-hidden ${
         notMobile ? 'hidden lg:block' : ''
       } ${notDesktop ? 'lg:hidden' : ''}`}
     >
