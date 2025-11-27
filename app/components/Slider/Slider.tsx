@@ -249,7 +249,7 @@ export default function ImageSlider() {
     ? dragStartIndexRef.current + dragOffset
     : index + progress
 
-  const translateX = -currentPosition * slotWidthPercent
+  const translateX = -currentPosition * slotWidthPercent //I need this translation to be more smooth, overly in Mobile, looks to weird, not fluid
 
   return (
     <section className='relative w-full overflow-hidden mt-10 lg:mt-32'>
@@ -260,7 +260,7 @@ export default function ImageSlider() {
         className='flex gap-2 lg:gap-4'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: 'none',
+          transition: 'transform 0.4s linear',
           cursor: isDragging ? 'grabbing' : 'grab',
           userSelect: 'none',
         }}
