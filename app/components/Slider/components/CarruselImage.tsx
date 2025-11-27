@@ -39,7 +39,7 @@ function CarouselImage({
         alt='carousel'
         width={0}
         height={0}
-        className='w-full lg:w-auto h-auto object-cover transition-opacity duration-500 group-hover:opacity-0 static xl:min-w-92'
+        className='w-full lg:w-auto h-auto object-cover transition-opacity duration-500 group-hover:opacity-0 static lg:min-w-72 xl:min-w-92'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 80vw'
         draggable={false}
         loading='lazy'
@@ -49,7 +49,7 @@ function CarouselImage({
         alt='carousel hover'
         width={0}
         height={0}
-        className='absolute inset-0 w-full lg:w-auto h-auto object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100 xl:min-w-92'
+        className='absolute inset-0 w-full lg:w-auto h-auto object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100 lg:min-w-72 xl:min-w-92'
         sizes='(max-width: 768px) 50vw, (max-width: 1280px) 80vw'
         draggable={false}
         loading='lazy'

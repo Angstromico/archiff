@@ -27,7 +27,12 @@ export default function ImageSlider() {
   }
 
   const [cardsPerView, setCardsPerView] = useState(2)
-  const [index, setIndex] = useState(0)
+
+  // NEW: Start in the middle of the infinite array (5 copies = start at 5th copy)
+  const INFINITE_COPIES = 4
+  const START_OFFSET = Math.floor(INFINITE_COPIES / 2) * slides.length
+
+  const [index, setIndex] = useState(START_OFFSET)
   const [progress, setProgress] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [dragStartX, setDragStartX] = useState(0)
@@ -35,9 +40,9 @@ export default function ImageSlider() {
 
   const rafRef = useRef<number | null>(null)
   const accumRef = useRef(0)
-  const dragStartIndexRef = useRef(0)
+  const dragStartIndexRef = useRef(START_OFFSET)
   const trackRef = useRef<HTMLDivElement>(null)
-  const dragDistanceRef = useRef(0) // Para trackear distancia del drag
+  const dragDistanceRef = useRef(0)
 
   // ---- Resize handler ----
   useEffect(() => {
@@ -50,10 +55,10 @@ export default function ImageSlider() {
   // --------------------------------------------------------------
   // 3. Continuous smooth scroll (ONLY when NOT dragging)
   // --------------------------------------------------------------
-  const speed = 0.1
+  const speed = 0.3
+  const totalSlides = slides.length * INFINITE_COPIES
 
   useEffect(() => {
-    // Don't run animation loop while dragging
     if (isDragging) {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current)
@@ -72,7 +77,21 @@ export default function ImageSlider() {
       const fullSlots = Math.floor(accumRef.current)
       const fractional = accumRef.current - fullSlots
 
-      setIndex((i) => (i + fullSlots) % slides.length)
+      setIndex((i) => {
+        const newIndex = (i + fullSlots) % totalSlides
+        // Reposition if we're getting close to edges
+        if (
+          newIndex < slides.length ||
+          newIndex >= totalSlides - slides.length
+        ) {
+          return (
+            START_OFFSET +
+            ((((newIndex - START_OFFSET) % slides.length) + slides.length) %
+              slides.length)
+          )
+        }
+        return newIndex
+      })
       setProgress(fractional)
 
       accumRef.current = fractional
@@ -84,17 +103,16 @@ export default function ImageSlider() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [cardsPerView, slides.length, isDragging])
+  }, [cardsPerView, slides.length, isDragging, totalSlides, START_OFFSET])
 
   // --------------------------------------------------------------
-  // 4. Mouse event handlers
+  // 4. Mouse/Touch event handlers
   // --------------------------------------------------------------
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault()
     setIsDragging(true)
     setDragStartX(e.clientX)
-    dragDistanceRef.current = 0 // Reset drag distance
-    // Store the current position when drag starts
+    dragDistanceRef.current = 0
     dragStartIndexRef.current = index + progress
   }
 
@@ -106,13 +124,12 @@ export default function ImageSlider() {
     dragStartIndexRef.current = index + progress
   }
 
-  // Add global mouse events for better drag experience
   useEffect(() => {
     if (!isDragging) return
 
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const deltaX = e.clientX - dragStartX
-      dragDistanceRef.current = Math.abs(deltaX) // Update drag distance
+      dragDistanceRef.current = Math.abs(deltaX)
       const pxPerSlot = window.innerWidth / cardsPerView
       const offsetInSlots = -deltaX / pxPerSlot
 
@@ -123,15 +140,30 @@ export default function ImageSlider() {
       if (!isDragging) return
 
       const finalPosition = dragStartIndexRef.current + dragOffset
-      const normalizedIndex =
-        ((finalPosition % slides.length) + slides.length) % slides.length
 
-      setIndex(Math.floor(normalizedIndex))
-      setProgress(normalizedIndex - Math.floor(normalizedIndex))
+      // Wrap to keep position within infinite array bounds
+      let normalizedPosition = finalPosition
+      while (normalizedPosition < 0) normalizedPosition += totalSlides
+      while (normalizedPosition >= totalSlides)
+        normalizedPosition -= totalSlides
+
+      // Reposition to middle if near edges
+      if (
+        normalizedPosition < slides.length ||
+        normalizedPosition >= totalSlides - slides.length
+      ) {
+        const posInCycle = normalizedPosition % slides.length
+        normalizedPosition =
+          START_OFFSET +
+          (posInCycle >= 0 ? posInCycle : posInCycle + slides.length)
+      }
+
+      setIndex(Math.floor(normalizedPosition))
+      setProgress(normalizedPosition - Math.floor(normalizedPosition))
 
       setIsDragging(false)
       setDragOffset(0)
-      accumRef.current = normalizedIndex - Math.floor(normalizedIndex)
+      accumRef.current = normalizedPosition - Math.floor(normalizedPosition)
     }
 
     window.addEventListener('mousemove', handleGlobalMouseMove)
@@ -141,7 +173,16 @@ export default function ImageSlider() {
       window.removeEventListener('mousemove', handleGlobalMouseMove)
       window.removeEventListener('mouseup', handleGlobalMouseUp)
     }
-  }, [isDragging, dragStartX, cardsPerView, dragOffset, slides.length])
+  }, [
+    isDragging,
+    dragStartX,
+    cardsPerView,
+    dragOffset,
+    slides.length,
+    totalSlides,
+    START_OFFSET,
+  ])
+
   useEffect(() => {
     if (!isDragging) return
 
@@ -156,15 +197,28 @@ export default function ImageSlider() {
 
     const handleTouchEnd = () => {
       const finalPosition = dragStartIndexRef.current + dragOffset
-      const normalizedIndex =
-        ((finalPosition % slides.length) + slides.length) % slides.length
 
-      setIndex(Math.floor(normalizedIndex))
-      setProgress(normalizedIndex - Math.floor(normalizedIndex))
+      let normalizedPosition = finalPosition
+      while (normalizedPosition < 0) normalizedPosition += totalSlides
+      while (normalizedPosition >= totalSlides)
+        normalizedPosition -= totalSlides
+
+      if (
+        normalizedPosition < slides.length ||
+        normalizedPosition >= totalSlides - slides.length
+      ) {
+        const posInCycle = normalizedPosition % slides.length
+        normalizedPosition =
+          START_OFFSET +
+          (posInCycle >= 0 ? posInCycle : posInCycle + slides.length)
+      }
+
+      setIndex(Math.floor(normalizedPosition))
+      setProgress(normalizedPosition - Math.floor(normalizedPosition))
 
       setIsDragging(false)
       setDragOffset(0)
-      accumRef.current = normalizedIndex - Math.floor(normalizedIndex)
+      accumRef.current = normalizedPosition - Math.floor(normalizedPosition)
     }
 
     window.addEventListener('touchmove', handleTouchMove)
@@ -174,17 +228,25 @@ export default function ImageSlider() {
       window.removeEventListener('touchmove', handleTouchMove)
       window.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [isDragging, dragStartX, cardsPerView, dragOffset, slides.length])
+  }, [
+    isDragging,
+    dragStartX,
+    cardsPerView,
+    dragOffset,
+    slides.length,
+    totalSlides,
+    START_OFFSET,
+  ])
 
   // --------------------------------------------------------------
   // 5. Render
   // --------------------------------------------------------------
   const visibleCount = typeof window === 'undefined' ? 2 : cardsPerView
-  //const slotWidth = `${100 / visibleCount}%`
   const slotWidthPercent = 100 / visibleCount
-  const infiniteSlides = [...slides, ...slides]
 
-  // Calculate translateX based on whether we're dragging or not
+  // Create infinite array
+  const infiniteSlides = Array(INFINITE_COPIES).fill(slides).flat()
+
   const currentPosition = isDragging
     ? dragStartIndexRef.current + dragOffset
     : index + progress
@@ -193,10 +255,8 @@ export default function ImageSlider() {
 
   return (
     <section className='relative w-full overflow-hidden mt-10 lg:mt-32'>
-      {/* Fade gradients */}
       <FadeGradients />
 
-      {/* Track */}
       <div
         ref={trackRef}
         className='flex gap-2 lg:gap-4'
@@ -213,7 +273,7 @@ export default function ImageSlider() {
           <div
             key={i}
             style={{ height: 'auto' }}
-            className={`w-1/2 sm:w-auto md:w-1/2 lg:w-auto shrink-0 transition-transform duration-200 ${
+            className={`w-1/2 sm:w-auto md:w-1/3 lg:w-auto shrink-0 transition-transform duration-200 ${
               isDragging ? 'scale-95' : 'scale-100'
             }`}
           >
