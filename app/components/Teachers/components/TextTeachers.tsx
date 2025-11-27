@@ -10,7 +10,7 @@ const TextTeachers = () => {
           alt='Profesores'
           noTop
           lessBottom
-          customClass='absolute top-0 sm:-top-3 lg:-top-9 xl:-top-6 left-1/3 lg:left-[147px]'
+          customClass='absolute top-0 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:right-auto sm:-top-3 lg:-top-9 xl:-top-6 lg:left-[147px]'
         />
       </div>
       <div className='mt-6 p-3 sm:mt-0 sm:w-full lg:max-w-1/2 border-2 border-b-0 lg:border-3 lg:border-b-0 mx-[30px] sm:mx-0 lg:pl-8 lg:pb-4 text-lg 2xl:text-[30px] text-justify h-[90%] self-baseline-last'>
