@@ -55,7 +55,7 @@ export default function ImageSlider() {
   // --------------------------------------------------------------
   // 3. Continuous smooth scroll (ONLY when NOT dragging)
   // --------------------------------------------------------------
-  const speed = 0.4 // Reduced for smoother mobile experience
+  const speed = 0.3 // Reduced for smoother mobile experience
   const totalSlides = slides.length * INFINITE_COPIES
 
   useEffect(() => {
