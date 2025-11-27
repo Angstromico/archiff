@@ -22,7 +22,7 @@ const MastersList = () => {
         newFrames[hoveredIndex] = (newFrames[hoveredIndex] + 1) % 4
         return newFrames
       })
-    }, 1200)
+    }, 950)
 
     return () => clearInterval(interval)
   }, [hoveredIndex])
