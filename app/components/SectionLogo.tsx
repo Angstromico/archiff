@@ -9,6 +9,7 @@ interface IProps {
   alt?: string
   lessBottom?: boolean
   noTop?: boolean
+  customClass?: string
 }
 
 const SectionLogo = ({
@@ -17,6 +18,7 @@ const SectionLogo = ({
   alt = '',
   lessBottom = false,
   noTop = false,
+  customClass = '',
 }: IProps) => {
   const { width, tinyWidth, height } = sizes
   const [isVisible, setIsVisible] = useState(false)
@@ -27,7 +29,7 @@ const SectionLogo = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Restart animation by forcing a re-mount
+          // 👉 Restart animation by forcing a re-mount
           setRenderKey((prev) => prev + 1)
           setIsVisible(true)
         } else {
@@ -48,7 +50,7 @@ const SectionLogo = ({
     }
   }, [])
 
-  const innerStyle = `relative inline-block ${
+  const innerStyle = `${customClass ? customClass : 'relative'} inline-block ${
     lessBottom ? 'lg:mb-4' : 'mb-4 md:mb-14'
   }`
 
@@ -64,24 +66,22 @@ const SectionLogo = ({
           {
             '--tiny': `${tinyWidth}px`,
             '--width': `${width}px`,
+            minHeight: `${height}px`,
           } as React.CSSProperties
         }
       >
-        {/* SOLUTION 1: Keep image in DOM but use opacity + visibility */}
-        <Image
-          key={renderKey}
-          src={image}
-          alt={alt}
-          width={width}
-          height={height}
-          className='block w-(--tiny) lg:w-(--width) max-w-full transition-opacity duration-300'
-          style={{
-            opacity: isVisible ? 1 : 0,
-            visibility: isVisible ? 'visible' : 'hidden',
-          }}
-          loading='eager'
-          unoptimized
-        />
+        {isVisible && (
+          <Image
+            key={renderKey}
+            src={image}
+            alt={alt}
+            width={width}
+            height={height}
+            className='block w-(--tiny) lg:w-(--width) max-w-full'
+            loading='eager'
+            unoptimized
+          />
+        )}
       </div>
     </div>
   )
