@@ -27,8 +27,8 @@ const SectionLogo = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // 👉 Restart animation by forcing a re-mount
-          setRenderKey(prev => prev + 1)
+          // Restart animation by forcing a re-mount
+          setRenderKey((prev) => prev + 1)
           setIsVisible(true)
         } else {
           setIsVisible(false)
@@ -67,18 +67,21 @@ const SectionLogo = ({
           } as React.CSSProperties
         }
       >
-        {isVisible && (
-          <Image
-            key={renderKey}     // 👉 new mount each time user scrolls back
-            src={image}
-            alt={alt}
-            width={width}
-            height={height}
-            className="block w-(--tiny) lg:w-(--width) max-w-full"
-            loading="eager"
-            unoptimized
-          />
-        )}
+        {/* SOLUTION 1: Keep image in DOM but use opacity + visibility */}
+        <Image
+          key={renderKey}
+          src={image}
+          alt={alt}
+          width={width}
+          height={height}
+          className='block w-(--tiny) lg:w-(--width) max-w-full transition-opacity duration-300'
+          style={{
+            opacity: isVisible ? 1 : 0,
+            visibility: isVisible ? 'visible' : 'hidden',
+          }}
+          loading='eager'
+          unoptimized
+        />
       </div>
     </div>
   )
