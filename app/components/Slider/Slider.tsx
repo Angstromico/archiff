@@ -55,7 +55,7 @@ export default function ImageSlider() {
   // --------------------------------------------------------------
   // 3. Continuous smooth scroll (ONLY when NOT dragging)
   // --------------------------------------------------------------
-  const speed = 0.2
+  const speed = 0.4 // Reduced for smoother mobile experience
   const totalSlides = slides.length * INFINITE_COPIES
 
   useEffect(() => {
@@ -78,17 +78,15 @@ export default function ImageSlider() {
       const fractional = accumRef.current - fullSlots
 
       setIndex((i) => {
-        const newIndex = (i + fullSlots) % totalSlides
-        // Reposition if we're getting close to edges
+        const newIndex = i + fullSlots
+        // Reposition if we're getting close to edges (smoother wrapping)
         if (
           newIndex < slides.length ||
           newIndex >= totalSlides - slides.length
         ) {
-          return (
-            START_OFFSET +
-            ((((newIndex - START_OFFSET) % slides.length) + slides.length) %
-              slides.length)
-          )
+          const normalizedIdx =
+            ((newIndex % slides.length) + slides.length) % slides.length
+          return START_OFFSET + normalizedIdx
         }
         return newIndex
       })
@@ -103,7 +101,7 @@ export default function ImageSlider() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [cardsPerView, slides.length, isDragging, totalSlides, START_OFFSET])
+  }, [slides.length, isDragging, totalSlides, speed])
 
   // --------------------------------------------------------------
   // 4. Mouse/Touch event handlers
@@ -272,8 +270,10 @@ export default function ImageSlider() {
         {infiniteSlides.map((img, i) => (
           <div
             key={i}
-            style={{ height: 'auto' }}
-            className={`w-1/2 sm:w-auto md:w-1/3 lg:w-auto shrink-0 transition-transform duration-200 ${
+            style={{
+              height: 'auto',
+            }}
+            className={`w-1/2 md:w-1/3 lg:w-auto shrink-0 transition-transform duration-200 ${
               isDragging ? 'scale-95' : 'scale-100'
             }`}
           >
