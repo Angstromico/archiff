@@ -29,7 +29,7 @@ export default function ImageSlider() {
   const [cardsPerView, setCardsPerView] = useState(2)
 
   // NEW: Start in the middle of the infinite array (5 copies = start at 5th copy)
-  const INFINITE_COPIES = 4
+  const INFINITE_COPIES = 10
   const START_OFFSET = Math.floor(INFINITE_COPIES / 2) * slides.length
 
   const [index, setIndex] = useState(START_OFFSET)
