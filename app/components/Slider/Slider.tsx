@@ -55,7 +55,7 @@ export default function ImageSlider() {
   // --------------------------------------------------------------
   // 3. Continuous smooth scroll (ONLY when NOT dragging)
   // --------------------------------------------------------------
-  const speed = 0.3 // Reduced for smoother mobile experience
+  const speed = 0.5 // Reduced for smoother mobile experience
   const totalSlides = slides.length * INFINITE_COPIES
 
   useEffect(() => {
@@ -260,7 +260,7 @@ export default function ImageSlider() {
         className='flex gap-2 lg:gap-4'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: isDragging ? 'none' : 'transform 0.4s linear',
+          transition: isDragging ? 'none' : 'transform 1s linear',
           cursor: isDragging ? 'grabbing' : 'grab',
           userSelect: 'none',
         }}
