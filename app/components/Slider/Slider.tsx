@@ -260,7 +260,7 @@ export default function ImageSlider() {
         className='flex gap-2 lg:gap-4'
         style={{
           transform: `translateX(${translateX}%)`,
-          transition: 'transform 0.4s linear',
+          transition: isDragging ? 'none' : 'transform 0.4s linear',
           cursor: isDragging ? 'grabbing' : 'grab',
           userSelect: 'none',
         }}
