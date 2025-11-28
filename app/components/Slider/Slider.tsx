@@ -101,7 +101,7 @@ export default function ImageSlider() {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [slides.length, isDragging, totalSlides, speed])
+  }, [slides.length, isDragging, totalSlides, speed, START_OFFSET])
 
   // --------------------------------------------------------------
   // 4. Mouse/Touch event handlers
